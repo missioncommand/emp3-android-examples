@@ -3,9 +3,6 @@ package mil.emp3.examples;
 import android.app.Activity;
 import android.util.Log;
 
-import java.util.List;
-
-import mil.emp3.api.abstracts.Map;
 import mil.emp3.api.enums.EditorMode;
 import mil.emp3.api.enums.FeatureTypeEnum;
 import mil.emp3.api.enums.MapMotionLockEnum;
@@ -13,7 +10,6 @@ import mil.emp3.api.enums.UserInteractionEventEnum;
 import mil.emp3.api.events.FeatureUserInteractionEvent;
 import mil.emp3.api.events.MapUserInteractionEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
-import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.interfaces.IOverlay;
@@ -41,6 +37,7 @@ public class UserInteractionTest  extends TestBase implements Runnable {
     MapInteractionEventListener[] miel = new MapInteractionEventListener[2];
     EventListenerHandle[] mielHandle = new EventListenerHandle[2];
 
+    private Boolean[] inRemoveFeatureMode = new Boolean[2];
 
     @Override
     public void run() {
@@ -48,8 +45,8 @@ public class UserInteractionTest  extends TestBase implements Runnable {
         overlays[0] = o1;
         overlays[1] = o2;
 
-        fiel[0] = new FeatureInteractionEventListener(maps[0]);
-        fiel[1] = new FeatureInteractionEventListener(maps[1]);
+        fiel[0] = new FeatureInteractionEventListener(maps[0], 0);
+        fiel[1] = new FeatureInteractionEventListener(maps[1], 1);
 
         miel[0] = new MapInteractionEventListener(maps[0]);
         miel[1] = new MapInteractionEventListener(maps[1]);
@@ -97,7 +94,7 @@ public class UserInteractionTest  extends TestBase implements Runnable {
                     "StartDraw-1", "CompleteDraw-1", "CancelDraw-1",
                     "CompleteEdit-1", "CancelEdit-1",
                     "StartFreehand-1", "ExitFreehand-1",
-                    "AddFeature-1" };
+                    "AddFeature-1", "RemoveFeature-1" };
             return actions;
         } else {
             String[] actions = { "LockStatus-1",
@@ -105,13 +102,13 @@ public class UserInteractionTest  extends TestBase implements Runnable {
                     "StartDraw-1", "CompleteDraw-1", "CancelDraw-1",
                     "CompleteEdit-1", "CancelEdit-1",
                     "StartFreehand-1", "ExitFreehand-1",
-                    "AddFeature-1",
+                    "AddFeature-1", "RemoveFeature-1",
                     "LockStatus-2",
                     "+MapUserInt-2", "-MapUserInt-2", "+FeatUserInt-2", "-FeatUserInt-2",
                     "StartDraw-2", "CompleteDraw-2", "CancelDraw-2",
                     "CompleteEdit-2", "CancelEdit-2",
                     "StartFreehand-2", "ExitFreehand-2",
-                    "AddFeature-2",
+                    "AddFeature-2", "RemoveFeature-2",
                     "Exit"
             };
             return actions;
@@ -121,6 +118,7 @@ public class UserInteractionTest  extends TestBase implements Runnable {
     @Override
     public void actOn(String userAction) {
 
+        inRemoveFeatureMode[0] = false;
         int whichMap = userAction.contains("-1") ? 0 : 1;
         try {
 
@@ -226,6 +224,9 @@ public class UserInteractionTest  extends TestBase implements Runnable {
                 maps[whichMap].completeEdit();
             } else if(userAction.contains("CancelEdit-")) {
                 maps[whichMap].cancelEdit();
+            }  else if(userAction.contains("RemoveFeature-")) {
+                inRemoveFeatureMode[whichMap] = true;
+                updateStatus("Single/Double TAP on a feature to be removed, requires FeatureUserInteraction listener installed");
             } else {
                 updateStatus("map" + String.valueOf(whichMap) + " " + userAction + " NOT supported");
             }
@@ -277,9 +278,11 @@ public class UserInteractionTest  extends TestBase implements Runnable {
     class FeatureInteractionEventListener implements IFeatureInteractionEventListener {
         private String TAG = FeatureInteractionEventListener.class.getSimpleName();
         private IMap map;
+        private int whichMap;
 
-        FeatureInteractionEventListener(IMap map) {
+        FeatureInteractionEventListener(IMap map, int whichMap) {
             this.map = map;
+            this.whichMap = whichMap;
         }
         @Override
         public void onEvent(FeatureUserInteractionEvent event) {
@@ -292,12 +295,20 @@ public class UserInteractionTest  extends TestBase implements Runnable {
                 }
 
                 if (event.getEvent().compareTo(UserInteractionEventEnum.DOUBLE_CLICKED) == 0) {
-                    Log.d(TAG, "Attempt to switch to editFeature");
-                    if ((event.getTarget().size() == 1) && (event.getTarget().get(0).getFeatureType().compareTo(FeatureTypeEnum.GEO_MIL_SYMBOL) == 0)) {
-                        if (map.getEditorMode() == EditorMode.INACTIVE) {
-                            EditFeature editFeature = new EditFeature(activity, m1, m2, false);
-                            editFeature.startEditFeature(event.getTarget().get(0), map);
+                    if(inRemoveFeatureMode[whichMap]) {
+                        overlays[whichMap].removeFeatures(event.getTarget());
+                    } else {
+                        Log.d(TAG, "Attempt to switch to editFeature");
+                        if ((event.getTarget().size() == 1) && (event.getTarget().get(0).getFeatureType().compareTo(FeatureTypeEnum.GEO_MIL_SYMBOL) == 0)) {
+                            if (map.getEditorMode() == EditorMode.INACTIVE) {
+                                EditFeature editFeature = new EditFeature(activity, m1, m2, false, false);
+                                editFeature.startEditFeature(event.getTarget().get(0), map);
+                            }
                         }
+                    }
+                } else if(event.getEvent().compareTo(UserInteractionEventEnum.CLICKED) == 0) {
+                    if(inRemoveFeatureMode[whichMap]) {
+                        overlays[whichMap].removeFeatures(event.getTarget());
                     }
                 } else if(event.getEvent().compareTo(UserInteractionEventEnum.DRAG) == 0) {
                     Log.e(TAG, "Application Received DRAG event");

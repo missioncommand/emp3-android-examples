@@ -5,7 +5,6 @@ import android.util.Log;
 
 import org.cmapi.primitives.GeoStrokeStyle;
 import org.cmapi.primitives.IGeoColor;
-import org.cmapi.primitives.IGeoPosition;
 import org.cmapi.primitives.IGeoPositionGroup;
 import org.cmapi.primitives.IGeoStrokeStyle;
 

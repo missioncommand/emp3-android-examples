@@ -3,9 +3,6 @@ package mil.emp3.examples;
 import android.app.Activity;
 import android.util.Log;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import mil.emp3.api.enums.Property;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IEmpPropertyList;
@@ -53,10 +50,9 @@ public class SwapMapEngineTest extends TestBase implements Runnable {
 
             try {
                 final IEmpPropertyList properties = new EmpPropertyList();
-                properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.openstreet.MapInstance");
-                properties.put(Property.ENGINE_APKNAME.getValue(), "mil.emp3.openstreetapk");
+                properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.worldwind.MapInstance");
+                properties.put(Property.ENGINE_APKNAME.getValue(), "mil.emp3.worldwind");
 
-                // m2.swapMapEngine("mil.emp3.arcgis.MapInstance", "mil.emp3.arcgis");
                 m2.swapMapEngine(properties);
                 // m2.swapMapEngine("mil.emp3.worldwind.MapInstance", "mil.emp3.worldwind");
 

@@ -1,17 +1,15 @@
 rootProject.name = 'emp3-android-example'
 
 include ':example-HelloEmp3'
-/* Removing COEv3 dependency
-include ':example-publisher'
-include ':example-subscriber'
-*/
+include ':example-MultiEngine'
+
 include ':example-cameraandwms'
 include ':example-plotmilstd'
 include ':example-userinteractionevents'
-include ':example-MultiEngine'
 include ':example-mirrorcache'
 include ':example-getbounds'
 include ':example-lookat'
+include ':example-geopackage'
 
 include ':example-mapfragmentandview:Common'
 project(':example-mapfragmentandview:Common').name = 'example-mapfragmentandview-Common'

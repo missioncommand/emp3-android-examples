@@ -5,9 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import mil.emp3.api.MilStdSymbol;
@@ -412,10 +410,9 @@ public class MultiThreadTest extends TestBase implements Runnable {
                 public void run() {
                     try {
                         final IEmpPropertyList properties = new EmpPropertyList();
-                        properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.openstreet.MapInstance");
-                        properties.put(Property.ENGINE_APKNAME.getValue(), "mil.emp3.openstreetapk");
+                        properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.worldwind.MapInstance");
+                        properties.put(Property.ENGINE_APKNAME.getValue(), "mil.emp3.worldwind");
 
-                        // m2.swapMapEngine("mil.emp3.arcgis.MapInstance", "mil.emp3.arcgis");
                         m2.swapMapEngine(properties);
                         // m2.swapMapEngine("mil.emp3.worldwind.MapInstance", "mil.emp3.worldwind");
 
@@ -447,7 +444,7 @@ public class MultiThreadTest extends TestBase implements Runnable {
             });
             Thread.sleep(large_waitInterval);
 
-            SwapEngineTask set = new SwapEngineTask("mil.emp3.openstreet.MapInstance", "mil.emp3.openstreetapk");
+            SwapEngineTask set = new SwapEngineTask("mil.emp3.worldwind.MapInstance", "mil.emp3.worldwind");
             Thread setThread = new Thread(set);
             setThread.start();
             setThread.join();

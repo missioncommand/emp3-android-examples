@@ -3,9 +3,6 @@ package mil.emp3.examples;
 import android.app.Activity;
 import android.util.Log;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import mil.emp3.api.enums.Property;
 import mil.emp3.api.interfaces.IEmpPropertyList;
 import mil.emp3.api.interfaces.IMap;

@@ -14,9 +14,6 @@ import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.examples.common.TestBase;
 
-/**
- * Created by raju on 7/13/2016.
- */
 public class GetBoundsTest extends TestBase implements Runnable{
 
     public GetBoundsTest(Activity activity, IMap map1, IMap map2) {

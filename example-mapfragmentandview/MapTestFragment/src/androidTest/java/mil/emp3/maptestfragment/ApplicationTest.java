@@ -1,4 +1,4 @@
-package mil.emp3.examples.maptestfragment;
+package mil.emp3.maptestfragment;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

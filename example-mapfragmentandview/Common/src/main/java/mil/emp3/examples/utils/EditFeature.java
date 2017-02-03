@@ -2,7 +2,6 @@ package mil.emp3.examples.utils;
 
 
 import android.app.Activity;
-import android.util.Log;
 
 import org.cmapi.primitives.IGeoPosition;
 
@@ -21,15 +20,21 @@ import mil.emp3.examples.common.TestBase;
  */
 public class EditFeature extends TestBase {
     private static String TAG = EditFeature.class.getSimpleName();
-
+    private boolean enableUpdaterThread = true;
     public EditFeature(Activity activity, IMap map1, IMap map2, boolean doSetup) {
         super(activity, map1, map2, TAG, doSetup);
+    }
+
+    public EditFeature(Activity activity, IMap map1, IMap map2, boolean doSetup, boolean enableUpdaterThread) {
+        super(activity, map1, map2, TAG, doSetup);
+        this.enableUpdaterThread = enableUpdaterThread;
     }
 
     public void startEditFeature(IFeature feature, IMap map) {
         try {
             map.editFeature(feature, new FeatureEditorListener(feature));
         } catch(EMP_Exception e) {
+            updateStatus(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -80,8 +85,10 @@ public class EditFeature extends TestBase {
         @Override
         public void onEditStart(IMap map) {
             updateStatus(TAG, "Edit Start.");
-            updaterThread = new Thread(new PositionUpdater(feature));
-            updaterThread.start();
+            if(enableUpdaterThread) {
+                updaterThread = new Thread(new PositionUpdater(feature));
+                updaterThread.start();
+            }
         }
 
         @Override
@@ -96,7 +103,9 @@ public class EditFeature extends TestBase {
         @Override
         public void onEditComplete(IMap map, IFeature feature) {
             updateStatus(TAG, "Edit Complete.");
-            updaterThread.interrupt();
+            if(null != updaterThread) {
+                updaterThread.interrupt();
+            }
 //            if (MainActivity.this.oSelectedDialogHash.containsKey(feature.getGeoId())) {
 //                FeatureLocationDialog oDialog = MainActivity.this.oSelectedDialogHash.get(feature.getGeoId());
 //                oDialog.updateDialog();
@@ -106,7 +115,9 @@ public class EditFeature extends TestBase {
         @Override
         public void onEditCancel(IMap map, IFeature originalFeature) {
             updateStatus(TAG, "Edit Canceled.");
-            updaterThread.interrupt();
+            if(null != updaterThread) {
+                updaterThread.interrupt();
+            }
 //            if (MainActivity.this.oSelectedDialogHash.containsKey(originalFeature.getGeoId())) {
 //                FeatureLocationDialog oDialog = MainActivity.this.oSelectedDialogHash.get(originalFeature.getGeoId());
 //                oDialog.updateDialog();
@@ -116,7 +127,9 @@ public class EditFeature extends TestBase {
         @Override
         public void onEditError(IMap map, String errorMessage) {
             updateStatus(TAG, "Edit Error.");
-            updaterThread.interrupt();
+            if(null != updaterThread) {
+                updaterThread.interrupt();
+            }
         }
     }
 }

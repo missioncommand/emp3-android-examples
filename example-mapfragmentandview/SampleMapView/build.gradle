@@ -13,5 +13,4 @@ dependencies {
 
     // Compile in the map engines rather than load it from the APK
     compile ("mil.army.sec.smartClient:emp3-android-worldwind:$version_emp3Android@aar") { transitive = true }
-    compile ("mil.army.sec.smartClient:emp3-android-openstreet:$version_emp3Android@aar") { transitive = true }
 }

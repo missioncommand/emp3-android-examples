@@ -20,8 +20,6 @@ android:orientation="vertical">
     android:text="TestStatus:"
     android:textSize="@dimen/font_size"/>
 <!--
-    app:map_engine_name="mil.emp3.openstreet.MapInstance"
-    app:map_engine_apk_name="mil.emp3.openstreetapk"
     app:map_engine_name="mil.emp3.worldwind.MapInstance"
     app:map_engine_apk_name="mil.emp3.worldwind"
 

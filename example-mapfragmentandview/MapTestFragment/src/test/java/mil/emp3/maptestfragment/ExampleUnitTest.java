@@ -1,4 +1,4 @@
-package mil.emp3.examples.maptestfragment;
+package mil.emp3.maptestfragment;
 
 import org.junit.Test;
 

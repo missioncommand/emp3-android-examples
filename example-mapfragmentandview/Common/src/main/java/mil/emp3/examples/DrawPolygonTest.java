@@ -17,8 +17,8 @@ import java.util.List;
 
 import mil.emp3.api.LookAt;
 import mil.emp3.api.MilStdSymbol;
-import mil.emp3.api.Overlay;
 import mil.emp3.api.Polygon;
+import mil.emp3.api.enums.MapMotionLockEnum;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IEditUpdateData;
 import mil.emp3.api.interfaces.IFeature;
@@ -26,6 +26,7 @@ import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.interfaces.IOverlay;
 import mil.emp3.api.listeners.IDrawEventListener;
 import mil.emp3.api.utils.EmpGeoColor;
+import mil.emp3.examples.common.CameraUtility;
 import mil.emp3.examples.common.TestBase;
 
 public class DrawPolygonTest extends TestBase implements Runnable{
@@ -35,6 +36,7 @@ public class DrawPolygonTest extends TestBase implements Runnable{
     private IOverlay[] overlays = new IOverlay[2];
 
     private boolean[] addPolygonOnComplete = { true, true };
+    Thread testThread;
 
     public DrawPolygonTest(Activity activity, IMap map1, IMap map2) {
         super(activity, map1, map2, TAG);
@@ -69,20 +71,54 @@ public class DrawPolygonTest extends TestBase implements Runnable{
                 e.printStackTrace();
             }
 
-            try {
-                drawPolygon(0, true);
 
-                if(maps[1] != null) {
-                    drawPolygon(1, true);
-                }
-            } catch (EMP_Exception e) {
-                updateStatus("drawPolygon Test failed " + e.getErrorDeatil());
-            }
+            test0();
+
             // justDrawPolygon(32.4520, 63.44553, 32.4520, 63.4460, 32.4530, 63.4459, 1e5, 45.0);
         } catch (Exception e) {
             Log.d(TAG, "run:" , e);
         } finally {
             testComplete();
+        }
+    }
+
+    private void test0() {
+
+        try {
+            testThread = Thread.currentThread();
+            while (!Thread.interrupted()) {
+                try {
+                    Thread.sleep(large_waitInterval * 10);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        } finally {
+            endTest();
+        }
+    }
+
+    private void prepareForExit(IMap map) {
+        if(null == map) {
+            return;
+        }
+        try {
+            switch(map.getEditorMode()) {
+                case EDIT_MODE:
+                    map.cancelEdit();
+                    break;
+                case DRAW_MODE:
+                    map.cancelDraw();
+                    break;
+                case FREEHAND_MODE:
+                    map.drawFreehandExit();
+            }
+
+            if(map.getMotionLockMode() != MapMotionLockEnum.UNLOCKED) {
+                map.setMotionLockMode(MapMotionLockEnum.UNLOCKED);
+            }
+        } catch(EMP_Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,14 +132,14 @@ public class DrawPolygonTest extends TestBase implements Runnable{
 
         strokeStyle.setStrokeColor(geoColor);
         strokeStyle.setStrokeWidth(5);
-        strokeStyle.setStrokePattern(IGeoStrokeStyle.StrokePattern.dotted);
+        strokeStyle.setStipplingPattern((short) 0);
         polygon.setStrokeStyle(strokeStyle);
 
         fillStyle.setFillColor(geoFillColor);
         fillStyle.setFillPattern(IGeoFillStyle.FillPattern.hatched);
         polygon.setFillStyle(fillStyle);
 
-        polygon.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.CLAMP_TO_GROUND);
+        polygon.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
 
         List<IGeoPosition> posList = new ArrayList<>();
         IGeoPosition pos = new GeoPosition();
@@ -121,32 +157,37 @@ public class DrawPolygonTest extends TestBase implements Runnable{
         pos.setLongitude(lon3);
         posList.add(pos);
 
-        polygon.setPositions(posList);
+        polygon.getPositions().clear();
+        polygon.getPositions().addAll(posList);
 
         polygon.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
-        LookAt lookAt = new LookAt();
+//        LookAt lookAt = new LookAt();
 
-        lookAt.setName("Main Cam");
-        lookAt.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
-        lookAt.setAltitude(0);
-        lookAt.setHeading(0);
-        lookAt.setLatitude(lat1);
-        lookAt.setLongitude(lon1);
-        lookAt.setRange(altitude);
-        lookAt.setTilt(tilt);
+//        lookAt.setName("Main Cam");
+//        lookAt.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
+//        lookAt.setAltitude(0);
+//        lookAt.setHeading(0);
+//        lookAt.setLatitude(lat1);
+//        lookAt.setLongitude(lon1);
+//        lookAt.setRange(altitude);
+//        lookAt.setTilt(tilt);
+//
+//        LookAt lookAt2 = new LookAt();
+//
+//        lookAt2.setName("Main Cam2");
+//        lookAt2.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
+//        lookAt2.setAltitude(0);
+//        lookAt2.setHeading(0);
+//        lookAt2.setLatitude(lat1);
+//        lookAt2.setLongitude(lon1);
+//        lookAt2.setRange(altitude);
+//        lookAt2.setTilt(tilt);
 
-        LookAt lookAt2 = new LookAt();
+        // Choose lat1, lon1 and 50000 as source points and lat2, lon2 and 0 as target points.
 
-        lookAt2.setName("Main Cam2");
-        lookAt2.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
-        lookAt2.setAltitude(0);
-        lookAt2.setHeading(0);
-        lookAt2.setLatitude(lat1);
-        lookAt2.setLongitude(lon1);
-        lookAt2.setRange(altitude);
-        lookAt2.setTilt(tilt);
-
+        LookAt lookAt = CameraUtility.setupLookAt(lat1, lon1, 50000, lat2, lon2, 0);
         try {
+            // ISSUE EMP-2818 created, if you remove the following like all works well.
             maps[whichMap].setLookAt(lookAt, false);
             overlays[whichMap].addFeature(polygon, true);
             updateMilStdSymbolPosition(p1, lat1-.5, lon1);
@@ -165,7 +206,7 @@ public class DrawPolygonTest extends TestBase implements Runnable{
 
         strokeStyle.setStrokeColor(geoColor);
         strokeStyle.setStrokeWidth(5);
-        strokeStyle.setStrokePattern(IGeoStrokeStyle.StrokePattern.dotted);
+        strokeStyle.setStipplingPattern((short) 0);
         polygon.setStrokeStyle(strokeStyle);
 
         fillStyle.setFillColor(geoFillColor);
@@ -305,38 +346,27 @@ public class DrawPolygonTest extends TestBase implements Runnable{
         int whichMap = userAction.contains("-1") ? 0 : 1;
 
         if (userAction.contentEquals("Exit")){
-            for(int ii = 0; ii < 2; ii++) {
-                if (inDrawMode[ii]) {
-                    try {
-                        maps[ii].cancelDraw();
-                        Thread.sleep(1000);
-                    } catch (EMP_Exception e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            endTest();
-            keepDrawing = false;
+            prepareForExit(m1);
+            prepareForExit(m2);
+            testThread.interrupt();
             return;
         }
 
-        if(inDrawMode[whichMap] && userAction.contains("Save")) {
+        if(inDrawMode[whichMap] && userAction.contains("Save-")) {
             try {
                 maps[whichMap].completeDraw();
                 updateStatus("You will need to Exit and restart the test");
             } catch (EMP_Exception e) {
                 e.printStackTrace();
             }
-        } else if(inDrawMode[whichMap] && userAction.contains("Remove")) {
+        } else if(inDrawMode[whichMap] && userAction.contains("Remove-")) {
             try {
                 maps[whichMap].cancelDraw();
                 updateStatus("You will need to Exit and restart the test");
             } catch (EMP_Exception e) {
                 e.printStackTrace();
             }
-        } else if(userAction.contains("Start Draw")) {
+        } else if(userAction.contains("Start Draw-")) {
             if(inDrawMode[whichMap]) {
                 updateStatus("You must remove or save current drawn feature");
             }
@@ -351,12 +381,12 @@ public class DrawPolygonTest extends TestBase implements Runnable{
                     Log.e(TAG, "Draw polygon failed.");
                 }
             }
-        } else if(userAction.contains("Draw Polygon")) {
+        } else if(userAction.contains("Draw Polygon-")) {
             if(inDrawMode[whichMap]) {
                 updateStatus("You must remove or save current drawn feature");
             }
             justDrawPolygon(whichMap, 32.4, 63.4, 32.4520, 63.8, 32.8, 63.6, 5000, 0);
-        } else if(userAction.contains("Get Camera")) {
+        } else if(userAction.contains("Get Camera-")) {
             showCamera(maps[whichMap]);
         }
         else {

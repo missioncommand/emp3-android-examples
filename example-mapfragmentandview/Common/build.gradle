@@ -1,5 +1,11 @@
 apply plugin: 'emp3AndroidLib'
 
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
 dependencies {
     provided    (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar') { transitive = true }
     provided    ("org.cmapi.primitives:common-map-geospatial-notation")

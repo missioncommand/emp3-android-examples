@@ -19,21 +19,11 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <!--
-    app:map_engine_name="mil.emp3.openstreet.MapInstance"
-    app:map_engine_apk_name="mil.emp3.openstreetapk"
     app:map_engine_name="mil.emp3.worldwind.MapInstance"
     app:map_engine_apk_name="mil.emp3.worldwind"
 
-    app:map_engine_name="org.mitre.momaps.emp3.MapEngine"
-    app:map_engine_apk_name="org.mitre.momaps"
-    app:map_engine_name="mil.emp3.arcgis.MapInstance"
-    app:map_engine_apk_name="mil.emp3.arcgis"
-
-            app:mirrorCache_mode="INGRESS"
-                    app:mirrorCache_mode="EGRESS"
-
-
-
+    app:mirrorCache_mode="INGRESS"
+    app:mirrorCache_mode="EGRESS"
      -->
     <fragment
         android:name="mil.emp3.examples.maptestfragment.MapTestMenuFragment"
@@ -82,7 +72,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
         class="mil.emp3.sdk.EMP3MapFragment"
-        app:map_engine_name="mil.emp3.openstreetmap.MapInstance"
-        app:map_engine_apk_name="openstreetmap"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance"
+        app:map_engine_apk_name="mil.emp3.worldwind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/> -->

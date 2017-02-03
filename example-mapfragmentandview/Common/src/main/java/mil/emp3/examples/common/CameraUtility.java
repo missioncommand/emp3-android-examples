@@ -2,11 +2,9 @@ package mil.emp3.examples.common;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
 
+import mil.emp3.api.LookAt;
 import mil.emp3.api.interfaces.ICamera;
 
-/**
- * Created by deepakkarmarkar on 6/10/2016.
- */
 public class CameraUtility {
     private static final double INVERSE_FLATTENING = 298.257223563;
     private static final double OFFICIAL_SEMI_MAJOR_AXIS = 6378137.0;
@@ -81,5 +79,35 @@ public class CameraUtility {
         double distanceRadians = 2.0 * Math.asin(Math.sqrt(c));
 
         return Double.isNaN(distanceRadians) ? 0 : distanceRadians;
+    }
+
+    public static LookAt setupLookAt(double sourceLat, double sourceLon, double sourceAlt, double targetLat, double targetLon, double targetAlt) {
+
+        LookAt lookAt = new LookAt();
+
+        // Compute heading and distance from aircraft to airport
+        double heading = CameraUtility.greatCircleAzimuth(Math.toRadians(sourceLat), Math.toRadians(sourceLon),
+                        Math.toRadians(targetLat), Math.toRadians(targetLon));
+        double distanceRadians = CameraUtility.greatCircleDistance(Math.toRadians(sourceLat), Math.toRadians(sourceLon),
+                        Math.toRadians(targetLat), Math.toRadians(targetLon));
+        double distance = distanceRadians * CameraUtility.getRadiusAt(sourceLat, sourceLon);
+        System.err.println(" CHECK heading " + heading + " distanceRadians " + distanceRadians + " distance" + distance);
+        // Compute camera settings
+        double altitude = sourceAlt - targetAlt;
+        double range = Math.sqrt(altitude * altitude + distance * distance);
+        double tilt = Math.toDegrees(Math.atan(distance / sourceAlt));
+        System.err.println("CHECK altitude " + altitude + " range " + range + " tilt " + tilt);
+
+        // Apply the new view
+        lookAt.setName("Main Cam");
+        lookAt.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
+        lookAt.setAltitude(targetAlt);
+        lookAt.setHeading(heading);
+        lookAt.setLatitude(targetLat);
+        lookAt.setLongitude(targetLon);
+        lookAt.setRange(range);
+        lookAt.setTilt(tilt);
+
+        return lookAt;
     }
 }

@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import mil.emp3.api.Camera;
 import mil.emp3.api.enums.Property;
 import mil.emp3.api.events.CameraEvent;
@@ -77,7 +74,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
             map.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
                 @Override
                 public void onEvent(MapStateChangeEvent mapStateChangeEvent) {
-                    Log.d(TAG, "mapStateChangeEvent arcgis " + mapStateChangeEvent.getNewState());
+                    Log.d(TAG, "mapStateChangeEvent worldwind 1 " + mapStateChangeEvent.getNewState());
                     map1Ready = true;
                     try {
                         onMapReady(map);
@@ -106,7 +103,6 @@ public class MainActivity extends MapFragmentAndViewActivity {
         if (!restartingActivity) {
             try {
                 map.swapMapEngine(properties);
-                // map.swapMapEngine("mil.emp3.arcgis.MapInstance", "mil.emp3.arcgisapk");
 
                 final ICamera c = new Camera();
                 c.setAltitude(1e7);
@@ -133,7 +129,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
             map2.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
                 @Override
                 public void onEvent(MapStateChangeEvent mapStateChangeEvent) {
-                    Log.d(TAG, "mapStateChangeEvent openstreet " + mapStateChangeEvent.getNewState());
+                    Log.d(TAG, "mapStateChangeEvent worldwind 2 " + mapStateChangeEvent.getNewState());
                     map2Ready = true;
                     try {
                         onMapReady(map2);
@@ -149,8 +145,6 @@ public class MainActivity extends MapFragmentAndViewActivity {
         if (!restartingActivity) {
             try {
                 map2.swapMapEngine(properties);
-                // map2.swapMapEngine("mil.emp3.openstreet.MapInstance", "mil.emp3.openstreetapk");
-                // map.swapMapEngine("mil.emp3.arcgis.MapInstance", "mil.emp3.arcgisapk");
 
                 final ICamera c = new Camera(); //TODO remove me thx
                 c.setAltitude(1e7);

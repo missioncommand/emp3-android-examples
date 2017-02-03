@@ -8,9 +8,6 @@ import mil.emp3.examples.ApplyTest;
 import mil.emp3.examples.GetTest;
 import mil.emp3.examples.RemoveTest;
 
-/**
- * Created by deepakkarmarkar on 6/14/2016.
- */
 public class ExecuteTest {
 
     private static UserAction userActionImpl;
@@ -60,6 +57,12 @@ public class ExecuteTest {
         }  else if(selectedTest.equals("UserInteractionTest")) {
             test = new mil.emp3.examples.UserInteractionTest(activity, map, map2);
             startingTest = "Starting UserInteractionTest";
+        } else if(selectedTest.equals("EventListenerTest")) {
+            test = new mil.emp3.examples.EventListenerTest(activity, map, map2);
+            startingTest = "Starting EventListenerTest";
+        }  else if(selectedTest.equals("SelectFeatureTest")) {
+            test = new mil.emp3.examples.SelectFeatureTest(activity, map, map2);
+            startingTest = "Starting SelectFeatureTest";
         }
 
 

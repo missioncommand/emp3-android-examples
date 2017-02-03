@@ -8,16 +8,8 @@
     android:orientation="vertical">
 
     <!--
-    app:map_engine_name="mil.emp3.openstreet.MapInstance"
-    app:map_engine_apk_name="mil.emp3.openstreetapk"
     app:map_engine_name="mil.emp3.worldwind.MapInstance"
     app:map_engine_apk_name="mil.emp3.worldwind"
-
-    app:map_engine_name="org.mitre.momaps.emp3.MapEngine"
-    app:map_engine_apk_name="org.mitre.momaps"
-    app:map_engine_name="mil.emp3.arcgis.MapInstance"
-    app:map_engine_apk_name="mil.emp3.arcgis"
-
      -->
     <fragment
         android:name="mil.emp3.examples.maptestfragment.MapTestMenuFragment"

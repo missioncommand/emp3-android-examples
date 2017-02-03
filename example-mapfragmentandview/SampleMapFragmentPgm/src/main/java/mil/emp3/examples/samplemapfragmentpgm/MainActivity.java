@@ -7,9 +7,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import mil.emp3.api.MapFragment;
 import mil.emp3.api.enums.Property;
 import mil.emp3.api.events.MapStateChangeEvent;

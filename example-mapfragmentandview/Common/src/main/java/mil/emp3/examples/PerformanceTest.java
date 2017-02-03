@@ -1,12 +1,8 @@
 package mil.emp3.examples;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.cmapi.primitives.GeoPosition;
 import org.cmapi.primitives.IGeoAltitudeMode;
@@ -303,7 +299,8 @@ public class PerformanceTest extends TestBase implements Runnable {
                     //oSPSymbol.setEchelonSymbolModifier(MilStdSymbol.EchelonSymbolModifier.HQ_BRIGADE);
 
                     // Set the position list with 1 position.
-                    oSPSymbol.setPositions(oPosList);
+                    oSPSymbol.getPositions().clear();
+                    oSPSymbol.getPositions().addAll(oPosList);
 
                     // Give the feature a name.
                     oSPSymbol.setName("Unit " + iIndex);

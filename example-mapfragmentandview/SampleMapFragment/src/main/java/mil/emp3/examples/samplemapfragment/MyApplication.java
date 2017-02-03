@@ -2,9 +2,6 @@ package mil.emp3.examples.samplemapfragment;
 
 import android.app.Application;
 
-/**
- * Created by deepakkarmarkar on 4/27/2016.
- */
 public class MyApplication extends Application {
     private String TAG = MyApplication.class.getSimpleName();
 

@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 
 import java.util.List;
-import java.util.UUID;
 
-import mil.emp3.api.Overlay;
-import mil.emp3.api.Point;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IContainer;
 import mil.emp3.api.interfaces.IFeature;

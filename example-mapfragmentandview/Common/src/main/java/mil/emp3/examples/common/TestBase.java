@@ -1,7 +1,6 @@
 package mil.emp3.examples.common;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Handler;
 import android.util.Log;
 
@@ -105,7 +104,7 @@ public class TestBase implements UserAction {
 
                     oLayers.add("BlueMarble-200412");
                     mil.emp3.api.WMS wmsService = new mil.emp3.api.WMS(
-                            "http://worldwind25.arc.nasa.gov/wms",
+                            "https://worldwind25.arc.nasa.gov/wms",
                             WMSVersionEnum.VERSION_1_1_1,
                             "image/png",
                             true,
@@ -150,7 +149,8 @@ public class TestBase implements UserAction {
             e.printStackTrace();
         }
 
-        oSPSymbol.setPositions(oPositionList);
+        oSPSymbol.getPositions().clear();
+        oSPSymbol.getPositions().addAll(oPositionList);
         oSPSymbol.setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "My First Icon");
         oSPSymbol.setName(description);
         oSPSymbol.setDescription(description);
@@ -173,7 +173,8 @@ public class TestBase implements UserAction {
             e.printStackTrace();
         }
 
-        oSPSymbol.setPositions(oPositionList);
+        oSPSymbol.getPositions().clear();
+        oSPSymbol.getPositions().addAll(oPositionList);
         oSPSymbol.setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "My First Icon");
         oSPSymbol.setName(description);
         oSPSymbol.setDescription(description);

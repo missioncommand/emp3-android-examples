@@ -2,8 +2,11 @@
 
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/PerformanceTest"
+        android:title="PerformanceTest" />
+    <!-- These tests are temporarily disabled. Please look at Capability Tester in emp3-android repository.
     <item android:id="@+id/RemoveTest"
-    android:title="RemoveTest" />
+        android:title="RemoveTest" />
     <item android:id="@+id/GetTest"
         android:title="GetTest" />
     <item android:id="@+id/ApplyTest"
@@ -26,4 +29,9 @@
         android:title="DrawPolygonTest" />
     <item android:id="@+id/UserInteractionTest"
         android:title="UserInteractionTest" />
+    <item android:id="@+id/EventListenerTest"
+        android:title="EventListenerTest" />
+    <item android:id="@+id/SelectFeatureTest"
+        android:title="SelectFeatureTest" />
+    -->
 </menu>

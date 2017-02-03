@@ -12,7 +12,4 @@ dependencies {
 
     compile ("mil.army.sec.smartClient:emp3-android-worldwind:$version_emp3Android@aar")
     compile ("com.android.support:appcompat-v7")
-
-    // compile ('mil.army.sec.smartClient:emp3-android-openstreet:' + rootProject.ext.version + '@aar')
-    // compile ('org.osmdroid:osmdroid-android:5.1@aar')
 }

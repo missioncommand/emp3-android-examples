@@ -1,9 +1,4 @@
 apply plugin: 'emp3AndroidApp'
-repositories {
-    maven {
-        url 'https://esri.bintray.com/arcgis'
-    }
-}
 
 android {
 
@@ -26,9 +21,6 @@ dependencies {
 
     compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
-
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-openstreet', version: "$version_emp3Android", ext: 'aar') { transitive = true }
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-arcgis', version: "$version_emp3Android", ext: 'aar') { transitive = true }
 
     testCompile ("junit:junit")
     // worldwind will be loaded from emp3-android-worldwind.apk

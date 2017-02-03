@@ -2,6 +2,8 @@ apply plugin: 'emp3AndroidApp'
 
 dependencies {
     compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$version_emp3Android") { transitive = true }
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
     compile ("com.android.support:appcompat-v7")
 }
 

@@ -2,10 +2,10 @@ apply plugin: 'emp3AndroidApp'
 
 dependencies {
     compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$project.version_emp3Android") { transitive = true }
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     compile ("com.android.support:appcompat-v7")
 
-    // You must install emp3-android-worldwind.spk and emp3-android-openstreet.apk
-    // emp3-android-openstreet.apk is NOT officially supported. including here to show multi engine capability.
+    // You must install emp3-android-worldwind.spk
 }
 
 android.defaultConfig.applicationId "mil.emp3.examples.multiengine"
