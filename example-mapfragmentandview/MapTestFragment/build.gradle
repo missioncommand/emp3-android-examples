@@ -1,0 +1,15 @@
+apply plugin: 'emp3AndroidLib'
+
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile     ("com.android.support:appcompat-v7")
+    compile     ("com.android.support:support-v4:23.2.1")
+    testCompile ("junit:junit")
+    provided project (":example-mapfragmentandview:example-mapfragmentandview-Common")
+    provided (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar') { transitive = true }
+}

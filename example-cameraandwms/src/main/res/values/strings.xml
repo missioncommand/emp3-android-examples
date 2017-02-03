@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">CameraAndWMS</string>
+    <string name="UrlDefault">http://irs.gis-lab.info/</string>
+    <string name="VersionDefault">1.1.1</string>
+    <string name="TileFormatDefault">null</string>
+    <string name="TransparentDefault">false</string>
+    <string name="LayersDefault">landsat</string>
+    <string name="CancelButton">Cancel</string>
+    <string name="OKButton">OK</string>
+    <string name="ZoomOut">Zoom -</string>
+    <string name="ZoomIn">Zoom +</string>
+    <string name="PanLeft">Left</string>
+    <string name="PanRight">Right</string>
+    <string name="TiltUp">Up</string>
+    <string name="TiltDown">Down</string>
+    <string name="rollCCW">Roll CCW</string>
+    <string name="rollCW">Roll CW</string>
+
+	<!-- from joystick interface -->
+	<string name="window_icon">Window icon</string>
+    <string name="hide">Hide</string>
+    <string name="close">Close</string>
+    <string name="corner">Corner</string>
+    <string name="maximize">Maximize</string>
+
+</resources>

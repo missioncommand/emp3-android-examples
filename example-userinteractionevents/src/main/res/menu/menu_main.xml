@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mil.emp3.examples.userinteractionevents.MainActivity" >
+    <item android:id="@+id/action_plot2units2525B"
+        android:title="@string/action_plot2units2525B"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_removeAll"
+        android:title="@string/action_removeAll"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_exit"
+        android:title="@string/action_exit"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

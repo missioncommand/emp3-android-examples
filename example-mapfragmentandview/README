@@ -1,0 +1,15 @@
+When embedding EMP3 Map in your application you have four options as stated below:
+
+SampleMapFragment   : Use MapFragment object statically (xml layout)
+SampleMapFragmentPgm: Use MapFragment object dynamically (programatically)
+SampleMapView       : Use MapView object statically (xml layout)
+SampleMapViewPgm    : Use MapView object dynamically (programatically)
+
+Files you will be interested in for each of the aabove projects are:
+layout file, MainActivity.java and build.gradle file.
+
+The build.gradle files in each of the projects uses different techniques for compile time and run-time resolution of EMP3 SDK.
+These options are described in the confluence article referred to in the README file in the parent folder.
+
+Each of the Sample application allows you to execute a set of basic tests. These are NOT all-inclusive regorous tests. Code for
+the tests is in the Common project. Intent of the tests is to show basic use of EMP3 API to display features on the map(s).

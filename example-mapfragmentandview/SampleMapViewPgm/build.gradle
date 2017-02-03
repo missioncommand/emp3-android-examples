@@ -1,0 +1,35 @@
+apply plugin: 'emp3AndroidApp'
+repositories {
+    maven {
+        url 'https://esri.bintray.com/arcgis'
+    }
+}
+
+android {
+
+    defaultConfig {
+        applicationId "mil.emp3.examples.samplemapviewpgm"
+    }
+
+    packagingOptions{
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+    compile ("com.android.support:appcompat-v7")
+
+    compile project (":example-mapfragmentandview:example-mapfragmentandview-Common")
+    compile project (":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
+
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-openstreet', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-arcgis', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
+    testCompile ("junit:junit")
+    // worldwind will be loaded from emp3-android-worldwind.apk
+}

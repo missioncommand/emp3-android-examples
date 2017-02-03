@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RightLink2" parent="@android:style/Widget.Button.Small">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">2dip</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+</resources>

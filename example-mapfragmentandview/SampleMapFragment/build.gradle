@@ -1,0 +1,31 @@
+apply plugin: 'emp3AndroidApp'
+
+android {
+    defaultConfig {
+        applicationId = "mil.emp3.examples.samplemapfragment"
+    }
+}
+
+dependencies {
+    compile ("com.android.support:appcompat-v7")
+
+    compile project(":example-mapfragmentandview:example-mapfragmentandview-Common")
+    compile project(":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
+
+    // Following line is commented out along with a change to MyApplication class to avoid dependency on COEv3 for now.
+    // Don't forget to push emp3-android-sdk-apk-$version.apk to /sdcard/coev3.
+    // Don't forget to uncomment the code in MyApplication to invoke COEv3.initialize
+    // If running Android 6 or beyond, turn on the Storage Permissions via Application Manager (In hybrid OS this is already done for you)
+//    compile (group: 'infrastructure.android'  , name: 'data_service'            , version: '1.7.0', classifier: 'coev3', ext: 'jar')
+//    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view'   , version: "$version_emp3Android", ext: 'aar') { transitive = false }
+//    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = false }
+//    provided (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar')
+
+    // If you want to test with CoeV3 and have access to repository ten comment the following two lines and update, uncomment the above
+    // four lines and update MyApplication.
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view'   , version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
+    compile (group: 'sec.web.renderer'        , name: 'mil-sym-android-renderer', ext: 'aar') { transitive = true }
+    provided ("org.cmapi.primitives:common-map-geospatial-notation")
+}

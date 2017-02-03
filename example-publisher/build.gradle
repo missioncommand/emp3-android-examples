@@ -1,0 +1,22 @@
+apply plugin: 'emp3AndroidApp'
+
+android {
+    defaultConfig {
+        applicationId = "mil.emp3.publisher"
+    }
+
+    sourceSets.main.java.srcDirs*.mkdirs()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+
+    provided group: 'infrastructure.data_model', name: 'seam-jar', version: '9.1.0.0', ext: 'jar'
+    provided group: 'infrastructure.common', name: 'data_service', version: '1.10',
+            classifier: 'api', ext: 'jar'
+    compile (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
+
+}

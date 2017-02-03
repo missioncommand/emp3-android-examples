@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LookAt</string>
+    <string name="Lower">Alt-</string>
+    <string name="Higher">Alt+</string>
+    <string name="LatN">Lat+0.5</string>
+    <string name="LatS">Lat-0.5</string>
+    <string name="LonE">Long+0.5</string>
+    <string name="LonW">Long-0.5</string>
+    <string name="TiltUp">Up</string>
+    <string name="TiltDown">Down</string>
+</resources>

@@ -1,0 +1,28 @@
+apply plugin: 'emp3AndroidApp'
+
+android {
+    defaultConfig {
+        applicationId = applicationId "mil.emp3.geometry"
+    }
+
+    sourceSets.main.java.srcDirs*.mkdirs()
+}
+
+dependencies {
+    compile (fileTree(dir: 'libs', include: ['*.jar']))
+    testCompile 'junit:junit:4.12'
+    compile ('com.android.support:appcompat-v7:23.1.1')
+
+    provided (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar')
+    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = false }
+    compile (group: 'sec.web.renderer', name: 'mil-sym-android-renderer', ext: 'aar') { transitive = true }
+    provided (group: 'org.cmapi.primitives', name: 'common-map-geospatial-notation')
+
+    provided group: 'infrastructure.data_model', name: 'seam-jar', version: '9.1.0.0', ext: 'jar'
+    provided group: 'infrastructure.common', name: 'data_service', version: '1.10',
+            classifier: 'api', ext: 'jar'
+    compile (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
+
+    compile (group: 'mil.army.sec.smartClient', name:'emp3-android-worldwind', version:"$version_emp3Android", ext: 'aar') { transitive = true }
+    // compile ("mil.army.sec.smartClient:worldwind-android-sdk@aar") { transitive = true }
+}

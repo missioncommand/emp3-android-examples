@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mil.emp3.examples.getBounds.MainActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/TestStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TestStatus:"
+        android:textSize="@dimen/font_size"/>
+    <!--
+        app:map_engine_name="mil.emp3.openstreet.MapInstance"
+        app:map_engine_apk_name="mil.emp3.openstreetapk"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance"
+        app:map_engine_apk_name="mil.emp3.worldwind"
+ -->
+    <mil.emp3.api.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance"
+        app:map_name="map1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    <mil.emp3.api.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map2"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance"
+        app:map_name="map2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+</LinearLayout>

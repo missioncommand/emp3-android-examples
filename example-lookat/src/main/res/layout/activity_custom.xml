@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="mil.emp3.examples.lookat.CustomActivity">
+
+    <LinearLayout
+        android:id="@+id/WmsParametersLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alignmentMode="alignBounds"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:useDefaultMargins="true">
+
+            <Button
+                android:id="@+id/Lower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="@string/Lower" />
+
+            <Button
+                android:id="@+id/Higher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="@string/Higher" />
+
+            <Button
+                android:id="@+id/LatN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="@string/LatN" />
+
+            <Button
+                android:id="@+id/LatS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="@string/LatS" />
+
+            <Button
+                android:id="@+id/LonW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="@string/LonW" />
+
+            <Button
+                android:id="@+id/LonE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="@string/LonE" />
+
+            <Button
+                android:id="@+id/TiltUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text="@string/TiltUp" />
+
+            <Button
+                android:id="@+id/TiltDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:text="@string/TiltDown" />
+
+            <!--Button
+                android:id="@+id/CLower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="4"
+                android:text="@string/Lower" />
+
+            <Button
+                android:id="@+id/CHigher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="4"
+                android:text="@string/Higher" />
+
+            <Button
+                android:id="@+id/CLatN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:text="@string/LatN" />
+
+            <Button
+                android:id="@+id/CLatS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="5"
+                android:text="@string/LatS" />
+
+            <Button
+                android:id="@+id/CLonW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="6"
+                android:text="@string/LonW" />
+
+            <Button
+                android:id="@+id/CLonE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="6"
+                android:text="@string/LonE" /-->
+
+
+        </GridLayout>
+        <TextView
+            android:id="@+id/LookAt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="LookAt:"/>
+
+        <TextView
+            android:id="@+id/Latitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Latitude"/>
+
+        <TextView
+            android:id="@+id/Longitude"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Longitude"/>
+    </LinearLayout>
+
+    <mil.emp3.api.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:map_engine_apk_name="mil.emp3.worldwind"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance" />
+
+</LinearLayout>
+

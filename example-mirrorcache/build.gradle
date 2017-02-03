@@ -1,0 +1,10 @@
+apply plugin: 'emp3AndroidApp'
+
+dependencies {
+    compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$project.version_emp3Android")
+
+    compile ("com.android.support:appcompat-v7")
+    compile ("com.android.support:design")
+}
+
+android.defaultConfig.applicationId "mil.emp3.examples.mirrorcache"

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/your_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/maps"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/TestStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TestStatus:"
+            android:textSize="@dimen/font_size"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+

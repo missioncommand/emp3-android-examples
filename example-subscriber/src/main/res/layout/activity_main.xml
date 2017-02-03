@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="mil.emp3.subscriber.MainActivity"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <!--
+    app:map_engine_name="mil.emp3.openstreet.MapInstance"
+    app:map_engine_apk_name="mil.emp3.openstreetapk"
+    app:map_engine_name="mil.emp3.worldwind.MapInstance"
+    app:map_engine_apk_name="mil.emp3.worldwind"
+
+    app:map_engine_name="org.mitre.momaps.emp3.MapEngine"
+    app:map_engine_apk_name="org.mitre.momaps"
+    app:map_engine_name="mil.emp3.arcgis.MapInstance"
+    app:map_engine_apk_name="mil.emp3.arcgis"
+
+     -->
+    <fragment
+        android:id="@+id/map"
+        class="mil.emp3.api.MapFragment"
+        app:map_engine_name="mil.emp3.worldwind.MapInstance"
+        app:map_engine_apk_name="mil.emp3.worldwind"
+        app:map_name="subscriber"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/ui"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/btnFreeDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Free Draw" />
+    </FrameLayout>
+
+</FrameLayout>
+
+
+    <!-- Simple Map Fragment example
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        class="mil.emp3.sdk.EMP3MapFragment"
+        app:map_engine_name="mil.emp3.openstreetmap.MapInstance"
+        app:map_engine_apk_name="openstreetmap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/> -->

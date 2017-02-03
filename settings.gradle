@@ -1,0 +1,35 @@
+rootProject.name = 'emp3-android-example'
+
+include ':example-HelloEmp3'
+/* Removing COEv3 dependency
+include ':example-publisher'
+include ':example-subscriber'
+*/
+include ':example-cameraandwms'
+include ':example-plotmilstd'
+include ':example-userinteractionevents'
+include ':example-MultiEngine'
+include ':example-mirrorcache'
+include ':example-getbounds'
+include ':example-lookat'
+
+include ':example-mapfragmentandview:Common'
+project(':example-mapfragmentandview:Common').name = 'example-mapfragmentandview-Common'
+
+include ':example-mapfragmentandview:MapTestFragment'
+project(':example-mapfragmentandview:MapTestFragment').name = 'example-mapfragmentandview-MapTestFragment'
+
+include ':example-mapfragmentandview:SampleMapFragment'
+project(':example-mapfragmentandview:SampleMapFragment').name = 'example-mapfragmentandview-SampleMapFragment'
+
+include ':example-mapfragmentandview:SampleMapView'
+project(':example-mapfragmentandview:SampleMapView').name = 'example-mapfragmentandview-SampleMapView'
+
+include ':example-mapfragmentandview:SampleMapViewPgm'
+project(':example-mapfragmentandview:SampleMapViewPgm').name = 'example-mapfragmentandview-SampleMapViewPgm'
+
+include ':example-mapfragmentandview:SampleMapFragmentPgm'
+project(':example-mapfragmentandview:SampleMapFragmentPgm').name = 'example-mapfragmentandview-SampleMapFragmentPgm'
+
+include ':example-mapfragmentandview:singlemapview'
+project(':example-mapfragmentandview:singlemapview').name = 'example-mapfragmentandview-singlemapview'

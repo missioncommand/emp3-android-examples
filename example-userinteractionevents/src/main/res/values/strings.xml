@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">User Interaction Events</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_plot2units2525B">200 2525B Units</string>
+    <string name="action_removeAll">Remove All Units</string>
+    <string name="action_settings">Settings</string>
+</resources>
