@@ -28,3 +28,5 @@ project(':example-mapfragmentandview:SampleMapViewPgm').name = 'example-mapfragm
 
 include ':example-mapfragmentandview:SampleMapFragmentPgm'
 project(':example-mapfragmentandview:SampleMapFragmentPgm').name = 'example-mapfragmentandview-SampleMapFragmentPgm'
+
+include ':example-capabilities'
