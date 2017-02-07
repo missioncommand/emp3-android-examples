@@ -14,7 +14,7 @@ import mil.emp3.api.interfaces.IEmpPropertyList;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
 import mil.emp3.api.utils.EmpPropertyList;
-import mil.emp3.examples.common.CameraUtility;
+import mil.emp3.examples.maptestfragment.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
 /**

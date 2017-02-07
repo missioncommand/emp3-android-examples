@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import android.widget.TextView;
-
 import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
-import mil.emp3.examples.common.CameraUtility;
+import mil.emp3.examples.maptestfragment.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
 public class MainActivity extends MapFragmentAndViewActivity {
@@ -26,7 +24,6 @@ public class MainActivity extends MapFragmentAndViewActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        testStatus = (TextView) findViewById(R.id.TestStatus);
         FragmentManager fm = getFragmentManager();
         map = (IMap) fm.findFragmentById(R.id.map1);
         if(null != map) {
@@ -57,7 +54,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                         Log.d(TAG, "mapStateChangeEvent map2 " + mapStateChangeEvent.getNewState());
                         try {
                             onMapReady(map2);
-                            map2.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
+                            map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
                         } catch (EMP_Exception e) {
                             e.printStackTrace();
                         }
@@ -68,6 +65,5 @@ public class MainActivity extends MapFragmentAndViewActivity {
             }
         }
 
-        testMenuFragment = ( mil.emp3.examples.maptestfragment.MapTestMenuFragment) getFragmentManager().findFragmentById(R.id.fooFragment);
     }
 }

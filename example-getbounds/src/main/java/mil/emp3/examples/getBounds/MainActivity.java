@@ -1,16 +1,13 @@
 package mil.emp3.examples.getBounds;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import mil.emp3.api.Emp3LifeCycleManager;
 import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
-import mil.emp3.examples.common.OnTestStatusUpdateListener;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
 public class MainActivity extends MapFragmentAndViewActivity {
