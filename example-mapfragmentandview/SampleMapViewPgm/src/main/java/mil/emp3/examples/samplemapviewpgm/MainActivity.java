@@ -1,14 +1,11 @@
 package mil.emp3.examples.samplemapviewpgm;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import mil.emp3.api.Camera;
 import mil.emp3.api.enums.Property;
 import mil.emp3.api.events.CameraEvent;
 import mil.emp3.api.events.MapStateChangeEvent;
@@ -21,7 +18,10 @@ import mil.emp3.api.listeners.IMapStateChangeEventListener;
 import mil.emp3.api.utils.EmpPropertyList;
 import mil.emp3.examples.common.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
-import mil.emp3.examples.maptestfragment.MapTestMenuFragment;
+
+/**
+ * Shows how a MapView(s) can be added to the display programmatically.
+ */
 
 public class MainActivity extends MapFragmentAndViewActivity {
 
@@ -38,18 +38,11 @@ public class MainActivity extends MapFragmentAndViewActivity {
         setContentView(R.layout.activity_main);
 
         final IEmpPropertyList properties = new EmpPropertyList();
+
+        // Initialize the name of the class for map engine and the APK that will contain that class.
+        // If you are compiling the mapengine ito your APP then you don't need to set the APK name
         properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.worldwind.MapInstance");
         properties.put(Property.ENGINE_APKNAME.getValue(), "mil.emp3.worldwind");
-
-
-        // Begin the transaction
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
-        testMenuFragment = new MapTestMenuFragment();
-        ft.replace(R.id.your_placeholder, testMenuFragment);
-        // or ft.add(R.id.your_placeholder, new FooFragment());
-        // Complete the changes added above
-        ft.commit();
 
         if (null != savedInstanceState) {
             Log.d(TAG, "onCreate onSavedInstanceState is NOT null");
@@ -58,10 +51,11 @@ public class MainActivity extends MapFragmentAndViewActivity {
             Log.d(TAG, "onCreate onSavedInstanceState is NULL");
         }
 
-        testStatus = (TextView) findViewById(R.id.TestStatus);
-
+        // Maps will be added to the Linear Layout.
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, (float) 0.5);
         LinearLayout ll = (LinearLayout) findViewById(R.id.maps);
+
+        // Infralte the map view and assign it a name.
         View mapView = getLayoutInflater().inflate(R.layout.map_view, null);
         mapView.setLayoutParams(p);
         map = (IMap) mapView;
@@ -100,22 +94,22 @@ public class MainActivity extends MapFragmentAndViewActivity {
             Log.e(TAG, "addCameraEventListener", e);
         }
 
+        // Assign a map engine to the MapView using swapMapEngine method of IMap. You shouldn't do that
+        // if activity is just starting. Always assign the camera to some know value.
         if (!restartingActivity) {
             try {
                 map.swapMapEngine(properties);
-
-                final ICamera c = new Camera();
-                c.setAltitude(1e7);
-                map.setCamera(c, false);
+                map.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
 
             } catch (EMP_Exception e) {
                 Log.e(TAG, "map.swapMapEngine failed ", e);
             }
         }
-        // IMap empMapView = new MapView(getApplicationContext(),"mil.emp3.worldwind", "mil.emp3.worldwind.MapInstance" );
 
+        // Add the map to the layout.
         ll.addView(mapView);
 
+        // Perform the same actions for second instance of the map as above and add it to the layout.
         View mapView2 = getLayoutInflater().inflate(R.layout.map_view, null);
         mapView2.setLayoutParams(p);
 
@@ -133,7 +127,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                     map2Ready = true;
                     try {
                         onMapReady(map2);
-                        map2.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
+                        map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
                     } catch (EMP_Exception e) {
                         e.printStackTrace();
                     }
@@ -142,14 +136,11 @@ public class MainActivity extends MapFragmentAndViewActivity {
         } catch (EMP_Exception e) {
             Log.e(TAG, "addMapStateChangeEventListener", e);
         }
+
         if (!restartingActivity) {
             try {
                 map2.swapMapEngine(properties);
-
-                final ICamera c = new Camera(); //TODO remove me thx
-                c.setAltitude(1e7);
-                map2.setCamera(c, false);
-                
+                map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
             } catch (EMP_Exception e) {
                 Log.e(TAG, "map2.swapMapEngine failed ", e);
             }
