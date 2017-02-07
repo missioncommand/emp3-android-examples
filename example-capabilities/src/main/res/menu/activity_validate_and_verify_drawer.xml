@@ -8,8 +8,8 @@
 
     <item android:title="Basic">
         <menu>
-            <item android:id="@+id/nav_add_remove_get"
-                android:title="Add Remove Get" />
+            <item android:id="@+id/nav_add_update_remove"
+                android:title="Add Update Remove" />
             <item android:id="@+id/nav_select_feature"
                 android:title="Select Feature" />
             <item android:id="@+id/nav_zoom_bounds"

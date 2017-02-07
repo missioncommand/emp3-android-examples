@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.examples.capabilities.dialogs.utils.ErrorDialog;
-import mil.emp3.examples.capabilities.navItems.AddRemoveGetTest;
+import mil.emp3.examples.capabilities.navItems.AddUpdateRemove;
 import mil.emp3.examples.capabilities.navItems.FreehandDrawTest;
 import mil.emp3.examples.capabilities.navItems.LaunchMap;
 import mil.emp3.examples.capabilities.navItems.performance_test.PerformanceTest;
@@ -52,7 +52,7 @@ public class ExecuteTest {
         capabilityTests = new HashMap<>();
         capabilityTests.put("Launch Map", LaunchMap.class);
         capabilityTests.put("Select Feature", SelectFeatureTest.class);
-        capabilityTests.put("Add Remove Get", AddRemoveGetTest.class);
+        capabilityTests.put("Add Update Remove", AddUpdateRemove.class);
         capabilityTests.put("Zoom and Bounds", ZoomAndBoundsTest.class);
         capabilityTests.put("Camera and Look At", CameraAndLookAtTest.class);
         capabilityTests.put("Basic Shapes Editors", BasicShapesEditorsTest.class);

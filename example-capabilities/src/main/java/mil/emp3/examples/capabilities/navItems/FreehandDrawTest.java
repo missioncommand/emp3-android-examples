@@ -29,7 +29,7 @@ import mil.emp3.examples.capabilities.dialogs.utils.ErrorDialog;
 
 
 public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.IStrokeStyleDialogListener {
-    private static String TAG = AddRemoveGetTest.class.getSimpleName();
+    private static String TAG = FreehandDrawTest.class.getSimpleName();
 
     MapFreehandEventListener[] mapFreehandEventListener = new MapFreehandEventListener[ExecuteTest.MAX_MAPS];
     FreehandeventListener[] freehandEventListener = new FreehandeventListener[ExecuteTest.MAX_MAPS];
