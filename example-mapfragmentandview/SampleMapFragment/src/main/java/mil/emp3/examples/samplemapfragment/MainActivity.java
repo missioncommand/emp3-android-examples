@@ -9,7 +9,7 @@ import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
-import mil.emp3.examples.common.CameraUtility;
+import mil.emp3.examples.maptestfragment.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
 public class MainActivity extends MapFragmentAndViewActivity {
