@@ -10,8 +10,8 @@
         <menu>
             <item android:id="@+id/nav_add_update_remove"
                 android:title="Add Update Remove" />
-            <item android:id="@+id/nav_select_feature"
-                android:title="Select Feature" />
+            <item android:id="@+id/nav_highlight_features"
+                android:title="Highlight Feature(s)" />
             <item android:id="@+id/nav_zoom_bounds"
                 android:title="Zoom and Bounds" />
             <item android:id="@+id/nav_camera_look_at"

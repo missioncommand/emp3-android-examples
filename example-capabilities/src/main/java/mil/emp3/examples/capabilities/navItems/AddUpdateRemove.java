@@ -19,6 +19,7 @@ import mil.emp3.api.interfaces.IOverlay;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
+import mil.emp3.examples.capabilities.utils.MyGeoPosition;
 
 /**
  * This example shows how to create an hierarchy of overlays and features. Once added these various properties of the
@@ -35,7 +36,7 @@ public class AddUpdateRemove extends NavItemBase {
 
     private static String TAG = AddUpdateRemove.class.getSimpleName();
 
-    // User can launch upto two maps, so all the members are setup to allow for two maps.
+    // User can launch up to two maps, so all the members are setup to allow for two maps.
     // It is possible to share overlays and features across maps but this example doesn't do that.
 
     private IOverlay overlay_a[] = new IOverlay[ExecuteTest.MAX_MAPS];
@@ -294,14 +295,6 @@ public class AddUpdateRemove extends NavItemBase {
             } finally {
                 stopExample(whichMap);
             }
-        }
-    }
-
-    class MyGeoPosition extends GeoPosition {
-        MyGeoPosition(double latitude, double longitude, double altitude) {
-            this.setLatitude(latitude);
-            this.setLongitude(longitude);
-            this.setAltitude(altitude);
         }
     }
 }

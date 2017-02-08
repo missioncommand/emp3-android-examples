@@ -185,7 +185,7 @@ public abstract class NavItemBase implements UserAction, IStatusListener, Runnab
         if(null != m2) clearMap(m2);
     }
 
-    private void clearMap(IMap map) {
+    protected void clearMap(IMap map) {
         if(null != map) {
             List<IOverlay> overlays = map.getAllOverlays();
             for(IOverlay overlay: overlays) {
