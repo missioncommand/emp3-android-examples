@@ -120,9 +120,6 @@ public class HighlightFeatures extends NavItemBase{
     }
 
     /**
-     * We can easily remove the root overlay and all overlays and features will be removed, but following code
-     * is showing how features and overlays can be removed from their parent containers. Overlays and Features are
-     * treated as containers. Overlays can contain other overlays and features. Features can contain other features.
      * @param whichMap
      */
     private void stopExample(int whichMap) {

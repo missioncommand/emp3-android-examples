@@ -16,7 +16,7 @@ import mil.emp3.examples.capabilities.navItems.performance_test.PerformanceTest;
 import mil.emp3.examples.capabilities.navItems.basic_capability_test.BasicShapeTest;
 
 import mil.emp3.examples.capabilities.navItems.basic_shapes_editors.BasicShapesEditorsTest;
-import mil.emp3.examples.capabilities.navItems.camera_and_look_at.CameraAndLookAtTest;
+import mil.emp3.examples.capabilities.navItems.CameraAndLookAt;
 import mil.emp3.examples.capabilities.navItems.HighlightFeatures;
 import mil.emp3.examples.capabilities.navItems.zoom_and_bounds.ZoomAndBoundsTest;
 import mil.emp3.examples.capabilities.optItems.Bounds;
@@ -54,7 +54,7 @@ public class ExecuteTest {
         capabilityTests.put("Highlight Feature(s)", HighlightFeatures.class);
         capabilityTests.put("Add Update Remove", AddUpdateRemove.class);
         capabilityTests.put("Zoom and Bounds", ZoomAndBoundsTest.class);
-        capabilityTests.put("Camera and Look At", CameraAndLookAtTest.class);
+        capabilityTests.put("Camera and Look At", CameraAndLookAt.class);
         capabilityTests.put("Basic Shapes Editors", BasicShapesEditorsTest.class);
         capabilityTests.put("Basic Shape", BasicShapeTest.class);
         capabilityTests.put("Freehand Draw", FreehandDrawTest.class);

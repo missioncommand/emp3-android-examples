@@ -222,10 +222,10 @@ public class AddUpdateRemove extends NavItemBase {
         }
 
         milStdSymbol[whichMap] = new MilStdSymbol();
-        milStdSymbol[whichMap].setSymbolCode("S*P*S-----*****");
+        milStdSymbol[whichMap].setSymbolCode("SFG*EVSC----***");
         milStdSymbol[whichMap].getPositions().add(new MyGeoPosition(33.940, -118.394, 0));
-        milStdSymbol[whichMap].setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "Space Track");
-        milStdSymbol[whichMap].setName("Satellite");
+        milStdSymbol[whichMap].setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "Ground Track");
+        milStdSymbol[whichMap].setName("Missile Support");
         milStdSymbol[whichMap].setAffiliation(MilStdSymbol.Affiliation.FRIEND);
         try {
             overlay_a_child[whichMap].addFeature(milStdSymbol[whichMap], visible);
