@@ -18,32 +18,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <!--
-    app:map_engine_name="mil.emp3.worldwind.MapInstance"
-    app:map_engine_apk_name="mil.emp3.worldwind"
-
-    app:mirrorCache_mode="INGRESS"
-    app:mirrorCache_mode="EGRESS"
-     -->
-    <fragment
-        android:name="mil.emp3.examples.maptestfragment.MapTestMenuFragment"
-        android:id="@+id/fooFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <!--
-    <FrameLayout
-        android:id="@+id/your_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </FrameLayout>
-    -->
-    <TextView
-        android:id="@+id/TestStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TestStatus:"
-        android:textSize="@dimen/font_size"/>
-
     <fragment
         android:id="@+id/map1"
         class="mil.emp3.api.MapFragment"
@@ -66,13 +40,3 @@
 
 
 </LinearLayout>
-
-    <!-- Simple Map Fragment example
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/map"
-        class="mil.emp3.sdk.EMP3MapFragment"
-        app:map_engine_name="mil.emp3.worldwind.MapInstance"
-        app:map_engine_apk_name="mil.emp3.worldwind"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/> -->
