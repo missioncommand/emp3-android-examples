@@ -9,7 +9,7 @@ import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
-import mil.emp3.examples.maptestfragment.CameraUtility;
+import mil.emp3.examples.common.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
 public class MainActivity extends MapFragmentAndViewActivity {
@@ -34,6 +34,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                         Log.d(TAG, "mapStateChangeEvent map1 " + mapStateChangeEvent.getNewState());
                         try {
                             onMapReady(map);
+                            // Map shows West coast of US
                             map.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
                         } catch (EMP_Exception e) {
                             e.printStackTrace();
@@ -54,6 +55,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                         Log.d(TAG, "mapStateChangeEvent map2 " + mapStateChangeEvent.getNewState());
                         try {
                             onMapReady(map2);
+                            // Map shows East coast of US
                             map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
                         } catch (EMP_Exception e) {
                             e.printStackTrace();

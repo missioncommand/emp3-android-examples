@@ -72,6 +72,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                     map1Ready = true;
                     try {
                         onMapReady(map);
+                        // Map shows West coast of US
                         map.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
                     } catch (EMP_Exception e) {
                         e.printStackTrace();
@@ -99,6 +100,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
         if (!restartingActivity) {
             try {
                 map.swapMapEngine(properties);
+                // Map shows West coast of US
                 map.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
 
             } catch (EMP_Exception e) {
@@ -127,6 +129,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                     map2Ready = true;
                     try {
                         onMapReady(map2);
+                        // Map shows East coast of US
                         map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
                     } catch (EMP_Exception e) {
                         e.printStackTrace();
@@ -140,6 +143,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
         if (!restartingActivity) {
             try {
                 map2.swapMapEngine(properties);
+                // Map shows East coast of US
                 map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
             } catch (EMP_Exception e) {
                 Log.e(TAG, "map2.swapMapEngine failed ", e);
