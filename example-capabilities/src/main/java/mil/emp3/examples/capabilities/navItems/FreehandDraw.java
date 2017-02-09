@@ -1,9 +1,6 @@
 package mil.emp3.examples.capabilities.navItems;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.cmapi.primitives.GeoStrokeStyle;
@@ -13,44 +10,40 @@ import org.cmapi.primitives.IGeoStrokeStyle;
 
 import mil.emp3.api.Path;
 import mil.emp3.api.enums.EditorMode;
+import mil.emp3.api.enums.MapMotionLockEnum;
 import mil.emp3.api.events.MapFreehandEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.interfaces.IOverlay;
-import mil.emp3.api.listeners.EventListenerHandle;
 import mil.emp3.api.listeners.IFreehandEventListener;
 import mil.emp3.api.listeners.IMapFreehandEventListener;
 import mil.emp3.api.utils.EmpGeoColor;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
-import mil.emp3.examples.capabilities.dialogs.StrokeStyleDialog;
 import mil.emp3.examples.capabilities.dialogs.utils.ErrorDialog;
 
+/**
+ * EMP supports API to enable users to draw on the map. This example shows how to use all the methods
+ * associated with that capability.
+ * The FreehandDraw.actOn method has the core of the example code, in the "Start" block.
+ */
+public class FreehandDraw extends NavItemBase {
+    private static String TAG = FreehandDraw.class.getSimpleName();
 
-public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.IStrokeStyleDialogListener {
-    private static String TAG = FreehandDrawTest.class.getSimpleName();
-
-    MapFreehandEventListener[] mapFreehandEventListener = new MapFreehandEventListener[ExecuteTest.MAX_MAPS];
-    FreehandeventListener[] freehandEventListener = new FreehandeventListener[ExecuteTest.MAX_MAPS];
-    EventListenerHandle[] mapFreehandEventListenerHandle = new EventListenerHandle[ExecuteTest.MAX_MAPS];
-    IGeoStrokeStyle[] customStrokeStyle = new IGeoStrokeStyle[ExecuteTest.MAX_MAPS];
-
-    public FreehandDrawTest(Activity activity, IMap map1, IMap map2) {
+    public FreehandDraw(Activity activity, IMap map1, IMap map2) {
         super(activity, map1, map2, TAG);
     }
 
     @Override
     public String[] getSupportedUserActions() {
-        String[] actions = {"Draw", "Exit Draw", "Set Style", "Create Style"};
+        String[] actions = {"Start", "Stop"};
         return actions;
     }
 
     @Override
     public String[] getMoreActions() {
-        String[] actions = {"Add IMapFreehandEventListener", "Add IFreehandEventListener", "Remove Listeners",
-                "Default Stroke Style"};
-        return actions;
+        return null;
     }
 
     protected void test0() {
@@ -80,12 +73,6 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
 
             if (userAction.equals("Exit")) {
                 for(int ii = 0; ii < ExecuteTest.MAX_MAPS; ii++) {
-                    freehandEventListener[ii] = null;
-                    if (null != mapFreehandEventListenerHandle[ii]) {
-                        maps[ii].removeEventListener(mapFreehandEventListenerHandle[ii]);
-                        mapFreehandEventListener[ii] = null;
-                        mapFreehandEventListenerHandle[ii] = null;
-                    }
                     if(null != maps[ii]) {
                         try {
                             maps[ii].drawFreehandExit();
@@ -96,77 +83,55 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
                 }
                 testThread.interrupt();
             } else if(userAction.equals("ClearMap")) {
-                clearMaps();
-            } else if(userAction.equals("Remove Listeners")) {
-                freehandEventListener[whichMap] = null;
-                if(null != mapFreehandEventListenerHandle[whichMap]) {
-                    maps[whichMap].removeEventListener(mapFreehandEventListenerHandle[whichMap]);
-                    mapFreehandEventListener[whichMap] = null;
-                    mapFreehandEventListenerHandle[whichMap] = null;
-                }
-            } else if(userAction.equals("Draw")) {
-                try {
-                    IGeoStrokeStyle strokeStyle = customStrokeStyle[whichMap];
-                    if(null == strokeStyle) {
-                        strokeStyle = new GeoStrokeStyle();
-                        IGeoColor geoColor = new EmpGeoColor(1.0, 255, 255, 0);
+                for(int ii = 0; ii < ExecuteTest.MAX_MAPS; ii++) {
+                    if(null != maps[ii]) {
+                        try {
+                            maps[ii].drawFreehandExit();
+                        } catch(EMP_Exception e) {
 
+                        }
+                    }
+                }
+                clearMaps();
+            } else if(userAction.equals("Start")) {
+                try {
+                    // Verify that map can be put into freehand draw mode
+                    if((maps[whichMap].getMotionLockMode() == MapMotionLockEnum.UNLOCKED) &&
+                            (maps[whichMap].getEditorMode() == EditorMode.INACTIVE)) {
+
+                        // Create a style to be used for the drawn lines
+                        IGeoStrokeStyle strokeStyle = new GeoStrokeStyle();
+                        IGeoColor geoColor = new EmpGeoColor(1.0, 255, 255, 0);
                         strokeStyle.setStrokeColor(geoColor);
                         strokeStyle.setStrokeWidth(5);
-                    }
-                    if(null == freehandEventListener[whichMap]) {
-                        maps[whichMap].drawFreehand(strokeStyle);
-                    } else {
-                        maps[whichMap].drawFreehand(strokeStyle, freehandEventListener[whichMap]);
+
+                        // There are other flavors of this method in IMap. You can install a Map level
+                        // listener and avoid providing a listener here.
+
+                        // After this call is executed user should be able to draw on the map. Drawing should
+                        // follow the stroke style set in the call. User can draw zero or more disconnected
+                        // segments. It is the responsibility of the listener to preserve the drawing on the map
+                        // as you will see in the implementation of the listener.
+
+                        // Note, when in freehand draw mode, zoom, pan, rotate gestures on the screen are disabled.
+
+                        maps[whichMap].drawFreehand(strokeStyle, new FreehandDrawEventListener(maps[whichMap]));
+                        Thread t = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ErrorDialog.showMessageWaitForConfirm(activity, "Draw on the screen, when done select Stop");
+                            }
+                        });
+                        t.start();
                     }
                 } catch(EMP_Exception e) {
                     ErrorDialog.showError(activity, e.getMessage());
                 }
-            } else if(userAction.equals("Exit Draw")) {
+            } else if(userAction.equals("Stop")) {
                 if(maps[whichMap].getEditorMode() == EditorMode.FREEHAND_MODE) {
                     maps[whichMap].drawFreehandExit();
                 } else {
                     ErrorDialog.showError(activity, "Map is neither in EDIT nor in FREEHAND_MODE");
-                }
-            } else if(userAction.equals("Add IMapFreehandEventListener")) {
-                if(null == mapFreehandEventListener[whichMap]) {
-                    if (freehandEventListener[whichMap] != null) {
-                        freehandEventListener[whichMap] = null;
-                    }
-                    mapFreehandEventListener[whichMap] = new MapFreehandEventListener(maps[whichMap]);
-                    mapFreehandEventListenerHandle[whichMap] = maps[whichMap].addMapFreehandEventListener(mapFreehandEventListener[whichMap]);
-                }
-            } else if(userAction.equals("Add IFreehandEventListener")) {
-                if(null == freehandEventListener[whichMap]) {
-                    if(null != mapFreehandEventListenerHandle[whichMap]) {
-                        maps[whichMap].removeEventListener(mapFreehandEventListenerHandle[whichMap]);
-                        mapFreehandEventListener[whichMap] = null;
-                        mapFreehandEventListenerHandle[whichMap] = null;
-                    }
-                    freehandEventListener[whichMap] = new FreehandeventListener(maps[whichMap]);
-                }
-            } else if(userAction.equals("Create Style")) {
-                Handler mainHandler = new Handler(activity.getMainLooper());
-                Runnable myRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        FragmentManager fm = ((AppCompatActivity)activity).getSupportFragmentManager();
-                        StrokeStyleDialog strokeStyleDialog = StrokeStyleDialog.newInstance("Stroke Style", FreehandDrawTest.this, maps[whichMap], customStrokeStyle[whichMap]);
-                        strokeStyleDialog.show(fm, "fragment_stroke_style_dialog");
-                    }
-                };
-                mainHandler.post(myRunnable);
-            } else if(userAction.equals("Default Stroke Style")) {
-                customStrokeStyle[whichMap] = null;
-            } else if(userAction.equals("Set Style")) {
-                if(null == customStrokeStyle[whichMap]) {
-                    ErrorDialog.showError(activity, "You must first create a custom style");
-                } else {
-                    try {
-                        maps[whichMap].setFreehandStyle(customStrokeStyle[whichMap]);
-                    } catch(EMP_Exception e) {
-                        ErrorDialog.showError(activity, e.getMessage());
-                    }
                 }
             }
         } catch (Exception e) {
@@ -188,6 +153,9 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
         return (actOn(userAction));
     }
 
+    /**
+     * This is a sample Map Level Freehand Draw listener that is NOT used in this example.
+     */
     class MapFreehandEventListener implements IMapFreehandEventListener {
         IMap theMap;
 
@@ -235,10 +203,13 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
         }
     }
 
-    class FreehandeventListener implements IFreehandEventListener {
+    /**
+     * Listener supplied to drawFreehand method.
+     */
+    class FreehandDrawEventListener implements IFreehandEventListener {
         IMap theMap;
 
-        FreehandeventListener(IMap map) {
+        FreehandDrawEventListener(IMap map) {
             this.theMap = map;
         }
         @Override
@@ -256,6 +227,13 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
             updateStatus(TAG, "IFreehandEventListener: onFreeHandLineDrawUpdate");
         }
 
+        /**
+         * When user lifts his/her finger from the screen this callback is invoked. EMP will remove the segment from the map,
+         * so it is upto the application to add the segment to an appropriate layer.
+         * @param map
+         * @param style
+         * @param positionList
+         */
         @Override
         public void onFreeHandLineDrawEnd(IMap map, IGeoStrokeStyle style, IGeoPositionGroup positionList) {
             Path path = new Path();
@@ -279,10 +257,5 @@ public class FreehandDrawTest extends NavItemBase implements StrokeStyleDialog.I
         public void onDrawError(IMap map, String errorMessage) {
             updateStatus(TAG, "IFreehandEventListener: onDrawError");
         }
-    }
-
-    @Override
-    public void setStrokeStyle(StrokeStyleDialog strokeStyleDialog) {
-        customStrokeStyle[ExecuteTest.getCurrentMap()] = strokeStyleDialog.getStrokeStyle();
     }
 }
