@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                                 camera.setLatitude(46.2);
                                 camera.setLongitude(6.0);
                                 camera.setAltitude(5e5);
+                                break;
                             case "cmapi":
                                 stream = getApplicationContext().getResources().openRawResource(R.raw.cmapi);
                                 featureList = GeoJsonParser.parse(stream);
