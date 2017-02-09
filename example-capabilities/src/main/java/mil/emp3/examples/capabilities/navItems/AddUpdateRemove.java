@@ -19,6 +19,7 @@ import mil.emp3.api.interfaces.IOverlay;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
+import mil.emp3.examples.capabilities.utils.MyGeoPosition;
 
 /**
  * This example shows how to create an hierarchy of overlays and features. Once added these various properties of the
@@ -35,7 +36,7 @@ public class AddUpdateRemove extends NavItemBase {
 
     private static String TAG = AddUpdateRemove.class.getSimpleName();
 
-    // User can launch upto two maps, so all the members are setup to allow for two maps.
+    // User can launch up to two maps, so all the members are setup to allow for two maps.
     // It is possible to share overlays and features across maps but this example doesn't do that.
 
     private IOverlay overlay_a[] = new IOverlay[ExecuteTest.MAX_MAPS];
@@ -221,10 +222,10 @@ public class AddUpdateRemove extends NavItemBase {
         }
 
         milStdSymbol[whichMap] = new MilStdSymbol();
-        milStdSymbol[whichMap].setSymbolCode("S*P*S-----*****");
+        milStdSymbol[whichMap].setSymbolCode("SFG*EVSC----***");
         milStdSymbol[whichMap].getPositions().add(new MyGeoPosition(33.940, -118.394, 0));
-        milStdSymbol[whichMap].setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "Space Track");
-        milStdSymbol[whichMap].setName("Satellite");
+        milStdSymbol[whichMap].setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, "Ground Track");
+        milStdSymbol[whichMap].setName("Missile Support");
         milStdSymbol[whichMap].setAffiliation(MilStdSymbol.Affiliation.FRIEND);
         try {
             overlay_a_child[whichMap].addFeature(milStdSymbol[whichMap], visible);
@@ -294,14 +295,6 @@ public class AddUpdateRemove extends NavItemBase {
             } finally {
                 stopExample(whichMap);
             }
-        }
-    }
-
-    class MyGeoPosition extends GeoPosition {
-        MyGeoPosition(double latitude, double longitude, double altitude) {
-            this.setLatitude(latitude);
-            this.setLongitude(longitude);
-            this.setAltitude(altitude);
         }
     }
 }

@@ -16,16 +16,15 @@ import mil.emp3.examples.capabilities.navItems.performance_test.PerformanceTest;
 import mil.emp3.examples.capabilities.navItems.basic_capability_test.BasicShapeTest;
 
 import mil.emp3.examples.capabilities.navItems.basic_shapes_editors.BasicShapesEditorsTest;
-import mil.emp3.examples.capabilities.navItems.camera_and_look_at.CameraAndLookAtTest;
-import mil.emp3.examples.capabilities.navItems.select_feature_test.SelectFeatureTest;
-import mil.emp3.examples.capabilities.navItems.zoom_and_bounds.ZoomAndBoundsTest;
+import mil.emp3.examples.capabilities.navItems.CameraAndLookAt;
+import mil.emp3.examples.capabilities.navItems.HighlightFeatures;
+import mil.emp3.examples.capabilities.navItems.ZoomAndBounds;
 import mil.emp3.examples.capabilities.optItems.Bounds;
 import mil.emp3.examples.capabilities.optItems.Camera;
 import mil.emp3.examples.capabilities.optItems.DistanceThresholds;
 import mil.emp3.examples.capabilities.optItems.EditorMode;
 import mil.emp3.examples.capabilities.optItems.GeoPackageSettings;
 import mil.emp3.examples.capabilities.optItems.Graphics;
-import mil.emp3.examples.capabilities.optItems.Locate;
 import mil.emp3.examples.capabilities.optItems.LookAt;
 import mil.emp3.examples.capabilities.optItems.Map;
 import mil.emp3.examples.capabilities.optItems.MapBrightness;
@@ -51,10 +50,10 @@ public class ExecuteTest {
     static {
         capabilityTests = new HashMap<>();
         capabilityTests.put("Launch Map", LaunchMap.class);
-        capabilityTests.put("Select Feature", SelectFeatureTest.class);
+        capabilityTests.put("Highlight Feature(s)", HighlightFeatures.class);
         capabilityTests.put("Add Update Remove", AddUpdateRemove.class);
-        capabilityTests.put("Zoom and Bounds", ZoomAndBoundsTest.class);
-        capabilityTests.put("Camera and Look At", CameraAndLookAtTest.class);
+        capabilityTests.put("Zoom and Bounds", ZoomAndBounds.class);
+        capabilityTests.put("Camera and Look At", CameraAndLookAt.class);
         capabilityTests.put("Basic Shapes Editors", BasicShapesEditorsTest.class);
         capabilityTests.put("Basic Shape", BasicShapeTest.class);
         capabilityTests.put("Freehand Draw", FreehandDrawTest.class);
@@ -71,7 +70,6 @@ public class ExecuteTest {
         optionSettings.put("Remove GeoPackage", RemoveGeoPackageSettings.class);
         optionSettings.put("Editor Mode", EditorMode.class);
         optionSettings.put("Distance Thresholds", DistanceThresholds.class);
-        optionSettings.put("Locate", Locate.class);
         optionSettings.put("Graphics", Graphics.class);
         optionSettings.put("Map Brightness", MapBrightness.class);
         optionSettings.put("Screen Capture", ScreenCaptureAction.class);

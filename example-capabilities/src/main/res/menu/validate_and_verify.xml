@@ -25,8 +25,6 @@
         android:title="@string/action_map" app:showAsAction="never" />
     <item android:id="@+id/action_editor_mode" android:orderInCategory="3"
         android:title="@string/action_editor_mode" app:showAsAction="never" />
-    <item android:id="@+id/action_locate" android:orderInCategory="3"
-        android:title="@string/action_locate" app:showAsAction="never" />
     <item android:id="@+id/action_graphics" android:orderInCategory="3"
         android:title="@string/action_graphics" app:showAsAction="never" />
     <item android:id="@+id/action_brightness" android:orderInCategory="3"
