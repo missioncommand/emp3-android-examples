@@ -2,6 +2,7 @@ package mil.emp3.examples.capabilities.navItems;
 
 import android.app.Activity;
 import android.util.Log;
+
 import java.util.List;
 
 import mil.emp3.api.Circle;
@@ -11,42 +12,55 @@ import mil.emp3.api.Rectangle;
 import mil.emp3.api.Square;
 import mil.emp3.api.enums.EditorMode;
 import mil.emp3.api.enums.MapMotionLockEnum;
-import mil.emp3.api.events.FeatureDrawEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IEditUpdateData;
 import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.interfaces.IOverlay;
-import mil.emp3.api.listeners.IDrawEventListener;
-import mil.emp3.api.listeners.IFeatureDrawEventListener;
+import mil.emp3.api.listeners.IEditEventListener;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
+
 import mil.emp3.examples.capabilities.dialogs.utils.ErrorDialog;
+import mil.emp3.examples.capabilities.utils.ExampleBuilder;
 
 /**
- * EMP supports API to enable users to draw features on the map. This example shows how to use all the methods
+ * EMP supports API to enable users to edit features on the map. This example shows how to use all the methods
  * associated with that capability.
  * The FreehandDraw.actOn method has the core of the example code.
  */
-public class DrawFeature extends NavItemBase {
-    private static String TAG = DrawFeature.class.getSimpleName();
 
-    public DrawFeature(Activity activity, IMap map1, IMap map2) {
+public class EditFeature extends NavItemBase {
+    private static String TAG = EditFeature.class.getSimpleName();
+
+    // User can launch up to two maps, so all the members are setup to allow for two maps.
+    // It is possible to share overlays and features across maps but this example doesn't do that.
+
+    private IOverlay overlay_a[] = new IOverlay[ExecuteTest.MAX_MAPS];
+    private IOverlay overlay_b[]= new IOverlay[ExecuteTest.MAX_MAPS];
+    private IOverlay overlay_a_child[]= new IOverlay[ExecuteTest.MAX_MAPS];
+
+    private Circle circle[]= new Circle[ExecuteTest.MAX_MAPS];
+    private Polygon polygon[] = new Polygon[ExecuteTest.MAX_MAPS];
+    private MilStdSymbol milStdSymbol[] = new MilStdSymbol[ExecuteTest.MAX_MAPS];
+
+    public EditFeature(Activity activity, IMap map1, IMap map2) {
         super(activity, map1, map2, TAG);
     }
 
     @Override
     public String[] getSupportedUserActions() {
-        String[] actions = {"Draw Circle", "Draw Polygon", "Draw Mil Symbol", "Done"};
+        String[] actions = {"Edit Circle", "Edit Polygon", "Edit Mil Symbol", "Done"};
         return actions;
     }
 
     @Override
     public String[] getMoreActions() {
-        String[] actions = {"Cancel" };
+        String[] actions = { "Cancel" };
         return actions;
     }
+
     protected void test0() {
 
         try {
@@ -78,7 +92,7 @@ public class DrawFeature extends NavItemBase {
                 for(int ii = 0; ii < ExecuteTest.MAX_MAPS; ii++) {
                     if(null != maps[ii]) {
                         try {
-                            maps[ii].cancelDraw();
+                            maps[ii].cancelEdit();
                         } catch(EMP_Exception e) {
 
                         }
@@ -90,59 +104,49 @@ public class DrawFeature extends NavItemBase {
                 for(int ii = 0; ii < ExecuteTest.MAX_MAPS; ii++) {
                     if(null != maps[ii]) {
                         try {
-                            maps[ii].cancelDraw();
+                            maps[ii].cancelEdit();
                         } catch(EMP_Exception e) {
 
                         }
                     }
                 }
                 clearMaps();
-            } else if(userAction.contains("Draw Circle")) {
+            } else if(userAction.contains("Edit Circle")) {
                 if((maps[whichMap].getMotionLockMode() == MapMotionLockEnum.UNLOCKED) &&
                         (maps[whichMap].getEditorMode() == EditorMode.INACTIVE)) {
-                    Circle circle = new Circle();
-
-                    // It is also possible to add a listener at Map level instead of providing one as it is done
-                    // below. Example of such a listener is provided at the end of this file.
-                    // Please explore all IMap methods related to drawFeature.
-
-                    // Note that once draw is complete, feature will be removed from the map, it is applications
-                    // responsibility to add the feature to an appropriate overlay.
-
-                    // Note, when in draw mode, zoom, pan, rotate gestures on the screen are disabled.
-                    maps[whichMap].drawFeature(circle, new DrawEventListener());
-                    showMessage("Use the control point to change the radius of the circle, then either select Done or Cancel");
+                    createFeaturesForEdit(whichMap);
+                    maps[whichMap].editFeature(circle[whichMap], new EditEventListener());
+                    showMessage("Use the control points to change the radius of the circle, then either select Done or Cancel");
                 } else {
-                    showMessage("Draw Circle not allowed in current state");
+                    showMessage("Edit Circle not allowed in current state");
                 }
-            } else if(userAction.contains("Draw Polygon")) {
+            } else if(userAction.contains("Edit Polygon")) {
                 if((maps[whichMap].getMotionLockMode() == MapMotionLockEnum.UNLOCKED) &&
                         (maps[whichMap].getEditorMode() == EditorMode.INACTIVE)) {
-                    Polygon polygon = new Polygon();
-                    maps[whichMap].drawFeature(polygon, new DrawEventListener());
-                    showMessage("Tap the screen for polygon vertices, then either select Done or Cancel");
+                    createFeaturesForEdit(whichMap);
+                    maps[whichMap].editFeature(polygon[whichMap], new EditEventListener());
+                    showMessage("Add, remove or Drag control points, then either select Done or Cancel");
                 } else {
-                    showMessage("Draw Polygon not allowed in current state");
+                    showMessage("Edit Polygon not allowed in current state");
                 }
-            }  else if(userAction.contains("Draw Mil Symbol")) {
+            } else if(userAction.contains("Edit Mil Symbol")) {
                 if((maps[whichMap].getMotionLockMode() == MapMotionLockEnum.UNLOCKED) &&
                         (maps[whichMap].getEditorMode() == EditorMode.INACTIVE)) {
-                    MilStdSymbol milStdSymbol = new MilStdSymbol();
-                    milStdSymbol.setSymbolCode("SFG*EWTM----***");
-                    maps[whichMap].drawFeature(milStdSymbol, new DrawEventListener());
+                    createFeaturesForEdit(whichMap);
+                    maps[whichMap].editFeature(milStdSymbol[whichMap], new EditEventListener());
                     showMessage("Select and drag the icon to desired position, you may need to zoom in, then either select Done or Cancel");
                 } else {
-                    showMessage("Draw Mil Symbol not allowed in current state");
+                    showMessage("Edit Mil Symbol not allowed in current state");
                 }
             } else if(userAction.equals("Done")) {
-                if(maps[whichMap].getEditorMode() == EditorMode.DRAW_MODE) {
-                    maps[whichMap].completeDraw();
+                if(maps[whichMap].getEditorMode() == EditorMode.EDIT_MODE) {
+                    maps[whichMap].completeEdit();
                 } else {
                     showMessage("Map is neither in EDIT nor in DRAW mode");
                 }
-            }  else if(userAction.equals("Cancel")) {
-                if(maps[whichMap].getEditorMode() == EditorMode.DRAW_MODE) {
-                    maps[whichMap].cancelDraw();
+            } else if(userAction.equals("Cancel")) {
+                if(maps[whichMap].getEditorMode() == EditorMode.EDIT_MODE) {
+                    maps[whichMap].cancelEdit();
                 } else {
                     showMessage("Map is neither in EDIT nor in DRAW mode");
                 }
@@ -176,12 +180,22 @@ public class DrawFeature extends NavItemBase {
         });
         t.start();
     }
+
     /**
-     * Process the onDrawUpdate callback on the DrawEventListener.
-     * @param listener
-     * @param oFeature
-     * @param updateData
+     * Create features for editing if they are already not there.
+     * @param whichMap
      */
+    private void createFeaturesForEdit(int whichMap) {
+
+        List<IFeature> features = maps[whichMap].getAllFeatures();
+        if((null == features) || (3 != features.size())) {
+            clearMap(maps[whichMap]);
+            ExampleBuilder.buildOverlayHierarchy(maps, whichMap, overlay_a, overlay_b, overlay_a_child);
+            ExampleBuilder.setupCamera(maps[whichMap]);
+            ExampleBuilder.createAndAddFeatures(whichMap, overlay_a, overlay_b, overlay_a_child, circle, polygon, milStdSymbol);
+        }
+    }
+
     private void processEditUpdate(String listener, IFeature oFeature, IEditUpdateData updateData) {
         int[] aIndexes;
         String temp;
@@ -250,77 +264,38 @@ public class DrawFeature extends NavItemBase {
     }
 
     /**
-     * Listener supplied with drawFeature method.
+     * Event listener for processing EMP editor callbacks. This listener simply puts out Log mesages. Applications
+     * will probably choose to do something more.
      */
-    public class DrawEventListener implements IDrawEventListener {
+    public class EditEventListener implements IEditEventListener {
 
         @Override
-        public void onDrawStart(IMap map) {
-            Log.d(TAG, "Draw Start.");
-            updateStatus(TAG, "IDrawEventListener: Draw Start" );
+        public void onEditStart(IMap map) {
+            updateStatus(TAG, "IEditEventListener: Edit Start" );
         }
 
         @Override
-        public void onDrawUpdate(IMap map, IFeature oFeature, List<IEditUpdateData> updateList) {
-            Log.d(TAG, "Draw Update.");
+        public void onEditUpdate(IMap map, IFeature oFeature, List<IEditUpdateData> updateList) {
+            Log.d(TAG, "Edit Update.");
 
             for (IEditUpdateData updateData: updateList) {
-                processEditUpdate("IDrawEventListener", oFeature, updateData);
+                processEditUpdate("IEditEventListener", oFeature, updateData);
             }
         }
 
-        // Note that once draw is complete, feature will be removed from the map, it is applications
-        // responsibility to add the feature to an appropriate overlay.
-
         @Override
-        public void onDrawComplete(IMap map, IFeature feature) {
-            Log.d(TAG, "Draw Complete. " + feature.getClass().getSimpleName() + " pos count " + feature.getPositions().size());
-            updateStatus(TAG, "IDrawEventListener: Draw Complete." + feature.getClass().getSimpleName());
-
-            for(int ii = 0; ii < feature.getPositions().size(); ii++ ) {
-                Log.d(TAG, "pos " + ii + " lat/lon " + feature.getPositions().get(ii).getLatitude() + "/" + feature.getPositions().get(ii).getLongitude());
-            }
-
-            try {
-                IOverlay overlay = createOverlay(map);
-                overlay.addFeature(feature, true);
-                Log.d(TAG, "add feature");
-            } catch (EMP_Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        /**
-         * Draw action was cancelled by the user, so no action required.
-         * @param map
-         * @param originalFeature
-         */
-        @Override
-        public void onDrawCancel(IMap map, IFeature originalFeature) {
-            Log.d(TAG, "Draw Cancelled.");
-            updateStatus(TAG, "IDrawEventListener: Draw Cancelled");
+        public void onEditComplete(IMap map, IFeature feature) {
+            updateStatus(TAG, "IEditEventListener: Edit Complete.");
         }
 
         @Override
-        public void onDrawError(IMap map, String errorMessage) {
-            Log.d(TAG, "Draw Error. ");
-            updateStatus(TAG, "IDrawEventListener: Draw Error");
+        public void onEditCancel(IMap map, IFeature originalFeature) {
+            updateStatus(TAG, "IEditEventListener: Edit Canceled.");
         }
-    }
 
-    /**
-     * Instead of adding a drawEventListener to the drawFeature method you can also add the following
-     * event listener at map level. This class is not used in this example.
-     */
-    public class FeatureDrawEventListener implements IFeatureDrawEventListener {
         @Override
-        public void onEvent(FeatureDrawEvent event) {
-            if(null != event.getUpdateData()) {
-                for (IEditUpdateData updateData : event.getUpdateData()) {
-                    processEditUpdate("IFeatureDrawEventListener", event.getTarget(), updateData);
-                }
-            }
+        public void onEditError(IMap map, String errorMessage) {
+            updateStatus(TAG, "IEditEventListener: Edit Error.");
         }
     }
 }
-
