@@ -4,11 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+
 import mil.emp3.api.Overlay;
 import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.events.MapUserInteractionEvent;
@@ -18,14 +23,15 @@ import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapInteractionEventListener;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
-import mil.emp3.json.geoJson.EmpGeoJsonParser;
+import mil.emp3.json.geoJson.GeoJsonParser;
 
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     private IMap map = null;
-    protected Overlay overlay;
+    private Overlay overlay;
+    private Spinner geoJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         camera.setLongitude(-100.0);
         camera.setRoll(0.0);
         camera.setTilt(0.0);
+        final ArrayAdapter<CharSequence> geoJsonAdapter = ArrayAdapter.createFromResource(this,
+                R.array.geojson, android.R.layout.simple_spinner_item);
+        geoJson = (Spinner)findViewById(R.id.geojsonfile);
+        geoJson.setAdapter(geoJsonAdapter);
 
         map = (IMap) findViewById(R.id.map);
         try {
@@ -98,21 +108,65 @@ public class MainActivity extends AppCompatActivity {
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                String simpleGeoJsonString =
-//                "{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [125.6, 10.1]}," +
-//                "\"properties\": {\"name\": \"Dinagat Islands\"}}";
-                    try (InputStream stream = getApplicationContext().getResources().openRawResource(R.raw.cmapi);){
-                        // Sample geoJSON from CMAPI 1.2 document, edited for correctness
-                        EmpGeoJsonParser emp = new EmpGeoJsonParser(stream);
+                    InputStream stream = null;
+                    try {
+                        String selection = geoJson.getSelectedItem().toString();
                         ICamera camera = MainActivity.this.map.getCamera();
-                        for (IFeature feature : emp.getFeatureList()) {
-                            MainActivity.this.overlay.addFeature(feature, true);
+                        switch (selection) {
+                            case "communes":
+                                stream = getApplicationContext().getResources().openRawResource(R.raw.communes_69);
+                                List<IFeature> featureList = GeoJsonParser.parse(stream);
+                                for (IFeature feature : featureList) {
+                                    MainActivity.this.overlay.addFeature(feature, true);
+                                }
+                                stream.close();
+                                camera.setLatitude(45.7);
+                                camera.setLongitude(5.2);
+                                camera.setAltitude(5e5);
+                                break;
+                            case "random":
+                                stream = getApplicationContext().getResources().openRawResource(R.raw.random_geoms);
+                                featureList = GeoJsonParser.parse(stream);
+                                for (IFeature feature : featureList) {
+                                    MainActivity.this.overlay.addFeature(feature, true);
+                                }
+                                stream.close();
+                                camera.setLatitude(48.0);
+                                camera.setLongitude(-1);
+                                camera.setAltitude(5e4);
+                                break;
+                            case "rhone":
+                                stream = getApplicationContext().getResources().openRawResource(R.raw.rhone);
+                                featureList = GeoJsonParser.parse(stream);
+                                for (IFeature feature : featureList) {
+                                    MainActivity.this.overlay.addFeature(feature, true);
+                                }
+                                stream.close();
+                                camera.setLatitude(46.2);
+                                camera.setLongitude(6.0);
+                                camera.setAltitude(5e5);
+                            case "cmapi":
+                                stream = getApplicationContext().getResources().openRawResource(R.raw.cmapi);
+                                featureList = GeoJsonParser.parse(stream);
+                                for (IFeature feature : featureList) {
+                                    MainActivity.this.overlay.addFeature(feature, true);
+                                }
+                                camera.setLatitude(0);
+                                camera.setLongitude(20);
+                                camera.setAltitude(2e6);
+                                break;
                         }
-                        camera.setLatitude(0);
-                        camera.setLongitude(20);
                         camera.apply(false);
-                    } catch (Exception e) {
+                    } catch (IOException | EMP_Exception e) {
                         e.printStackTrace();
+                    } finally {
+                        try {
+                            if (stream != null) {
+                                stream.close();
+                            }
+                        } catch (IOException ioe) {
+                            ioe.printStackTrace();
+                        }
                     }
                 }
             });
