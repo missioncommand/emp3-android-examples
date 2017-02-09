@@ -27,6 +27,8 @@
                 android:title="Freehand Draw" />
             <item android:id="@+id/nav_basic_shapes_editors"
                 android:title="Basic Shapes Editors" />
+            <item android:id="@+id/nav_draw_feature"
+                android:title="Draw Feature" />
         </menu>
     </item>
 
