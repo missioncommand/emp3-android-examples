@@ -13,6 +13,7 @@ import mil.emp3.examples.capabilities.navItems.AddUpdateRemove;
 import mil.emp3.examples.capabilities.navItems.DrawFeature;
 import mil.emp3.examples.capabilities.navItems.FreehandDraw;
 import mil.emp3.examples.capabilities.navItems.LaunchMap;
+import mil.emp3.examples.capabilities.navItems.Styles;
 import mil.emp3.examples.capabilities.navItems.performance_test.PerformanceTest;
 import mil.emp3.examples.capabilities.navItems.basic_capability_test.BasicShapeTest;
 
@@ -60,6 +61,7 @@ public class ExecuteTest {
         capabilityTests.put("Freehand Draw", FreehandDraw.class);
         capabilityTests.put("Draw Feature", DrawFeature.class);
         capabilityTests.put("Performance", PerformanceTest.class);
+        capabilityTests.put("Styles", Styles.class);
 
         optionSettings = new HashMap<>();
         optionSettings.put("Camera", Camera.class);
