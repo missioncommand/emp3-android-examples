@@ -6,6 +6,7 @@
         <item>communes</item>
         <item>random</item>
         <item>rhone</item>
+        <item>stations</item>
     </string-array>
     <string name="OKButton">OK</string>
 </resources>

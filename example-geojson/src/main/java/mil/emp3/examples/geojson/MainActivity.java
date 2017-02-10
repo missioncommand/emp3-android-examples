@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
         /*
         Instantiate a camera and set the location and angle
-        The altitude here is set initially to 1000 km
+        The altitude here is set initially to 2000 km
          */
 
         final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                 stream.close();
                                 camera.setLatitude(45.7);
                                 camera.setLongitude(5.2);
-                                camera.setAltitude(5e5);
+                                camera.setAltitude(2e5);
                                 break;
                             case "random":
                                 stream = getApplicationContext().getResources().openRawResource(R.raw.random_geoms);
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                                 stream.close();
                                 camera.setLatitude(48.0);
                                 camera.setLongitude(-1);
-                                camera.setAltitude(5e4);
+                                camera.setAltitude(1e4);
                                 break;
                             case "rhone":
                                 stream = getApplicationContext().getResources().openRawResource(R.raw.rhone);
@@ -156,7 +156,16 @@ public class MainActivity extends AppCompatActivity {
                                 camera.setLongitude(20);
                                 camera.setAltitude(2e6);
                                 break;
-                        }
+                            case "stations":
+                                stream = getApplicationContext().getResources().openRawResource(R.raw.stations);
+                                featureList = GeoJsonParser.parse(stream);
+                                for (IFeature feature : featureList) {
+                                    MainActivity.this.overlay.addFeature(feature, true);
+                                }
+                                camera.setLatitude(38.7);
+                                camera.setLongitude(-77.2);
+                                camera.setAltitude(1e5);
+                                break;                        }
                         camera.apply(false);
                     } catch (IOException | EMP_Exception e) {
                         e.printStackTrace();
