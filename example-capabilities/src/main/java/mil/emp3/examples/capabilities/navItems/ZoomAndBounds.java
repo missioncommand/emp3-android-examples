@@ -84,8 +84,11 @@ public class ZoomAndBounds extends NavItemBase {
             }
 
             if (userAction.equals("Exit")) {
+                ExampleBuilder.stopAllExamples(examples);
+                clearMaps();
                 testThread.interrupt();
             } else if(userAction.equals("ClearMap")) {
+                ExampleBuilder.stopAllExamples(examples);
                 clearMaps();
             }  else if(userAction.equals("Start")) {
                 if(null == examples[whichMap]) {

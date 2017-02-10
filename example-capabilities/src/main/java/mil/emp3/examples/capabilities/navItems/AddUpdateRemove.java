@@ -19,6 +19,7 @@ import mil.emp3.api.interfaces.IOverlay;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
+import mil.emp3.examples.capabilities.utils.ExampleBuilder;
 import mil.emp3.examples.capabilities.utils.MyGeoPosition;
 
 /**
@@ -92,10 +93,10 @@ public class AddUpdateRemove extends NavItemBase {
             }
 
             if (userAction.equals("Exit")) {
-                stopAllExamples();
+                ExampleBuilder.stopAllExamples(examples);
                 testThread.interrupt();
             } else if(userAction.equals("ClearMap")) {
-                stopAllExamples();
+                ExampleBuilder.stopAllExamples(examples);
                 clearMaps();
             } else if(userAction.equals("Start")) {
                 if(null == examples[whichMap]) {
@@ -125,15 +126,6 @@ public class AddUpdateRemove extends NavItemBase {
     protected boolean exitTest() {
         String userAction = "Exit";
         return (actOn(userAction));
-    }
-
-    private void stopAllExamples() {
-        for(int ii = 0; ii < examples.length; ii++) {
-            if(null != examples[ii]) {
-                examples[ii].interrupt();
-                examples[ii] = null;
-            }
-        }
     }
 
     /**
@@ -285,7 +277,7 @@ public class AddUpdateRemove extends NavItemBase {
                 createAndAddFeatures(whichMap);
                 while (!Thread.interrupted()) {
                     try {
-                        Thread.sleep(10 * 1000);
+                        Thread.sleep(3 * 1000);
                         updateFeatures(whichMap);
                         setupCamera(maps[whichMap]); // In case user has moved it.
                     } catch (InterruptedException e) {
