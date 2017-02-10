@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">GeoPackage</string>
-    <string name="geojson">cmapi.geojson</string>
+    <string name="app_name">GeoJSON</string>
     <string name="CancelButton">Cancel</string>
+    <string-array name="geojson">
+        <item>cmapi</item>
+        <item>communes</item>
+        <item>random</item>
+        <item>rhone</item>
+        <item>stations</item>
+    </string-array>
     <string name="OKButton">OK</string>
 </resources>
-

@@ -9,6 +9,7 @@ include ':example-userinteractionevents'
 include ':example-mirrorcache'
 include ':example-lookat'
 include ':example-geopackage'
+include ':example-geojson'
 
 include ':example-mapfragmentandview:MapTestFragment'
 project(':example-mapfragmentandview:MapTestFragment').name = 'example-mapfragmentandview-MapTestFragment'

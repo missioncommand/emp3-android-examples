@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/geopackage"
+        <Spinner
+            android:id="@+id/geojsonfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Service"
-            android:text="@string/geojson" />
+            android:spinnerMode="dropdown"
+            style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <Button
             android:id="@+id/CancelButton"
