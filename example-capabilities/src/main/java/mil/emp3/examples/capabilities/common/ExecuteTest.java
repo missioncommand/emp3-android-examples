@@ -14,26 +14,13 @@ import mil.emp3.examples.capabilities.navItems.DrawFeature;
 import mil.emp3.examples.capabilities.navItems.FreehandDraw;
 import mil.emp3.examples.capabilities.navItems.LaunchMap;
 import mil.emp3.examples.capabilities.navItems.Styles;
-import mil.emp3.examples.capabilities.navItems.performance_test.PerformanceTest;
-import mil.emp3.examples.capabilities.navItems.basic_capability_test.BasicShapeTest;
 
 import mil.emp3.examples.capabilities.navItems.EditFeature;
 import mil.emp3.examples.capabilities.navItems.CameraAndLookAt;
 import mil.emp3.examples.capabilities.navItems.HighlightFeatures;
 import mil.emp3.examples.capabilities.navItems.ZoomAndBounds;
-import mil.emp3.examples.capabilities.optItems.Bounds;
 import mil.emp3.examples.capabilities.optItems.Camera;
-import mil.emp3.examples.capabilities.optItems.DistanceThresholds;
-import mil.emp3.examples.capabilities.optItems.EditorMode;
-import mil.emp3.examples.capabilities.optItems.GeoPackageSettings;
-import mil.emp3.examples.capabilities.optItems.Graphics;
-import mil.emp3.examples.capabilities.optItems.LookAt;
 import mil.emp3.examples.capabilities.optItems.Map;
-import mil.emp3.examples.capabilities.optItems.MapBrightness;
-import mil.emp3.examples.capabilities.optItems.RemoveGeoPackageSettings;
-import mil.emp3.examples.capabilities.optItems.RemoveWmsSettings;
-import mil.emp3.examples.capabilities.optItems.ScreenCaptureAction;
-import mil.emp3.examples.capabilities.optItems.WmsSettings;
 
 public class ExecuteTest {
 
@@ -57,26 +44,13 @@ public class ExecuteTest {
         capabilityTests.put("Zoom and Bounds", ZoomAndBounds.class);
         capabilityTests.put("Camera and Look At", CameraAndLookAt.class);
         capabilityTests.put("Edit Feature", EditFeature.class);
-        capabilityTests.put("Basic Shape", BasicShapeTest.class);
         capabilityTests.put("Freehand Draw", FreehandDraw.class);
         capabilityTests.put("Draw Feature", DrawFeature.class);
-        capabilityTests.put("Performance", PerformanceTest.class);
         capabilityTests.put("Styles", Styles.class);
 
         optionSettings = new HashMap<>();
         optionSettings.put("Camera", Camera.class);
-        optionSettings.put("Bounds", Bounds.class);
-        optionSettings.put("Look At", LookAt.class);
         optionSettings.put("Map", Map.class);
-        optionSettings.put("Add WMS", WmsSettings.class);
-        optionSettings.put("Remove WMS", RemoveWmsSettings.class);
-        optionSettings.put("Add GeoPackage", GeoPackageSettings.class);
-        optionSettings.put("Remove GeoPackage", RemoveGeoPackageSettings.class);
-        optionSettings.put("Editor Mode", EditorMode.class);
-        optionSettings.put("Distance Thresholds", DistanceThresholds.class);
-        optionSettings.put("Graphics", Graphics.class);
-        optionSettings.put("Map Brightness", MapBrightness.class);
-        optionSettings.put("Screen Capture", ScreenCaptureAction.class);
     }
 
     public static UserAction getUserActionImpl() {

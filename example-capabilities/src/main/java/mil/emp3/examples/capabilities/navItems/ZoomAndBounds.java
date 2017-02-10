@@ -18,7 +18,6 @@ import mil.emp3.api.interfaces.IOverlay;
 import mil.emp3.examples.capabilities.common.Emp3TesterDialogBase;
 import mil.emp3.examples.capabilities.common.ExecuteTest;
 import mil.emp3.examples.capabilities.common.NavItemBase;
-import mil.emp3.examples.capabilities.containers.dialogs.milstdunits.SymbolPropertiesDialog;
 
 import mil.emp3.examples.capabilities.utils.ExampleBuilder;
 
@@ -60,7 +59,6 @@ public class ZoomAndBounds extends NavItemBase {
     protected void test0() {
 
         try {
-            SymbolPropertiesDialog.loadSymbolTables();
             testThread = Thread.currentThread();
             while (!Thread.interrupted()) {
                 try {
