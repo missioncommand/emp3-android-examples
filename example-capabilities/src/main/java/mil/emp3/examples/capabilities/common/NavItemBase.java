@@ -20,7 +20,6 @@ import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.interfaces.IOverlay;
-import mil.emp3.examples.capabilities.containers.IStatusListener;
 import mil.emp3.examples.capabilities.dialogs.utils.ErrorDialog;
 
 public abstract class NavItemBase implements UserAction, IStatusListener, Runnable {
