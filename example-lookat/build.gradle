@@ -1,11 +1,6 @@
 apply plugin: 'emp3AndroidApp'
 
 dependencies {
-//    compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$version_emp3Android@aar") { transitive = false }
-//    provided ("mil.army.sec.smartClient:emp3-android-sdk:$version_emp3Android@jar")
-//    provided ("mil.army.sec.smartClient:emp3-android-sdk-core:$version_emp3Android@jar")
-//    compile ('sec.web.renderer:mil-sym-android-renderer:0.1.3@aar') { transitive = false }
-//    provided ('org.cmapi.primitives:common-map-geospatial-notation:0.0.3@jar')
     compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$version_emp3Android@aar")  { transitive = true }
     compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     compile ("com.android.support:appcompat-v7")
