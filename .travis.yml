@@ -17,8 +17,6 @@ env:
   global:
     - secure: W0IJfwEUeDfG+E1RTDA3Z4eE7kkNzcSqF6p4dAYa8ssuRxaDwjRte4zQf48o/gfChLJX9LJsK8ExXvXV5Alx2v3z4Bgud7uiigS5ql9mMdIWCLo5+ZMXKYuBIbIHAixpcMxA4ABEUuxRM+EHwmY0Eo65zqBy0BYn1dZaacNAXmjji3LIIIm9jLy6Gxvv3vhCZLtmUWNoTOXL4q/w/RHCn9UfUlNNzAI2DJpjiLGkCN1r+KL/j6qnYTHROwzhF7kmdrQ0QFEwyULFIHP7GdWfj/1GGlxouZbDxj6OxkLqiISy0v4KNfK8WxnPHDtE579giHWsQAPE3AkALECHrPSba+Qmf1mEMZXkn8stjwfRSu2EB3HhHSyZyFaGNbOwHzAhxrZu3XTgucxyXxW2BQKY/z/Y/1tQgJnQCgshthNS1/7pE3x3tMCTfe/2G1/c10WjEJz9EINk4FaYwIwVhjJunmbpJUn+p1YG615fJ93x8gRQlRzYCdHxgibQj3oVD0vQd3iUAWXHafgwVKUHa6Qmm20yHH3wZ4ZABPqTxa/vT9vHafw2+nDge9v2iHckjjBPYoiqzUL+p2VKVE5bWzhJHTJn9L8s7MQkh0z/BbKHEekkRIeH+79xQHa/5dO/wCCbvuYfZsvecoWXt6Z/GSvY3+S0hKD9CoXuRHZJB4ep8zw=
     - secure: Kn56fHRl1j9IICTe44CIFxOU2O8tvU1vmUEvo5k1bsgv3ytXvCPjEj5SVFnLsFRSKikh9OBhXdo9msdy1/CNrSzQ9RsTjs7E8/nHD0V6eAo/4K+YvWYZ4tk2d/m5o2fbxKs05/OjOf0qx3xoJTDxu5F274a4fDVGwiXf9N1D1+XyKZuH6RdmLYeDm0Zy6mlUgbfEfXgnULCtt3M4wsMNIrNfM7jhQNVGJ16FwyFh8j+kWfRyt0G8tLv7LhvBTrGfVFxh5KJ0riGSNrXKXkRpS/1zHtcQ8Njp8Sz63aekad4R/d2PeInv7sASXBoJQycZBS4lz97SEJkwWB+ICOWdxSsPKBiGu2ewB6ZlrLKSkc/2DQsJcJw0cokASLVAs2Em3sJ53B8eXpiVms2uf7IMT+Do+jWzwPCdMezGWCaTHXL87Pm3uJ/GnBd1V1BT7br6Q9qFWPY/50lWuQnxmCK0mB/wJGu2FYG1fvupBUkCmj4tcveGKdGJ90ybnG64bwxFqrqUDqI9V2b9Bzfm23o2hU4enmoGWaMmK+N7POUjIzASLA/Eq/KbiqyzVumOHqJAYgyQFnoCJGGXuTAIJ1fbtA5qu5NgP0xH1skOoDw3zt5+ko6VIkM6xwnMlqBrXozx4cSmLs8so+7IA8kqjyAWT4979wXlCgNGXgwavQmXs4Q=
-    - secure: v1CXlgC3cQ2F5phsOuWU6LSbeVWcDFTfNzOcc4QHklv+2bSrewPu0fhPrFxUljvmfAWM3qgerlNV/LFdGCa+k5hn1nNt3Vo/bwQpeVWl3mxtam3f/y/n2bwCq+EOUJXBebphImNYERpARlt0jK+5NlNsfo9FkxPrcVMDoHlAlG3e8YkYdTGKK0TPtiQKPxxhgBw+Dh/tr8seYBdJ9KfIVTp9yectNgjYVJAaqz5O8QNEsyXzjcdIigk8lPii3EtmxFNSRyffnyjzcvV0qrlKmMs251hvxibrKdv/t35zayLiQK4GU+TRizZi4sgP+DBylpJr0VkKBikeC6CShfMdGI+YK4WbjH7eTRdaRVYZPMSK1AGNeoZwYeewvlWSDeX8CpiVl6/8GxS3CL/cZiJFF2hh3+l1dvDvx3n8F7JafO6i0/kG8SvLcoKgU820OtJ8zJ8/m4VdIRxvPAnLa78BmjNE0hv73JsaGurDYIldDP3WhwlPOrkVTYHEEot9k7grw3jCBcmruMSQFEbg3NBwl559zZ5TdKmQ4wsYimTabQmz6gRrfwJKzZCfdM2/bWDuW9mnI6SWYligdufUvgACUDsfaVLRIDQ39+A5YVuSGnNgoTfEZGZ+r2S8UhU2jIfkEUkQmudkmwOz7Vo5iN85Rv1v5nNT8UZRgcc4+vwpUSM=
-    - secure: QlF6o4qOnIVeMB7lVRyypaOV23B6qAPnqH9NGcfhocOUcj6yvGeRreolbXYMTlDFWB+68z4guvDna3GDiIMD3qLkYxjhBz5q/CV0wXwuQX1U7bofv4qfAzttmy8K34fWSImdhwacPUukmlQBjZvLn1MWxLbRJejC5rjux0oLO/OqrqmjtQu5Lk65E6svdyOl54ZVc6PiHW9o0GVEF0nYBBjsYNkNr8btYaIpP2wfwkKhhTIj6Bt2geUADgWqwa9keogjCOhfZQlooCmERL7WU1iPEGlfITKKth/lsuyAAyrAJG4W1L7bf2eFuxSh9UrhB5XKDSoRyFLZ8tKECUIc34J0sCoi80LMhX/WKzlFeidqfPsQ5bkGQZlop/hEK6NkexEG5xU0tladvncpB39Cp/cMe+hXMSCeOlbAQ4IiIMXcFd4lHcCCkcBdqxf0mGt/5yqz1eqsgmCS+Fk/kQ/txmY7m8/G00e7UzZFngZ7w43wgOfPMMbLx+lZ4Y8E4uDawIxOEs7GLB+68WTxBRPxf/2+8mXkiyced3GaLRRbckt/xcL+8N4/Nak2DI7Sg6iJFgzpwWo0xwpBN/6TNAe+TAc8yOLu6QRPKv/h0BOSm+G149lJbrWi80OmEU6CfvJ7ey7x86zb41Dpi6WQhlz65KYLys/I2ZbWze5lGUcjNFg=
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -31,7 +29,7 @@ before_install:
   - export GRADLE_OPTS="-Dorg.gradle.daemon=false -XX:MaxPermSize=512m -Xmx2048m $GRADLE_OPTS"
   - export DEFAULT_JVM_OPTS=
 
-#install: echo "skip 'gradle assemble' step"
+install: echo "skip 'gradle assemble' step"
 
 script:
  - ./gradlew build --refresh-dependencies --continue --stacktrace
@@ -39,18 +37,3 @@ script:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-deploy: # travis by default will not invoke this step for PRs
-  - provider: script
-    skip_cleanup: true
-    script: travis/deploy.sh $CI_SNAPSHOT_URL
-    on:
-      all_branches: true
-      #branch:
-        #- development
-#  - provider: script
-#    skip_cleanup: true
-#    script: travis/deploy.sh $CI_RELEASE_URL
-#    on:
-#      branch:
-#        - master
