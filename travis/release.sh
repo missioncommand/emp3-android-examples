@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set +x
+#set +x
 set -e
 
 echo '[release] TRAVIS_TAG='$TRAVIS_TAG
@@ -27,7 +27,7 @@ if [[ -n $TRAVIS_TAG ]] && [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     git checkout --force master
     git merge --no-commit --no-ff -X theirs $TRAVIS_TAG
     git commit -m "[travis] Merge tag '$TRAVIS_TAG' [ci skip]"
-    git push --quiet > /dev/null 2>&1
+    git push --quiet #> /dev/null 2>&1
 
     echo '[release] Merging to development..'
     git checkout --force development
@@ -38,12 +38,12 @@ if [[ -n $TRAVIS_TAG ]] && [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
     chmod +x gradlew
     ./gradlew :nextMinorVersion -PisSnapshot
     git commit -am "[travis] Bump version"
-    git push --quiet > /dev/null 2>&1
+    git push --quiet #> /dev/null 2>&1
 
 
     echo '[release] Deleting release branch..'
     git branch -d $RELEASE_BRANCH
-    git push --quiet origin :$RELEASE_BRANCH > /dev/null 2>&1
+    git push --quiet origin :$RELEASE_BRANCH #> /dev/null 2>&1
 
     exit $?
 fi
