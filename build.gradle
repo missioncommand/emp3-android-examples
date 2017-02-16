@@ -28,7 +28,7 @@ buildscript {
 }
 
 ext {
-    version_emp3Android = "2.0.0"
+    version_emp3Android = "2.1.0-SNAPSHOT"
 
     git = org.ajoberstar.grgit.Grgit.open(file('.')) // Open the Git repository in the current directory.
     revision = git.head().id                         // Get commitId of HEAD.
