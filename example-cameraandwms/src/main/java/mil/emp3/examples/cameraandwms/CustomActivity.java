@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import mil.emp3.api.WMS;
 import mil.emp3.api.enums.WMSVersionEnum;
@@ -30,13 +34,28 @@ public class CustomActivity extends AppCompatActivity {
     private WMS wmsService = null;
     private WMS oldWMSService = null;
     private IMap map = null;
+    private Spinner selectedLayers;
+    private Spinner versionText;
+    private Spinner tileFormatText;
+    private Spinner transparentText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "Setting custom activity");
         setContentView(R.layout.activity_custom);
-
+        ArrayAdapter<CharSequence> versionAdapter = ArrayAdapter.createFromResource(this,
+                R.array.wms_versions, android.R.layout.simple_spinner_item);
+        versionText = (Spinner)findViewById(R.id.VersionText);
+        versionText.setAdapter(versionAdapter);
+        ArrayAdapter<CharSequence> tileAdapter = ArrayAdapter.createFromResource(this,
+                R.array.image_formats, android.R.layout.simple_spinner_item);
+        tileFormatText = (Spinner)findViewById(R.id.TileFormatText);
+        tileFormatText.setAdapter(tileAdapter);
+        ArrayAdapter<CharSequence> booleanAdapter = ArrayAdapter.createFromResource(this,
+                R.array.boolean_values, android.R.layout.simple_spinner_item);
+        transparentText = (Spinner)findViewById(R.id.TransparentText);
+        transparentText.setAdapter(booleanAdapter);
         // Cancel button exits the app
         Button cancelButton = (Button) findViewById(R.id.CancelButton);
         if (cancelButton != null) {
@@ -111,6 +130,8 @@ public class CustomActivity extends AppCompatActivity {
                         initAltitude *= 1.2;
                         camera.setAltitude(initAltitude);
                         camera.apply(false);
+                        Log.i(TAG, "camera altitude " + initAltitude + " latitude " + camera.getLatitude()
+                         + " longitude " + camera.getLongitude());
                     } else {
                         Toast.makeText(CustomActivity.this, "Can't zoom out any more, altitude " + initAltitude, Toast.LENGTH_LONG).show();
                     }
@@ -128,10 +149,12 @@ public class CustomActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     ICamera camera = map.getCamera();
                     double initAltitude = camera.getAltitude();
-                    if (initAltitude >= 12000) {
+                    if (initAltitude >= 1.2) {
                         initAltitude /= 1.2;
                         camera.setAltitude(initAltitude);
                         camera.apply(false);
+                        Log.i(TAG, "camera altitude " + initAltitude + " latitude " + camera.getLatitude()
+                                + " longitude " + camera.getLongitude());
                     } else {
                         Toast.makeText(CustomActivity.this, "Can't zoom in any more, altitude " + initAltitude, Toast.LENGTH_LONG).show();
                     }
@@ -294,39 +317,25 @@ public class CustomActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     EditText urlText = (EditText) findViewById(R.id.UrlText);
-                    EditText versionText = (EditText) findViewById(R.id.VersionText);
-                    EditText tileFormatText = (EditText) findViewById(R.id.TileFormatText);
-                    EditText transparentText = (EditText) findViewById(R.id.TransparentText);
-                    EditText layerText = (EditText) findViewById(R.id.LayerText);
+                    EditText layerName = (EditText) findViewById(R.id.LayerText);
+                    EditText resolutionText = (EditText) findViewById(R.id.ResolutionText);
 
                     try {
                         String url = urlText.getText().toString();
-                        String version = versionText.getText().toString();
-                        if (version == null)
-                            version = "";
-                        String tileFormat = tileFormatText.getText().toString();
-                        boolean transparent = (transparentText.getText().toString()).equals("false");
-                        String layer = layerText.getText().toString();
+                        String version = versionText.getSelectedItem().toString();
+                        WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
+                        String tileFormat = tileFormatText.getSelectedItem().toString();
+                        boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
+                        String layer = layerName.getText().toString();
                         ArrayList<String> layers = new ArrayList<>();
                         layers.add(layer);
-                        Resources res = getBaseContext().getResources();
-                        WMSVersionEnum wmsVersion = null;
-                        switch (version) {
-                            case "1.1.1" : wmsVersion = WMSVersionEnum.VERSION_1_1_1;
-                                break;
-                            case "1.1" : wmsVersion = WMSVersionEnum.VERSION_1_1;
-                                break;
-                            case "1.3.0" :
-                            case "1.3" : wmsVersion = WMSVersionEnum.VERSION_1_3;
-                                break;
-                            default:
-                                wmsVersion = WMSVersionEnum.VERSION_1_1_1;
-                        }
                         wmsService = new WMS(url,
                                 wmsVersion,
                                 tileFormat.equals("null") ? null : tileFormat,  // tile format
                                 transparent,
                                 layers);
+                        String resolution = resolutionText.getText().toString();
+                        wmsService.setLayerResolution(Double.valueOf(resolution));
                         if (wmsService != null) {
                             if (wmsService != oldWMSService) {
                                 if (oldWMSService != null)

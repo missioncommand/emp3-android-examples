@@ -5,10 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.TextView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import mil.emp3.api.MapFragment;
 import mil.emp3.api.enums.Property;
@@ -18,9 +14,12 @@ import mil.emp3.api.interfaces.IEmpPropertyList;
 import mil.emp3.api.interfaces.IMap;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
 import mil.emp3.api.utils.EmpPropertyList;
-import mil.emp3.examples.common.CameraUtility;
+import mil.emp3.examples.maptestfragment.CameraUtility;
 import mil.emp3.examples.maptestfragment.MapFragmentAndViewActivity;
 
+/**
+ * Shows how MapFragment(s) can be added to the display programmatically.
+ */
 public class MainActivity extends MapFragmentAndViewActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -30,24 +29,21 @@ public class MainActivity extends MapFragmentAndViewActivity {
         setContentView(R.layout.activity_main);
 
         if(null == savedInstanceState) {
-            // Begin the transaction
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            // Replace the contents of the container with the new fragment
             ft.replace(R.id.map1_placeholder, new MapFragment(), "map1_placeholder");
             ft.replace(R.id.map2_placeholder, new MapFragment(), "map2_placeholder");
-            // or ft.add(R.id.your_placeholder, new FooFragment());
-            // Complete the changes added above
             ft.commit();
         }
-
-        testStatus = (TextView) findViewById(R.id.TestStatus);
-        testMenuFragment = ( mil.emp3.examples.maptestfragment.MapTestMenuFragment) getFragmentManager().findFragmentById(R.id.fooFragment);
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         Log.d(TAG, "onPostCreate");
+
+        // Initialize the name of the class for map engine and the APK that will contain that class.
+        // In this example map engine is loaded from a separate APK so APK name is required and
+        // You must installed the map engine APK on the target device.
 
         final IEmpPropertyList properties = new EmpPropertyList();
         properties.put(Property.ENGINE_CLASSNAME.getValue(), "mil.emp3.worldwind.MapInstance");
@@ -68,6 +64,7 @@ public class MainActivity extends MapFragmentAndViewActivity {
                     Log.d(TAG, "mapStateChangeEvent map " + mapStateChangeEvent.getNewState());
                     try {
                         onMapReady(map);
+                        // Map shows West coast of US
                         map.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
                     } catch (EMP_Exception e) {
                         e.printStackTrace();
@@ -90,7 +87,8 @@ public class MainActivity extends MapFragmentAndViewActivity {
                     Log.d(TAG, "mapStateChangeEvent map2 " + mapStateChangeEvent.getNewState());
                     try {
                         onMapReady(map2);
-                        map2.setCamera(CameraUtility.buildCamera(33.9424368, -118.4081222, 2000000.0), false);
+                        // Map shows East coast of US
+                        map2.setCamera(CameraUtility.buildCamera(40.7128, -74.0059, 2000000.0), false);
                     } catch (EMP_Exception e) {
                         e.printStackTrace();
                     }

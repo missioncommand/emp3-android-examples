@@ -342,7 +342,8 @@ public class MainActivity extends AppCompatActivity implements SymbolPropertiesD
                     //oSPSymbol.setEchelonSymbolModifier(MilStdSymbol.EchelonSymbolModifier.HQ_BRIGADE);
 
                     // Set the position list with 1 position.
-                    oSPSymbol.setPositions(oPosList);
+                    oSPSymbol.getPositions().clear();
+                    oSPSymbol.getPositions().addAll(oPosList);
 
                     //Set a single modifier.
                     oSPSymbol.setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, oSymDef.getDescription());
@@ -620,7 +621,8 @@ public class MainActivity extends AppCompatActivity implements SymbolPropertiesD
                     List<IGeoPosition> oPosList = this.getPositions(1, 20000);
                     Point oPoint = new Point();
 
-                    oPoint.setPositions(oPosList);
+                    oPoint.getPositions().clear();
+                    oPoint.getPositions().addAll(oPosList);
                     this.oRootOverlay.addFeature(oPoint, true);
 
                 } catch (EMP_Exception ex) {
@@ -713,7 +715,10 @@ public class MainActivity extends AppCompatActivity implements SymbolPropertiesD
                     oNewSymbol.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.RELATIVE_TO_GROUND);
                     oNewSymbol.setName(oDialog.getFeatureName());
                     oNewSymbol.setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, oUnitDef.getDescription());
-                    SelectedFeature oSelectedItem = new SelectedFeature(oNewSymbol);
+
+                    // This is not doing anything
+                    // It throws an exception.  Removed by Raju for ticket EMP-2537
+                    // SelectedFeature oSelectedItem = new SelectedFeature(oNewSymbol);
 
                     MainActivity.this.oCurrentSelectedFeature = oNewSymbol;
 

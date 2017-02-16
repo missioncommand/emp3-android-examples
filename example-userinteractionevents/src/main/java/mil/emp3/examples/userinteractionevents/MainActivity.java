@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
                         java.util.List<IGeoPosition> oPositionList = oFeature.getPositions();
                         oPositionList.get(0).setLatitude(event.getCoordinate().getLatitude());
                         oPositionList.get(0).setLongitude(event.getCoordinate().getLongitude());
-                        oFeature.setPositions(oPositionList);
+                        oFeature.getPositions().clear();
+                        oFeature.getPositions().addAll(oPositionList);
                         oFeature.apply();
                     }
                     break;
@@ -238,7 +239,8 @@ public class MainActivity extends AppCompatActivity {
 
                     oSPSymbol.setAffiliation(MilStdSymbol.Affiliation.FRIEND);
                     //oSPSymbol.setEchelonSymbolModifier(MilStdSymbol.EchelonSymbolModifier.HQ_BRIGADE);
-                    oSPSymbol.setPositions(oPosList);
+                    oSPSymbol.getPositions().clear();
+                    oSPSymbol.getPositions().addAll(oPosList);
                     oSPSymbol.setModifier(IGeoMilSymbol.Modifier.UNIQUE_DESIGNATOR_1, oSymDef.getDescription());
                     iCount++;
                     oSPSymbol.setName("Unit " + iCount);

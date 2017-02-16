@@ -24,5 +24,4 @@ dependencies {
     compile (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
 
     compile (group: 'mil.army.sec.smartClient', name:'emp3-android-worldwind', version:"$version_emp3Android", ext: 'aar') { transitive = true }
-    // compile ("mil.army.sec.smartClient:worldwind-android-sdk@aar") { transitive = true }
 }

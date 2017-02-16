@@ -1,20 +1,15 @@
 rootProject.name = 'emp3-android-example'
 
 include ':example-HelloEmp3'
-/* Removing COEv3 dependency
-include ':example-publisher'
-include ':example-subscriber'
-*/
+include ':example-MultiEngine'
+
 include ':example-cameraandwms'
 include ':example-plotmilstd'
 include ':example-userinteractionevents'
-include ':example-MultiEngine'
 include ':example-mirrorcache'
-include ':example-getbounds'
 include ':example-lookat'
-
-include ':example-mapfragmentandview:Common'
-project(':example-mapfragmentandview:Common').name = 'example-mapfragmentandview-Common'
+include ':example-geopackage'
+include ':example-geojson'
 
 include ':example-mapfragmentandview:MapTestFragment'
 project(':example-mapfragmentandview:MapTestFragment').name = 'example-mapfragmentandview-MapTestFragment'
@@ -31,5 +26,4 @@ project(':example-mapfragmentandview:SampleMapViewPgm').name = 'example-mapfragm
 include ':example-mapfragmentandview:SampleMapFragmentPgm'
 project(':example-mapfragmentandview:SampleMapFragmentPgm').name = 'example-mapfragmentandview-SampleMapFragmentPgm'
 
-include ':example-mapfragmentandview:singlemapview'
-project(':example-mapfragmentandview:singlemapview').name = 'example-mapfragmentandview-singlemapview'
+include ':example-capabilities'
