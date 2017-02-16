@@ -17,6 +17,8 @@ env:
   global:
     - secure: W0IJfwEUeDfG+E1RTDA3Z4eE7kkNzcSqF6p4dAYa8ssuRxaDwjRte4zQf48o/gfChLJX9LJsK8ExXvXV5Alx2v3z4Bgud7uiigS5ql9mMdIWCLo5+ZMXKYuBIbIHAixpcMxA4ABEUuxRM+EHwmY0Eo65zqBy0BYn1dZaacNAXmjji3LIIIm9jLy6Gxvv3vhCZLtmUWNoTOXL4q/w/RHCn9UfUlNNzAI2DJpjiLGkCN1r+KL/j6qnYTHROwzhF7kmdrQ0QFEwyULFIHP7GdWfj/1GGlxouZbDxj6OxkLqiISy0v4KNfK8WxnPHDtE579giHWsQAPE3AkALECHrPSba+Qmf1mEMZXkn8stjwfRSu2EB3HhHSyZyFaGNbOwHzAhxrZu3XTgucxyXxW2BQKY/z/Y/1tQgJnQCgshthNS1/7pE3x3tMCTfe/2G1/c10WjEJz9EINk4FaYwIwVhjJunmbpJUn+p1YG615fJ93x8gRQlRzYCdHxgibQj3oVD0vQd3iUAWXHafgwVKUHa6Qmm20yHH3wZ4ZABPqTxa/vT9vHafw2+nDge9v2iHckjjBPYoiqzUL+p2VKVE5bWzhJHTJn9L8s7MQkh0z/BbKHEekkRIeH+79xQHa/5dO/wCCbvuYfZsvecoWXt6Z/GSvY3+S0hKD9CoXuRHZJB4ep8zw=
     - secure: Kn56fHRl1j9IICTe44CIFxOU2O8tvU1vmUEvo5k1bsgv3ytXvCPjEj5SVFnLsFRSKikh9OBhXdo9msdy1/CNrSzQ9RsTjs7E8/nHD0V6eAo/4K+YvWYZ4tk2d/m5o2fbxKs05/OjOf0qx3xoJTDxu5F274a4fDVGwiXf9N1D1+XyKZuH6RdmLYeDm0Zy6mlUgbfEfXgnULCtt3M4wsMNIrNfM7jhQNVGJ16FwyFh8j+kWfRyt0G8tLv7LhvBTrGfVFxh5KJ0riGSNrXKXkRpS/1zHtcQ8Njp8Sz63aekad4R/d2PeInv7sASXBoJQycZBS4lz97SEJkwWB+ICOWdxSsPKBiGu2ewB6ZlrLKSkc/2DQsJcJw0cokASLVAs2Em3sJ53B8eXpiVms2uf7IMT+Do+jWzwPCdMezGWCaTHXL87Pm3uJ/GnBd1V1BT7br6Q9qFWPY/50lWuQnxmCK0mB/wJGu2FYG1fvupBUkCmj4tcveGKdGJ90ybnG64bwxFqrqUDqI9V2b9Bzfm23o2hU4enmoGWaMmK+N7POUjIzASLA/Eq/KbiqyzVumOHqJAYgyQFnoCJGGXuTAIJ1fbtA5qu5NgP0xH1skOoDw3zt5+ko6VIkM6xwnMlqBrXozx4cSmLs8so+7IA8kqjyAWT4979wXlCgNGXgwavQmXs4Q=
+    - secure: xFzkZHGEPjFoc/RDF6XPcMjFbq1Zd8vsZ3hGzWFBG66jwJT5aG5FoQSsUoGK1f+jkBM7wkafB8AvNZOIPHSvJZvbsZQXZTHBcufZlrrAcP0yIVtqLUbcL63oGKgQw8f/blWfFBk1y2bTNO+F9j+5DvjELJb62uUqcdy0+3GTpDP8l82isBLZKzxC9ZJNYHJXUr7qKbD+9nzaquvf6MAdkowOPhksI/H8PLb4cFY4at+uZ8s+TPlU5spiaDKfFqBVJt/l5CZlJgL/E9IB2AWyXJS10CJ0L4o3eYXGBuWjCg2lCNKbfPewIQ1BLYU1WQc0BP32pncy6iwoLz0CGvfXw8BM38CtCiVu62DbfiXLD7iclXkn4ohReGDHs7OYFm0tFQT7M4iGWzhFz2G0/MoapRC+7s9nBwBbkQGIP4akVzFRKcS8eXObXYu6S7NZmitL4dPy1n66sa86pW54TKe7s3FraYtVvciP1X5NL6S1OwMw5WbBLSnOjFubUVt0mSb7KYJbbl/Ffj58erTPc0/P516YB485yGnHeInXz4OGmzaeS42p71kTK8OP/KHvUn9/Dh1pa8A5C+8l8Dxe3942za8LZIoPhBL5wvXWuvAVdd/AUeCagbHaGrGsYg9BFaUJ8X7y7SZgOADXMcsNKNyopby/eixaYx2YV7fr3eLZ4y4=
+
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -25,6 +27,7 @@ cache:
 
 before_install:
   - chmod +x gradlew
+  - chmod +x travis/release.sh
   - export GRADLE_OPTS="-Dorg.gradle.daemon=false -XX:MaxPermSize=512m -Xmx2048m $GRADLE_OPTS"
   - export DEFAULT_JVM_OPTS=
 
@@ -36,3 +39,11 @@ script:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+deploy: # travis by default will not invoke this step for PRs
+  - provider: script
+    skip_cleanup: true
+    script: travis/release.sh
+    on:
+      tags: true
+      condition: "$TRAVIS_TAG =~ ^v[0-9]+.[0-9]+.[0-9]+$"
