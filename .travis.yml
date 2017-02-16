@@ -27,6 +27,7 @@ cache:
 
 before_install:
   - chmod +x gradlew
+  - chmod +x travis/release.sh
   - export GRADLE_OPTS="-Dorg.gradle.daemon=false -XX:MaxPermSize=512m -Xmx2048m $GRADLE_OPTS"
   - export DEFAULT_JVM_OPTS=
 
