@@ -1,4 +1,6 @@
 ext {
+    version_emp3Android = "2.1.0-SNAPSHOT"
+
     empUsername = System.getenv("CI_USERNAME") ?: empUsername
     empPassword = System.getenv("CI_PASSWORD") ?: empPassword
 

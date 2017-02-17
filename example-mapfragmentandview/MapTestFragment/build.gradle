@@ -1,4 +1,4 @@
-apply plugin: 'emp3AndroidLib'
+apply plugin: 'emp.android-lib'
 
 android {
     lintOptions {
