@@ -21,22 +21,20 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'mil.army.sec.smartClient:emp3-android-gradle-plugin:1.5.0'
-        classpath 'org.ajoberstar:grgit:1.7.0'
+        classpath "com.android.tools.build:gradle:2.2.3"
+        classpath "mil.army.sec.smartClient:emp3-gradle-plugin:${version_emp3Android}"
+        classpath "org.ajoberstar:grgit:1.7.0"
     }
 }
 
 ext {
-    version_emp3Android = "2.1.0-SNAPSHOT"
-
     git = org.ajoberstar.grgit.Grgit.open(file('.')) // Open the Git repository in the current directory.
     revision = git.head().id                         // Get commitId of HEAD.
     //revision = git.head().abbreviatedId            // An alternative way using the abbreviatedId.
 }
 
 allprojects {
-    apply plugin: 'emp3AndroidCommon'
+    apply plugin: 'emp.common'
 
     repositories {
         maven {

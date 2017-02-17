@@ -1,4 +1,4 @@
-apply plugin: 'emp3AndroidApp'
+apply plugin: 'emp.android-app'
 
 dependencies {
     compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$version_emp3Android@aar")  { transitive = true }

@@ -1,4 +1,4 @@
-apply plugin: 'emp3AndroidApp'
+apply plugin: 'emp.android-app'
 
 android {
     defaultConfig {
