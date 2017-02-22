@@ -11,8 +11,8 @@ dependencies {
 
     compile project(":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
 
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view'   , version: "$version_emp3Android", ext: 'aar') { transitive = true }
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view'   , version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
 
     compile (group: 'sec.web.renderer'        , name: 'mil-sym-android-renderer', ext: 'aar') { transitive = true }
     provided ("org.cmapi.primitives:common-map-geospatial-notation")

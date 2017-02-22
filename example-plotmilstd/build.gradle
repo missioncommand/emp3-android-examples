@@ -4,8 +4,8 @@ dependencies {
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
 
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
 }
 
 android.defaultConfig.applicationId "mil.emp3.examples.plotmilstd"
