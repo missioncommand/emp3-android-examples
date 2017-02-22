@@ -13,8 +13,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile ('com.android.support:appcompat-v7:23.1.1')
 
-    provided (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar')
-    compile (group: 'mil.army.sec.smartClient', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = false }
+    provided (group: 'mil.army.missioncommand', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar')
+    compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = false }
     compile (group: 'sec.web.renderer', name: 'mil-sym-android-renderer', ext: 'aar') { transitive = true }
     provided (group: 'org.cmapi.primitives', name: 'common-map-geospatial-notation')
 
@@ -23,5 +23,5 @@ dependencies {
             classifier: 'api', ext: 'jar'
     compile (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
 
-    compile (group: 'mil.army.sec.smartClient', name:'emp3-android-worldwind', version:"$version_emp3Android", ext: 'aar') { transitive = true }
+    compile (group: 'mil.army.missioncommand', name:'emp3-android-worldwind', version:"$version_emp3Android", ext: 'aar') { transitive = true }
 }
