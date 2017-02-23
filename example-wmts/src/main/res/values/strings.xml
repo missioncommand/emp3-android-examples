@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">example-wmts</string>
+    <string name="UrlDefault">http://opencache.statkart.no/gatekeeper/gk/gk.open_wmts</string>
+    <string name="sample">matrikkel_bakgrunn</string>
+    <string name="CancelButton">Cancel</string>
+    <string name="OKButton">OK</string>
+    <string name="ZoomOut">Zoom -</string>
+    <string name="ZoomIn">Zoom +</string>
+    <string name="PanLeft">Left</string>
+    <string name="PanRight">Right</string>
+    <string name="TiltUp">Up</string>
+    <string name="TiltDown">Down</string>
+    <string name="rollCCW">Roll CCW</string>
+    <string name="rollCW">Roll CW</string>
+</resources>
