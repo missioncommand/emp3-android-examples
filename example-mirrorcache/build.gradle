@@ -1,7 +1,7 @@
 apply plugin: 'emp.android-app'
 
 dependencies {
-    compile ("mil.army.sec.smartClient:emp3-android-sdk-view:$project.version_emp3Android")
+    compile ("mil.army.missioncommand:emp3-android-sdk-view:$project.version_emp3Android")
 
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
