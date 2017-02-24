@@ -3,12 +3,11 @@ language: android
 android:
   components:
     - tools
-    - platform-tools
+    #- platform-tools
     - build-tools-23.0.2
     - android-23
-    - extra-google-m2repository
-    #- sys-img-armeabi-v7a-android-23
-    #- sys-img-x86-android-23
+    - extra-android-m2repository
+    #- extra-google-m2repository
 
 jdk:
   - oraclejdk8
@@ -31,7 +30,7 @@ before_install:
   - export GRADLE_OPTS="-Dorg.gradle.daemon=false -XX:MaxPermSize=512m -Xmx2048m $GRADLE_OPTS"
   - export DEFAULT_JVM_OPTS=
 
-install: echo "skip 'gradle assemble' step"
+install: true
 
 script:
  - ./gradlew build --refresh-dependencies --continue --stacktrace
