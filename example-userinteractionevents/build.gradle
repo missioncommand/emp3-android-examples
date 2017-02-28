@@ -1,7 +1,7 @@
-apply plugin: 'emp3AndroidApp'
+apply plugin: 'emp.android-app'
 
 dependencies {
-    compile (group: "mil.army.sec.smartClient", name: "emp3-android-sdk-view", version: "$version_emp3Android", ext: "aar") { transitive = true }
+    compile (group: "mil.army.missioncommand", name: "emp3-android-sdk-view", version: "$version_emp3Android", ext: "aar") { transitive = true }
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
 }
