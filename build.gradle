@@ -1,11 +1,14 @@
 buildscript {
     ext {
-        version_emp3Android = "2.1.0-SNAPSHOT"
+        version_emp3Android = "2.1.0"
     }
 
     repositories {
         mavenLocal()
         jcenter()
+        maven {
+            url "https://dl.bintray.com/missioncommand/maven/"
+        }
         maven {
             url "https://oss.jfrog.org/artifactory/libs-snapshot"
         }
