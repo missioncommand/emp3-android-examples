@@ -1,4 +1,7 @@
 # emp3-android-examples
+[![Build Status](https://travis-ci.org/missioncommand/emp3-android-examples.svg?branch=master)](https://travis-ci.org/missioncommand/emp3-android-examples)
+
+## About
 The emp3-android-examples repository contains code that shows, by examples, how Extensible Mapping Platform should be 
 used. There are many examples in this repository and this README document tries to point you to the correct example 
 based on your requirements.
