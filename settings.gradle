@@ -3,10 +3,10 @@ rootProject.name = 'emp3-android-example'
 include ':example-HelloEmp3'
 include ':example-MultiEngine'
 
+include ':example-capabilities'
 include ':example-cameraandwms'
 include ':example-plotmilstd'
 include ':example-userinteractionevents'
-include ':example-mirrorcache'
 include ':example-lookat'
 include ':example-geopackage'
 include ':example-geojson'
@@ -26,4 +26,6 @@ project(':example-mapfragmentandview:SampleMapViewPgm').name = 'example-mapfragm
 include ':example-mapfragmentandview:SampleMapFragmentPgm'
 project(':example-mapfragmentandview:SampleMapFragmentPgm').name = 'example-mapfragmentandview-SampleMapFragmentPgm'
 
-include ':example-capabilities'
+include 'example-mirrorcache-echo'
+project(':example-mirrorcache-echo').projectDir = new File(settingsDir, 'example-mirrorcache/echo')
+
