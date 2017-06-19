@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        version_emp3Android = "2.4.0"
+        version_emp3Android = "2.6.2-SNAPSHOT"
     }
 
     repositories {
@@ -15,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:2.3.0"
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath "mil.army.missioncommand:emp3-gradle-plugin:${version_emp3Android}"
         classpath "org.ajoberstar:grgit:1.7.0"
     }
