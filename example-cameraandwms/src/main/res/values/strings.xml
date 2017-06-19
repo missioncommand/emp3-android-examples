@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Camera And WMS</string>
-    <string name="UrlDefault">http://neowms.sci.gsfc.nasa.gov/wms/wms</string>
+    <string name="UrlDefault">https://neo.sci.gsfc.nasa.gov/wms/wms</string>
     <string name="VersionDefault">1.3.0</string>
     <string name="TileFormatDefault">image/png</string>
     <string name="TransparentDefault">true</string>
@@ -16,6 +16,8 @@
     <string name="TiltDown">Down</string>
     <string name="rollCCW">Roll CCW</string>
     <string name="rollCW">Roll CW</string>
+    <string name="Loop">Loop</string>
+    <string name="Stop">Stop</string>
 
 	<!-- from joystick interface -->
 	<string name="window_icon">Window icon</string>
