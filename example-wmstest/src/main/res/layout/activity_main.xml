@@ -55,16 +55,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Layer"
-                android:text="@string/sample"
+                android:text="@string/LayerDefault"
                 style="@style/Widget.AppCompat.Spinner.Underlined" />
 
             <EditText
-                android:id="@+id/ResolutionText"
+                android:id="@+id/DelayText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Meters per pixel"
                 android:inputType="numberDecimal"
-                android:text="@string/ResolutionDefault" />
+                android:text="@string/DelayDefault" />
 
             <GridLayout
                 android:layout_width="match_parent"
