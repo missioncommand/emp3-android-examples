@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner versionText;
     private Spinner tileFormatText;
     private Spinner transparentText;
+    private EditText delayText;
     ArrayList<String> layers = new ArrayList<>();
     String layer;
 
@@ -128,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                             try
 
                             {
+                                delayText = (EditText) findViewById(R.id.DelayText);
+                                String delayStr = delayText.getText().toString();
+                                final int delay = Integer.parseInt(delayStr);
                                 for (int i = 0; i < 5; i++) {
                                     List<IMapService> mapServices = map.getMapServices();
                                     Log.i(TAG, "map services count before " + mapServices.size());
@@ -138,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                     Log.i(TAG, "map services count after " + map.getMapServices().size());
-                                    Thread.sleep(2000);
+                                    Thread.sleep(delay);
                                     map.addMapService(wmsService);
-                                    Thread.sleep(2000);
+                                    Thread.sleep(delay);
                                 }
                             } catch (
                                     Exception e)
@@ -186,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                         if (wmsService == null) {
                             EditText urlText = (EditText) findViewById(R.id.UrlText);
                             EditText layerName = (EditText) findViewById(R.id.LayerText);
-                            EditText resolutionText = (EditText) findViewById(R.id.ResolutionText);
                             String url = urlText.getText().toString();
                             String version = versionText.getSelectedItem().toString();
                             WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
@@ -199,8 +202,7 @@ public class MainActivity extends AppCompatActivity {
                                     tileFormat.equals("null") ? null : tileFormat,  // tile format
                                     transparent,
                                     layers);
-                            String resolution = resolutionText.getText().toString();
-                            wmsService.setLayerResolution(Double.valueOf(resolution));
+                            wmsService.setLayerResolution(1.0);
                         }
                         map.addMapService(wmsService);
                     } catch (Exception e) {
