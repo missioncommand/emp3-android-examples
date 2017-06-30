@@ -1,26 +1,18 @@
 <resources>
-    <string name="app_name">Camera And WMS</string>
+    <string name="app_name">WMSTest</string>
     <string name="UrlDefault">https://neo.sci.gsfc.nasa.gov/wms/wms</string>
     <string name="VersionDefault">1.3.0</string>
     <string name="TileFormatDefault">image/png</string>
     <string name="TransparentDefault">true</string>
-    <string name="LayersDefault">set1</string>
-    <string name="ResolutionDefault">1.0</string>
+    <string name="LayerDefault">MOD_LSTD_CLIM_M</string>
+    <string name="DelayDefault">2000</string>
     <string name="CancelButton">Cancel</string>
     <string name="OKButton">OK</string>
-    <string name="ZoomOut">Zoom -</string>
-    <string name="ZoomIn">Zoom +</string>
-    <string name="PanLeft">Left</string>
-    <string name="PanRight">Right</string>
-    <string name="TiltUp">Up</string>
-    <string name="TiltDown">Down</string>
-    <string name="rollCCW">Roll CCW</string>
-    <string name="rollCW">Roll CW</string>
-    <string name="Loop">Loop</string>
-    <string name="Stop">Stop</string>
+    <string name="RemoveButton">Remove</string>
+    <string name="LoopButton">Loop</string>
 
-	<!-- from joystick interface -->
-	<string name="window_icon">Window icon</string>
+    <!-- from joystick interface -->
+    <string name="window_icon">Window icon</string>
     <string name="hide">Hide</string>
     <string name="close">Close</string>
     <string name="corner">Corner</string>
@@ -38,5 +30,4 @@
         <item>image/png</item>
         <item>image/jpeg</item>
     </string-array>
-    <string name="sample">MOD_LSTD_CLIM_M</string>
 </resources>

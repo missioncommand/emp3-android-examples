@@ -1,6 +1,6 @@
 rootProject.name = 'emp3-android-example'
 
-include ':example-HelloEmp3'
+include ':example-HelloEmp3', ':example-wmstest'
 include ':example-MultiEngine'
 
 include ':example-capabilities'
@@ -10,6 +10,7 @@ include ':example-userinteractionevents'
 include ':example-lookat'
 include ':example-geopackage'
 include ':example-geojson'
+include ':example-wmstest'
 
 include ':example-mapfragmentandview:MapTestFragment'
 project(':example-mapfragmentandview:MapTestFragment').name = 'example-mapfragmentandview-MapTestFragment'
