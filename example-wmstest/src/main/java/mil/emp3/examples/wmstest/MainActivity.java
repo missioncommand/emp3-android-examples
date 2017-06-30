@@ -133,15 +133,7 @@ public class MainActivity extends AppCompatActivity {
                                 String delayStr = delayText.getText().toString();
                                 final int delay = Integer.parseInt(delayStr);
                                 for (int i = 0; i < 5; i++) {
-                                    List<IMapService> mapServices = map.getMapServices();
-                                    Log.i(TAG, "map services count before " + mapServices.size());
-                                    for (IMapService mapService : mapServices) {
-                                        if (mapService.getGeoId().equals(wmsService.getGeoId())) {
-                                            map.removeMapService(wmsService);
-                                            break;
-                                        }
-                                    }
-                                    Log.i(TAG, "map services count after " + map.getMapServices().size());
+                                    map.removeMapService(wmsService);
                                     Thread.sleep(delay);
                                     map.addMapService(wmsService);
                                     Thread.sleep(delay);
@@ -199,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                             layers.add(layer);
                             wmsService = new WMS(url,
                                     wmsVersion,
-                                    tileFormat.equals("null") ? null : tileFormat,  // tile format
+                                    "image/png",  // tile format
                                     transparent,
                                     layers);
                             wmsService.setLayerResolution(1.0);
