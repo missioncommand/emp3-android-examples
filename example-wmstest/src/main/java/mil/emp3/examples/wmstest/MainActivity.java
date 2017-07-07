@@ -1,7 +1,7 @@
 package mil.emp3.examples.wmstest;
 
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,23 +11,25 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import org.cmapi.primitives.IGeoAltitudeMode;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import io.reactivex.schedulers.Schedulers;
 import mil.emp3.api.WMS;
 import mil.emp3.api.enums.WMSVersionEnum;
 import mil.emp3.api.events.MapStateChangeEvent;
 import mil.emp3.api.events.MapUserInteractionEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
-import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.IMap;
-import mil.emp3.api.interfaces.IMapService;
 import mil.emp3.api.listeners.IMapInteractionEventListener;
 import mil.emp3.api.listeners.IMapStateChangeEventListener;
+
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import io.reactivex.*;
+import io.reactivex.android.schedulers.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ArrayAdapter<CharSequence> versionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wms_versions, android.R.layout.simple_spinner_item);
-        versionText = (Spinner)findViewById(R.id.VersionText);
+        versionText = (Spinner) findViewById(R.id.VersionText);
         versionText.setAdapter(versionAdapter);
         ArrayAdapter<CharSequence> tileAdapter = ArrayAdapter.createFromResource(this,
                 R.array.image_formats, android.R.layout.simple_spinner_item);
-        tileFormatText = (Spinner)findViewById(R.id.TileFormatText);
+        tileFormatText = (Spinner) findViewById(R.id.TileFormatText);
         tileFormatText.setAdapter(tileAdapter);
         ArrayAdapter<CharSequence> booleanAdapter = ArrayAdapter.createFromResource(this,
                 R.array.boolean_values, android.R.layout.simple_spinner_item);
-        transparentText = (Spinner)findViewById(R.id.TransparentText);
+        transparentText = (Spinner) findViewById(R.id.TransparentText);
         transparentText.setAdapter(booleanAdapter);
         // Cancel button exits the app
         Button cancelButton = (Button) findViewById(R.id.CancelButton);
@@ -100,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
                                 empe.printStackTrace();
                             }
                             break;
+                        default:
+                            break;
                     }
                 }
             });
@@ -119,51 +123,47 @@ public class MainActivity extends AppCompatActivity {
 
         Button loopButton = (Button) findViewById(R.id.LoopButton);
         if (loopButton != null) {
-            loopButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Runnable remove = new Runnable() {
-                        @Override
-                        public void run() {
-                            try
-
-                            {
+            RxView.clicks(loopButton)
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(aVoid -> {
                                 delayText = (EditText) findViewById(R.id.DelayText);
                                 String delayStr = delayText.getText().toString();
                                 final int delay = Integer.parseInt(delayStr);
-                                for (int i = 0; i < 5; i++) {
-                                    map.removeMapService(wmsService);
-                                    Thread.sleep(delay);
-                                    map.addMapService(wmsService);
-                                    Thread.sleep(delay);
-                                }
-                            } catch (
-                                    Exception e)
 
-                            {
-                                e.printStackTrace();
+                                try
+
+                                {
+                                    for (int i = 0; i < 5; i++) {
+
+                                        map.removeMapService(wmsService);
+                                        Thread.sleep(delay);
+                                        map.addMapService(wmsService);
+                                        Thread.sleep(delay);
+                                    }
+
+                                } catch (
+                                        Exception e)
+
+                                {
+                                    e.printStackTrace();
+                                }
+
                             }
-                        }
-                    };
-                    Thread thread = new Thread(remove);
-                    thread.start();
-                }
-            });
+
+
+                    );
         }
 
         Button removeButton = (Button) findViewById(R.id.RemoveButton);
         if (removeButton != null) {
-            removeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        map.removeMapService(wmsService);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            RxView.clicks(removeButton)
+                    .subscribe(aVoid -> {
+                        try {
+                            map.removeMapService(wmsService);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
         }
 
         // Pressing OK sets the WMS server
@@ -175,33 +175,31 @@ public class MainActivity extends AppCompatActivity {
         if (okButton != null)
 
         {
-            okButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        if (wmsService == null) {
-                            EditText urlText = (EditText) findViewById(R.id.UrlText);
-                            EditText layerName = (EditText) findViewById(R.id.LayerText);
-                            String url = urlText.getText().toString();
-                            String version = versionText.getSelectedItem().toString();
-                            WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
-                            String tileFormat = tileFormatText.getSelectedItem().toString();
-                            boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
-                            layer = layerName.getText().toString();
-                            layers.add(layer);
-                            wmsService = new WMS(url,
-                                    wmsVersion,
-                                    "image/png",  // tile format
-                                    transparent,
-                                    layers);
-                            wmsService.setLayerResolution(1.0);
+            RxView.clicks(okButton)
+                    .subscribe(aVoid -> {
+                        try {
+                            if (wmsService == null) {
+                                EditText urlText = (EditText) findViewById(R.id.UrlText);
+                                EditText layerName = (EditText) findViewById(R.id.LayerText);
+                                String url = urlText.getText().toString();
+                                String version = versionText.getSelectedItem().toString();
+                                WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
+                                String tileFormat = tileFormatText.getSelectedItem().toString();
+                                boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
+                                layer = layerName.getText().toString();
+                                layers.add(layer);
+                                wmsService = new WMS(url,
+                                        wmsVersion,
+                                        "image/png",  // tile format
+                                        transparent,
+                                        layers);
+                                wmsService.setLayerResolution(1.0);
+                            }
+                            map.addMapService(wmsService);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        map.addMapService(wmsService);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                    });
         }
     }
 }
