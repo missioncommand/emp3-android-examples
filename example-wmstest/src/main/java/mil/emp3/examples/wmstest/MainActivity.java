@@ -1,15 +1,12 @@
 package mil.emp3.examples.wmstest;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -18,25 +15,20 @@ import org.cmapi.primitives.IGeoAltitudeMode;
 import io.reactivex.schedulers.Schedulers;
 import mil.emp3.api.WMS;
 import mil.emp3.api.enums.WMSVersionEnum;
-import mil.emp3.api.events.MapStateChangeEvent;
-import mil.emp3.api.events.MapUserInteractionEvent;
+
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.IMap;
-import mil.emp3.api.listeners.IMapInteractionEventListener;
-import mil.emp3.api.listeners.IMapStateChangeEventListener;
+
+// The only place this is really useful is the observeOn call
+// Elsewhere it Android data binding could have been used
 
 import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-
-import io.reactivex.*;
-import io.reactivex.android.schedulers.*;
 
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     private WMS wmsService = null;
     private IMap map = null;
-    private Spinner selectedLayers;
     private Spinner versionText;
     private Spinner tileFormatText;
     private Spinner transparentText;
@@ -64,12 +56,7 @@ public class MainActivity extends AppCompatActivity {
         // Cancel button exits the app
         Button cancelButton = (Button) findViewById(R.id.CancelButton);
         if (cancelButton != null) {
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
+            cancelButton.setOnClickListener(view -> finish());
         } else {
             Log.e(TAG, "Cancel Button not found");
         }
@@ -90,81 +77,72 @@ public class MainActivity extends AppCompatActivity {
 
         map = (IMap) findViewById(R.id.map);
         try {
-            map.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
-                @Override
-                public void onEvent(MapStateChangeEvent mapStateChangeEvent) {
-                    Log.d(TAG, "mapStateChangeEvent " + mapStateChangeEvent.getNewState());
-                    switch (mapStateChangeEvent.getNewState()) {
-                        case MAP_READY:
-                            try {
-                                map.setCamera(camera, false);
-                            } catch (EMP_Exception empe) {
-                                empe.printStackTrace();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+            map.addMapStateChangeEventListener(mapStateChangeEvent -> {
+                Log.d(TAG, "mapStateChangeEvent " + mapStateChangeEvent.getNewState());
+                switch (mapStateChangeEvent.getNewState()) {
+                    case MAP_READY:
+                        try {
+                            map.setCamera(camera, false);
+                        } catch (EMP_Exception empe) {
+                            empe.printStackTrace();
+                        }
+                        break;
+                    default:
+                        break;
                 }
             });
         } catch (EMP_Exception e) {
             Log.e(TAG, "addMapStateChangeEventListener", e);
         }
         try {
-            map.addMapInteractionEventListener(new IMapInteractionEventListener() {
-                @Override
-                public void onEvent(MapUserInteractionEvent mapUserInteractionEvent) {
-                    Log.d(TAG, "mapUserInteractionEvent " + mapUserInteractionEvent.getPoint().x);
-                }
-            });
+            map.addMapInteractionEventListener(mapUserInteractionEvent -> Log.d(TAG, "mapUserInteractionEvent " + mapUserInteractionEvent.getPoint().x));
         } catch (EMP_Exception e) {
             Log.e(TAG, "addMapInteractionEventListener", e);
         }
 
         Button loopButton = (Button) findViewById(R.id.LoopButton);
-        if (loopButton != null) {
-            RxView.clicks(loopButton)
-                    .observeOn(Schedulers.newThread())
-                    .subscribe(aVoid -> {
-                                delayText = (EditText) findViewById(R.id.DelayText);
-                                String delayStr = delayText.getText().toString();
-                                final int delay = Integer.parseInt(delayStr);
 
-                                try
+        RxView.clicks(loopButton)
+                .observeOn(Schedulers.newThread())
+                .subscribe(aVoid -> {
+                            delayText = (EditText) findViewById(R.id.DelayText);
+                            String delayStr = delayText.getText().toString();
+                            final int delay = Integer.parseInt(delayStr);
 
-                                {
-                                    for (int i = 0; i < 5; i++) {
+                            try
 
-                                        map.removeMapService(wmsService);
-                                        Thread.sleep(delay);
-                                        map.addMapService(wmsService);
-                                        Thread.sleep(delay);
-                                    }
+                            {
+                                for (int i = 0; i < 5; i++) {
 
-                                } catch (
-                                        Exception e)
-
-                                {
-                                    e.printStackTrace();
+                                    map.removeMapService(wmsService);
+                                    Thread.sleep(delay);
+                                    map.addMapService(wmsService);
+                                    Thread.sleep(delay);
                                 }
 
+                            } catch (
+                                    Exception e)
+
+                            {
+                                e.printStackTrace();
                             }
 
+                        }
 
-                    );
-        }
+
+                );
+
 
         Button removeButton = (Button) findViewById(R.id.RemoveButton);
-        if (removeButton != null) {
-            RxView.clicks(removeButton)
-                    .subscribe(aVoid -> {
-                        try {
-                            map.removeMapService(wmsService);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
+
+        RxView.clicks(removeButton)
+                .subscribe(aVoid -> {
+                    try {
+                        map.removeMapService(wmsService);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
 
         // Pressing OK sets the WMS server
         // Only one WMS layer is displayed at a time
@@ -172,35 +150,33 @@ public class MainActivity extends AppCompatActivity {
         // previous server
 
         Button okButton = (Button) findViewById(R.id.OKButton);
-        if (okButton != null)
 
-        {
-            RxView.clicks(okButton)
-                    .subscribe(aVoid -> {
-                        try {
-                            if (wmsService == null) {
-                                EditText urlText = (EditText) findViewById(R.id.UrlText);
-                                EditText layerName = (EditText) findViewById(R.id.LayerText);
-                                String url = urlText.getText().toString();
-                                String version = versionText.getSelectedItem().toString();
-                                WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
-                                String tileFormat = tileFormatText.getSelectedItem().toString();
-                                boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
-                                layer = layerName.getText().toString();
-                                layers.add(layer);
-                                wmsService = new WMS(url,
-                                        wmsVersion,
-                                        "image/png",  // tile format
-                                        transparent,
-                                        layers);
-                                wmsService.setLayerResolution(1.0);
-                            }
-                            map.addMapService(wmsService);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        RxView.clicks(okButton)
+                .subscribe(aVoid -> {
+                    try {
+                        if (wmsService == null) {
+                            EditText urlText = (EditText) findViewById(R.id.UrlText);
+                            EditText layerName = (EditText) findViewById(R.id.LayerText);
+                            String url = urlText.getText().toString();
+                            String version = versionText.getSelectedItem().toString();
+                            WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
+                            String tileFormat = tileFormatText.getSelectedItem().toString();
+                            boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
+                            layer = layerName.getText().toString();
+                            layers.add(layer);
+                            wmsService = new WMS(url,
+                                    wmsVersion,
+                                    "image/png",  // tile format
+                                    transparent,
+                                    layers);
+                            wmsService.setLayerResolution(1.0);
                         }
-                    });
-        }
+                        map.addMapService(wmsService);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
+
 }
 
