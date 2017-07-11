@@ -65,31 +65,23 @@ public class CustomActivity extends AppCompatActivity {
 
         map = dataBinding.map;
         try {
-            map.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
-                @Override
-                public void onEvent(MapStateChangeEvent mapStateChangeEvent) {
-                    Log.d(TAG, "mapStateChangeEvent " + mapStateChangeEvent.getNewState());
-                    switch (mapStateChangeEvent.getNewState()) {
-                        case MAP_READY:
-                            try {
-                                map.setCamera(camera, false);
-                            } catch (EMP_Exception empe) {
-                                empe.printStackTrace();
-                            }
-                            break;
-                    }
+            map.addMapStateChangeEventListener(mapStateChangeEvent -> {
+                Log.d(TAG, "mapStateChangeEvent " + mapStateChangeEvent.getNewState());
+                switch (mapStateChangeEvent.getNewState()) {
+                    case MAP_READY:
+                        try {
+                            map.setCamera(camera, false);
+                        } catch (EMP_Exception empe) {
+                            empe.printStackTrace();
+                        }
+                        break;
                 }
             });
         } catch (EMP_Exception e) {
             Log.e(TAG, "addMapStateChangeEventListener", e);
         }
         try {
-            map.addMapInteractionEventListener(new IMapInteractionEventListener() {
-                @Override
-                public void onEvent(MapUserInteractionEvent mapUserInteractionEvent) {
-                    Log.d(TAG, "mapUserInteractionEvent " + mapUserInteractionEvent.getPoint().x);
-                }
-            });
+            map.addMapInteractionEventListener(mapUserInteractionEvent -> Log.d(TAG, "mapUserInteractionEvent " + mapUserInteractionEvent.getPoint().x));
         } catch (EMP_Exception e) {
             Log.e(TAG, "addMapInteractionEventListener", e);
         }
