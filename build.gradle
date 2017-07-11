@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        version_emp3Android = "2.7.0"
+        version_emp3Android = "2.8.0-SNAPSHOT"
     }
 
     repositories {
