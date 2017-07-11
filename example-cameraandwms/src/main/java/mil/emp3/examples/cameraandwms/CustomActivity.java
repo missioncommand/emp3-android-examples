@@ -1,22 +1,16 @@
 package mil.emp3.examples.cameraandwms;
 
-import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import mil.emp3.api.WMS;
 import mil.emp3.api.enums.WMSVersionEnum;
@@ -37,11 +31,6 @@ public class CustomActivity extends AppCompatActivity {
     private WMS wmsService = null;
     private WMS oldWMSService = null;
     private IMap map = null;
-    private Spinner selectedLayers;
-    private Spinner versionText;
-    private Spinner tileFormatText;
-    private Spinner transparentText;
-
     ActivityCustomBinding dataBinding;
 
     @Override
@@ -52,16 +41,13 @@ public class CustomActivity extends AppCompatActivity {
         dataBinding.setCwms(this);
         ArrayAdapter<CharSequence> versionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wms_versions, android.R.layout.simple_spinner_item);
-        versionText = (Spinner) findViewById(R.id.VersionText);
-        versionText.setAdapter(versionAdapter);
+        dataBinding.VersionText.setAdapter(versionAdapter);
         ArrayAdapter<CharSequence> tileAdapter = ArrayAdapter.createFromResource(this,
                 R.array.image_formats, android.R.layout.simple_spinner_item);
-        tileFormatText = (Spinner) findViewById(R.id.TileFormatText);
-        tileFormatText.setAdapter(tileAdapter);
+        dataBinding.TileFormatText.setAdapter(tileAdapter);
         ArrayAdapter<CharSequence> booleanAdapter = ArrayAdapter.createFromResource(this,
                 R.array.boolean_values, android.R.layout.simple_spinner_item);
-        transparentText = (Spinner) findViewById(R.id.TransparentText);
-        transparentText.setAdapter(booleanAdapter);
+        dataBinding.TransparentText.setAdapter(booleanAdapter);
         /*
         Instantiate a camera and set the location and angle
         The altitude here is set initially to 1000 km
@@ -77,7 +63,7 @@ public class CustomActivity extends AppCompatActivity {
         camera.setRoll(0.0);
         camera.setTilt(0.0);
 
-        map = (IMap) findViewById(R.id.map);
+        map = dataBinding.map;
         try {
             map.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
                 @Override
@@ -263,17 +249,14 @@ public class CustomActivity extends AppCompatActivity {
 
 
     public void onClickOK(View v) {
-        EditText urlText = (EditText) findViewById(R.id.UrlText);
-        EditText layerName = (EditText) findViewById(R.id.LayerText);
-        EditText resolutionText = (EditText) findViewById(R.id.ResolutionText);
 
         try {
-            String url = urlText.getText().toString();
-            String version = versionText.getSelectedItem().toString();
+            String url = dataBinding.UrlText.getText().toString();
+            String version = dataBinding.VersionText.getSelectedItem().toString();
             WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
-            String tileFormat = tileFormatText.getSelectedItem().toString();
-            boolean transparent = (transparentText.getSelectedItem().toString()).equals("true");
-            String layer = layerName.getText().toString();
+            String tileFormat = dataBinding.TileFormatText.getSelectedItem().toString();
+            boolean transparent = (dataBinding.TransparentText.getSelectedItem().toString()).equals("true");
+            String layer = dataBinding.LayerText.getText().toString();
             ArrayList<String> layers = new ArrayList<>();
             layers.add(layer);
             wmsService = new WMS(url,
@@ -281,7 +264,7 @@ public class CustomActivity extends AppCompatActivity {
                     tileFormat.equals("null") ? null : tileFormat,  // tile format
                     transparent,
                     layers);
-            String resolution = resolutionText.getText().toString();
+            String resolution = dataBinding.ResolutionText.getText().toString();
             wmsService.setLayerResolution(Double.valueOf(resolution));
             if (wmsService != null) {
                 if (wmsService != oldWMSService) {
