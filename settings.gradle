@@ -27,6 +27,6 @@ project(':example-mapfragmentandview:SampleMapViewPgm').name = 'example-mapfragm
 include ':example-mapfragmentandview:SampleMapFragmentPgm'
 project(':example-mapfragmentandview:SampleMapFragmentPgm').name = 'example-mapfragmentandview-SampleMapFragmentPgm'
 
-include 'example-mirrorcache-echo'
-project(':example-mirrorcache-echo').projectDir = new File(settingsDir, 'example-mirrorcache/echo')
+//include 'example-mirrorcache-echo'
+//project(':example-mirrorcache-echo').projectDir = new File(settingsDir, 'example-mirrorcache/echo')
 

@@ -4,7 +4,7 @@ android.defaultConfig.applicationId "mil.emp3.examples.samplemapview"
 
 dependencies {
     compile ("com.android.support:appcompat-v7")
-
+    provided files ("$rootDir/cmapi/cmapi.jar")
     compile project(":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
 
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
