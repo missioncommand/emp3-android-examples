@@ -26,7 +26,7 @@ android {
 dependencies {
     compile ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android") { transitive = true }
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
-
+    provided files ("$rootDir/cmapi/cmapi.jar")
     // Compile in the map engines rather than load it from the APK
     compile ("mil.army.missioncommand:emp3-android-worldwind:$version_emp3Android@aar") { transitive = true }
     compile (group: 'mil.army.missioncommand', name: 'mil-sym-android-renderer', ext: 'aar') { transitive = true }

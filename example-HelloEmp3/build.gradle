@@ -5,6 +5,7 @@ dependencies {
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
 
     compile ("com.android.support:appcompat-v7")
+    provided files ("$rootDir/cmapi/cmapi.jar")
 }
 
 android.defaultConfig.applicationId "mil.emp3.examples.helloemp3"

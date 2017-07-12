@@ -11,6 +11,6 @@ dependencies {
 
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
-
+    provided files ("$rootDir/cmapi/cmapi.jar")
     compile ("com.android.support:appcompat-v7")
 }
