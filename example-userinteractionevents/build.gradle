@@ -4,7 +4,6 @@ dependencies {
     compile (group: "mil.army.missioncommand", name: "emp3-android-sdk-view", version: "$version_emp3Android", ext: "aar") { transitive = true }
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
-    provided files ("$rootDir/cmapi/cmapi.jar")
 }
 
 android.defaultConfig.applicationId "mil.emp3.examples.userinteractionevents"
