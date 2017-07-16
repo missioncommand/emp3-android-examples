@@ -1,5 +1,23 @@
 apply plugin: 'emp.android-app'
 
+android {
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "mil.emp3.examples.multiengine"
+        jackOptions {
+            enabled true
+        }
+    }
+}
+
 dependencies {
     compile ("mil.army.missioncommand:emp3-android-sdk-view:$project.version_emp3Android") { transitive = true }
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
@@ -8,4 +26,3 @@ dependencies {
     // You must install emp3-android-worldwind.spk
 }
 
-android.defaultConfig.applicationId "mil.emp3.examples.multiengine"

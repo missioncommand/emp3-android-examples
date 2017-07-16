@@ -1,9 +1,26 @@
 apply plugin: 'emp.android-app'
 
+android {
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        applicationId "mil.emp3.examples.userinteractionevents"
+
+        jackOptions {
+            enabled true
+        }
+    }
+}
+
 dependencies {
     compile (group: "mil.army.missioncommand", name: "emp3-android-sdk-view", version: "$version_emp3Android", ext: "aar") { transitive = true }
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
 }
 
-android.defaultConfig.applicationId "mil.emp3.examples.userinteractionevents"

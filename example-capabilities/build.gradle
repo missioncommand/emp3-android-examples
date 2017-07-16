@@ -1,6 +1,22 @@
 apply plugin: 'emp.android-app'
 
-android.defaultConfig.applicationId "mil.emp3.examples.capabilities"
+android {
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "mil.emp3.examples.capabilities"
+        jackOptions {
+            enabled true
+        }
+    }
+}
 
 dependencies {
     compile ("com.android.support:appcompat-v7")
