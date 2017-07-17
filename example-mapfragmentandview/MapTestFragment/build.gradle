@@ -10,6 +10,5 @@ dependencies {
     compile     ("com.android.support:appcompat-v7")
     compile     ("com.android.support:support-v4:23.2.1")
     testCompile ("junit:junit")
-    provided files ("$rootDir/cmapi/cmapi.jar")
     provided (group: 'mil.army.missioncommand', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar') { transitive = true }
 }

@@ -1,11 +1,26 @@
 apply plugin: 'emp.android-app'
 
-android.defaultConfig.applicationId "mil.emp3.examples.capabilities"
+android {
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "mil.emp3.examples.capabilities"
+        jackOptions {
+            enabled true
+        }
+    }
+}
 
 dependencies {
     compile ("com.android.support:appcompat-v7")
     compile ("com.android.support:design")
-    provided files ("$rootDir/cmapi/cmapi.jar")
 
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     compile (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
