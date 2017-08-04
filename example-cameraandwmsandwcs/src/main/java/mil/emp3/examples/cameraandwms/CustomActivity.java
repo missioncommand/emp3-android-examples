@@ -272,7 +272,7 @@ public class CustomActivity extends AppCompatActivity {
                     map.addMapService(wmsService);
                     oldWMSService = wmsService;
                     if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
-                        addWCSButton.setEnabled(true);
+                        dataBinding.addWCS.setEnabled(true);
                     }
                 } else {
                     Log.i(TAG, "Layer unchanged");
