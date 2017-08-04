@@ -274,6 +274,9 @@ public class CustomActivity extends Activity {
                     altitudeMode = altMode;
                     camera.apply(false);
                 }
+                if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
+                    dataBinding.addWCS.setEnabled(true);
+                }
             } else {
                 Log.i(TAG, "Got null WMS service");
             }
@@ -284,6 +287,8 @@ public class CustomActivity extends Activity {
     public void onClickAddWCS(View v){
         try {
             try {
+                url = dataBinding.UrlText.getText().toString();
+                layer = dataBinding.LayerText.getText().toString();
                 wcsService = new WCS(url + "wcs", layer);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
