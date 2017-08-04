@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="mil.emp3.examples.cameraandwms.CustomActivity">
+    tools:context="mil.emp3.examples.wms_and_wcs.CustomActivity">
 
     <data>
-        <variable name = "cwms" type = "mil.emp3.examples.cameraandwms.CustomActivity"/>
+        <variable name = "cwms" type = "mil.emp3.examples.wms_and_wcs.CustomActivity"/>
     </data>
 <LinearLayout
     android:layout_width="match_parent"

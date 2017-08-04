@@ -1,14 +1,11 @@
-package mil.emp3.examples.cameraandwms;
+package mil.emp3.examples.wms_and_wcs;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
@@ -19,24 +16,18 @@ import java.util.ArrayList;
 import mil.emp3.api.WMS;
 import mil.emp3.api.WCS;
 import mil.emp3.api.enums.WMSVersionEnum;
-import mil.emp3.api.events.MapStateChangeEvent;
-import mil.emp3.api.events.MapUserInteractionEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.ILookAt;
 import mil.emp3.api.interfaces.IMap;
-import mil.emp3.api.listeners.IMapInteractionEventListener;
-import mil.emp3.api.listeners.IMapStateChangeEventListener;
 import mil.emp3.examples.maptestfragment.CameraUtility;
-import wei.mark.standout.StandOutWindow;
 
-import mil.emp3.examples.cameraandwms.databinding.ActivityCustomBinding;
+import mil.emp3.examples.wms_and_wcs.databinding.ActivityCustomBinding;
 
 public class CustomActivity extends Activity {
 
     private final static String TAG = CustomActivity.class.getSimpleName();
     private WMS wmsService = null;
-    private WMS oldWMSService = null;
     private WCS wcsService = null;
     private IMap map = null;
     private ActivityCustomBinding dataBinding;
@@ -256,10 +247,10 @@ public class CustomActivity extends Activity {
             String altModeString = dataBinding.AltitudeMode.getSelectedItem().toString();
             IGeoAltitudeMode.AltitudeMode altMode = null;
             switch (altModeString) {
-                case "CLAMP TO GROUND" :
+                case "CLAMP TO GROUND":
                     altMode = IGeoAltitudeMode.AltitudeMode.CLAMP_TO_GROUND;
                     break;
-                case "RELATIVE TO GROUND" :
+                case "RELATIVE TO GROUND":
                     altMode = IGeoAltitudeMode.AltitudeMode.RELATIVE_TO_GROUND;
                     break;
                 default:
@@ -277,23 +268,11 @@ public class CustomActivity extends Activity {
             String resolution = dataBinding.ResolutionText.getText().toString();
             wmsService.setLayerResolution(Double.valueOf(resolution));
             if (wmsService != null) {
-                if (wmsService != oldWMSService) {
-                    if (oldWMSService != null)
-                        map.removeMapService(oldWMSService);
-                    else
-                        Log.i(TAG, "No previous WMS service");
-                    map.addMapService(wmsService);
-                    oldWMSService = wmsService;
-                    if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
-                        dataBinding.addWCS.setEnabled(true);
-                    }
-                    if (altMode != altitudeMode) {
-                        camera.setAltitudeMode(altMode);
-                        altitudeMode = altMode;
-                        camera.apply(false);
-                    }
-                } else {
-                    Log.i(TAG, "Layer unchanged");
+                map.addMapService(wmsService);
+                if (altMode != altitudeMode) {
+                    camera.setAltitudeMode(altMode);
+                    altitudeMode = altMode;
+                    camera.apply(false);
                 }
             } else {
                 Log.i(TAG, "Got null WMS service");
@@ -311,8 +290,8 @@ public class CustomActivity extends Activity {
             }
             Log.i(TAG, wcsService.toString());
             map.addMapService(wcsService);
-            ILookAt calculatedLookAt = CameraUtility.setupLookAt(37.5, -105.5, 5000,
-                    37.577227, -105.485845, 4374);
+            ILookAt calculatedLookAt = CameraUtility.setupLookAt(28, 87, 9000,
+                    27.9878, 86.9250, 8848);
             map.setLookAt(calculatedLookAt, false);
 
             dataBinding.removeWCS.setEnabled(true);
@@ -323,10 +302,6 @@ public class CustomActivity extends Activity {
     public void onClickRemoveWCS(View v){
         try {
             map.removeMapService(wcsService);
-            ILookAt calculatedLookAt = CameraUtility.setupLookAt(37.5, -105.5, 5000,
-                    37.577227, -105.485845, 4374);
-            map.setLookAt(calculatedLookAt, false);
-
             dataBinding.removeWCS.setEnabled(false);
             dataBinding.addWCS.setEnabled(true);
         } catch (EMP_Exception ex) {
