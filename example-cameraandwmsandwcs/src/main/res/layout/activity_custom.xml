@@ -39,22 +39,13 @@
                 android:text="@string/VersionDefault" />
 
             <Spinner
-                android:id="@+id/TileFormatText"
+                android:id="@+id/AltitudeMode"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tile Format"
+                android:hint="Altitude Mode"
                 android:spinnerMode="dropdown"
-                android:text="@string/TileFormatDefault" />
-
-            <Spinner
-                android:id="@+id/TransparentText"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Transparent"
-                android:spinnerMode="dropdown"
-                android:text="@string/TransparentDefault" />
+                android:text="@string/AltitudeModeDefault" />
 
             <EditText
                 android:id="@+id/LayerText"
@@ -78,7 +69,7 @@
                 android:useDefaultMargins="true"
                 android:alignmentMode="alignBounds"
                 android:columnOrderPreserved="false"
-                android:columnCount="3">
+                android:columnCount="2">
 
                 <Button
                     android:id="@+id/button"
@@ -159,18 +150,20 @@
                     android:onClick="@{cwms::onClickRollCW}" />
 
                 <Button
+                    android:id="@+id/addWCS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_row="5"
                     android:onClick="@{cwms::onClickAddWCS}"
                     android:text="Add WCS" />
 
                 <Button
+                    android:id="@+id/removeWCS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_row="5"
                     android:onClick="@{cwms::onClickRemoveWCS}"
                     android:text="Remove WCS" />
             </GridLayout>

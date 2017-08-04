@@ -1,5 +1,6 @@
 package mil.emp3.examples.cameraandwms;
 
+import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,14 +32,19 @@ import wei.mark.standout.StandOutWindow;
 
 import mil.emp3.examples.cameraandwms.databinding.ActivityCustomBinding;
 
-public class CustomActivity extends AppCompatActivity {
+public class CustomActivity extends Activity {
 
     private final static String TAG = CustomActivity.class.getSimpleName();
     private WMS wmsService = null;
     private WMS oldWMSService = null;
     private WCS wcsService = null;
     private IMap map = null;
-    ActivityCustomBinding dataBinding;
+    private ActivityCustomBinding dataBinding;
+    private String url;
+    private String layer;
+    private IGeoAltitudeMode.AltitudeMode altitudeMode = IGeoAltitudeMode.AltitudeMode.ABSOLUTE;
+    private final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +55,17 @@ public class CustomActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> versionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wms_versions, android.R.layout.simple_spinner_item);
         dataBinding.VersionText.setAdapter(versionAdapter);
-        ArrayAdapter<CharSequence> tileAdapter = ArrayAdapter.createFromResource(this,
-                R.array.image_formats, android.R.layout.simple_spinner_item);
-        dataBinding.TileFormatText.setAdapter(tileAdapter);
-        ArrayAdapter<CharSequence> booleanAdapter = ArrayAdapter.createFromResource(this,
-                R.array.boolean_values, android.R.layout.simple_spinner_item);
-        dataBinding.TransparentText.setAdapter(booleanAdapter);
+        ArrayAdapter<CharSequence> altitudeModeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.altitude_mode, android.R.layout.simple_spinner_item);
+        dataBinding.AltitudeMode.setAdapter(altitudeModeAdapter);
         /*
         Instantiate a camera and set the location and angle
         The altitude here is set initially to 1000 km
          */
 
-        final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
         camera.setName("Main Cam");
-        camera.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
-        camera.setAltitude(1e6);
+        camera.setAltitudeMode(altitudeMode);
+        camera.setAltitude(1e5);
         camera.setHeading(0.0);
         camera.setLatitude(40.0);
         camera.setLongitude(-100.0);
@@ -248,18 +250,29 @@ public class CustomActivity extends AppCompatActivity {
     public void onClickOK(View v) {
 
         try {
-            String url = dataBinding.UrlText.getText().toString();
+            url = dataBinding.UrlText.getText().toString();
             String version = dataBinding.VersionText.getSelectedItem().toString();
             WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
-            String tileFormat = dataBinding.TileFormatText.getSelectedItem().toString();
-            boolean transparent = (dataBinding.TransparentText.getSelectedItem().toString()).equals("true");
-            String layer = dataBinding.LayerText.getText().toString();
+            String altModeString = dataBinding.AltitudeMode.getSelectedItem().toString();
+            IGeoAltitudeMode.AltitudeMode altMode = null;
+            switch (altModeString) {
+                case "CLAMP TO GROUND" :
+                    altMode = IGeoAltitudeMode.AltitudeMode.CLAMP_TO_GROUND;
+                    break;
+                case "RELATIVE TO GROUND" :
+                    altMode = IGeoAltitudeMode.AltitudeMode.RELATIVE_TO_GROUND;
+                    break;
+                default:
+                    altMode = IGeoAltitudeMode.AltitudeMode.ABSOLUTE;
+                    break;
+            }
+            layer = dataBinding.LayerText.getText().toString();
             ArrayList<String> layers = new ArrayList<>();
             layers.add(layer);
-            wmsService = new WMS(url,
+            wmsService = new WMS(url + "wms",
                     wmsVersion,
-                    tileFormat.equals("null") ? null : tileFormat,  // tile format
-                    transparent,
+                    "image/png",
+                    true,
                     layers);
             String resolution = dataBinding.ResolutionText.getText().toString();
             wmsService.setLayerResolution(Double.valueOf(resolution));
@@ -272,7 +285,12 @@ public class CustomActivity extends AppCompatActivity {
                     map.addMapService(wmsService);
                     oldWMSService = wmsService;
                     if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
-                        addWCSButton.setEnabled(true);
+                        dataBinding.addWCS.setEnabled(true);
+                    }
+                    if (altMode != altitudeMode) {
+                        camera.setAltitudeMode(altMode);
+                        altitudeMode = altMode;
+                        camera.apply(false);
                     }
                 } else {
                     Log.i(TAG, "Layer unchanged");
@@ -286,10 +304,8 @@ public class CustomActivity extends AppCompatActivity {
     }
     public void onClickAddWCS(View v){
         try {
-            String url = "http://10.0.2.2:8080/geoserver/tiger/wcs";
-            String coverageText = "gebco";
             try {
-                wcsService = new WCS(url, coverageText);
+                wcsService = new WCS(url + "wcs", layer);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

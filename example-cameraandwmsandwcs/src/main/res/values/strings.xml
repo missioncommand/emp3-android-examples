@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Camera And WMS</string>
-    <string name="UrlDefault">https://neo.sci.gsfc.nasa.gov/wms/wms</string>
+    <string name="UrlDefault">http://192.168.1.5:8080/geoserver/</string>
     <string name="VersionDefault">1.3.0</string>
-    <string name="TileFormatDefault">image/png</string>
-    <string name="TransparentDefault">true</string>
     <string name="LayersDefault">set1</string>
     <string name="ResolutionDefault">1.0</string>
     <string name="CancelButton">Cancel</string>
@@ -30,13 +28,11 @@
         <item>VERSION_1_1</item>
         <item>VERSION_1_1_1</item>
     </string-array>
-    <string-array name="boolean_values">
-        <item>true</item>
-        <item>false</item>
+    <string-array name="altitude_mode">
+        <item>ABSOLUTE</item>
+        <item>CLAMP TO GROUND</item>
+        <item>RELATIVE TO GROUND</item>
     </string-array>
-    <string-array name="image_formats">
-        <item>image/png</item>
-        <item>image/jpeg</item>
-    </string-array>
-    <string name="sample">MOD_LSTD_CLIM_M</string>
+    <string name="AltitudeModeDefault">ABSOLUTE</string>
+    <string name="sample">gebco:gebco</string>
 </resources>
