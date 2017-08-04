@@ -159,7 +159,6 @@
                     android:onClick="@{cwms::onClickRollCW}" />
 
                 <Button
-                    android:id="@+id/addWCS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
@@ -168,7 +167,6 @@
                     android:text="Add WCS" />
 
                 <Button
-                    android:id="@+id/removeWCS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"

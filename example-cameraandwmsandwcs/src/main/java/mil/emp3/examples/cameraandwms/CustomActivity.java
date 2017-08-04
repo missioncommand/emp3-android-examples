@@ -93,8 +93,6 @@ public class CustomActivity extends AppCompatActivity {
             Log.e(TAG, "addMapInteractionEventListener", e);
         }
 
-        WallpaperController wallpaperController = new WallpaperController(map);
-        StandOutWindow.show(getBaseContext(), WallpaperController.class, StandOutWindow.DEFAULT_ID);
 
     }
 
@@ -273,9 +271,7 @@ public class CustomActivity extends AppCompatActivity {
                         Log.i(TAG, "No previous WMS service");
                     map.addMapService(wmsService);
                     oldWMSService = wmsService;
-                    Button addWCSButton = (Button) findViewById(R.id.addWCS);
-                    Button removeWCSButton = (Button) findViewById(R.id.removeWCS);
-                    if(!(addWCSButton.isEnabled() || removeWCSButton.isEnabled())){
+                    if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
                         addWCSButton.setEnabled(true);
                     }
                 } else {
@@ -290,8 +286,8 @@ public class CustomActivity extends AppCompatActivity {
     }
     public void onClickAddWCS(View v){
         try {
-            String url = "http://10.0.2.2:8080/geoserver/tiger/wms";
-            String coverageText = "gebco:gebco";
+            String url = "http://10.0.2.2:8080/geoserver/tiger/wcs";
+            String coverageText = "gebco";
             try {
                 wcsService = new WCS(url, coverageText);
             } catch (MalformedURLException e) {
@@ -303,10 +299,8 @@ public class CustomActivity extends AppCompatActivity {
                     37.577227, -105.485845, 4374);
             map.setLookAt(calculatedLookAt, false);
 
-            Button removeWCSButton = (Button) findViewById(R.id.removeWCS);
-            removeWCSButton.setEnabled(true);
-            Button addWCSButton = (Button) findViewById(R.id.addWCS);
-            addWCSButton.setEnabled(false);
+            dataBinding.removeWCS.setEnabled(true);
+            dataBinding.addWCS.setEnabled(false);
         } catch (EMP_Exception ex) {
         }
     }
@@ -317,10 +311,8 @@ public class CustomActivity extends AppCompatActivity {
                     37.577227, -105.485845, 4374);
             map.setLookAt(calculatedLookAt, false);
 
-            Button removeWCSButton = (Button) findViewById(R.id.removeWCS);
-            removeWCSButton.setEnabled(false);
-            Button addWCSButton = (Button) findViewById(R.id.addWCS);
-            addWCSButton.setEnabled(true);
+            dataBinding.removeWCS.setEnabled(false);
+            dataBinding.addWCS.setEnabled(true);
         } catch (EMP_Exception ex) {
         }
     }
