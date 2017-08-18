@@ -1,5 +1,23 @@
-apply plugin: 'emp.android-lib'
+apply plugin: 'com.android.library'
 
+android {
+    compileSdkVersion 23
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        packagingOptions {
+            exclude 'META-INF/rxjava.properties'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 android {
     lintOptions {
         abortOnError false
@@ -7,8 +25,8 @@ android {
 }
 
 dependencies {
-    compile     ("com.android.support:appcompat-v7")
+    compile     ("com.android.support:appcompat-v7:23.2.1")
     compile     ("com.android.support:support-v4:23.2.1")
-    testCompile ("junit:junit")
+    testImplementation ("junit:junit:4.12")
     provided (group: 'mil.army.missioncommand', name: 'emp3-android-sdk', version: "$version_emp3Android", ext: 'jar') { transitive = true }
 }

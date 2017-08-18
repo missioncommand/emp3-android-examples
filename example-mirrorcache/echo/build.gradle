@@ -1,16 +1,16 @@
 apply plugin: 'emp.android-app'
 
 dependencies {
-    compile ("mil.army.missioncommand:mirrorcache-api")
-    compile ("mil.army.missioncommand:mirrorcache-impl-core")
-    compile ("mil.army.missioncommand:mirrorcache-impl-transport-ws-nv")
+    implementation ("mil.army.missioncommand:mirrorcache-api")
+    implementation ("mil.army.missioncommand:mirrorcache-impl-core")
+    implementation ("mil.army.missioncommand:mirrorcache-impl-transport-ws-nv")
 
-    compile ("mil.army.missioncommand:emp3-android-sdk:${version_emp3Android}")
-    compile ("mil.army.missioncommand:emp3-android-sdk-core:${version_emp3Android}@aar")
-    compile ("mil.army.missioncommand:emp3-android-sdk-view:${version_emp3Android}")
+    implementation ("mil.army.missioncommand:emp3-android-sdk:${version_emp3Android}")
+    implementation ("mil.army.missioncommand:emp3-android-sdk-core:${version_emp3Android}@aar")
+    implementation ("mil.army.missioncommand:emp3-android-sdk-view:${version_emp3Android}")
 
-    compile ("com.android.support:appcompat-v7")
-    compile ("com.android.support:design")
+    implementation ("com.android.support:appcompat-v7:23.2.1")
+    implementation ("com.android.support:design")
 }
 
 android {
