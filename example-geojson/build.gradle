@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    implementation ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android") { transitive = true }
+    implementation ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android@aar") { transitive = true }
     implementation (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
 
     // Compile in the map engines rather than load it from the APK
