@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">GeoPackage</string>
-    <string name="geopackage">/sdcard/Download/AGC_DG_APG_R2C1_14_17_22NOV2016.gpkg</string>
-    <string name="CancelButton">Cancel</string>
-    <string name="OKButton">OK</string>
-</resources>

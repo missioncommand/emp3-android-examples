@@ -168,8 +168,47 @@
                     android:onClick="@{cwms::onClickRemoveWCS}"
                     android:text="Remove WCS"
                     android:enabled="false"/>
-            </GridLayout>
 
+                <Button
+                    android:id="@+id/addWMTS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="6"
+                    android:onClick="@{cwms::onClickAddWMTS}"
+                    android:text="Add WMTS"
+                    android:enabled="true"/>
+
+                <Button
+                    android:id="@+id/removeWMTS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="6"
+                    android:onClick="@{cwms::onClickRemoveWMTS}"
+                    android:text="Remove WMTS"
+                    android:enabled="true"/>
+
+                <Button
+                    android:id="@+id/addGeopackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="7"
+                    android:onClick="@{cwms::onClickAddGeopackage}"
+                    android:text="Add Geopackage"
+                    android:enabled="true"/>
+
+                <Button
+                    android:id="@+id/removeGeopackage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="7"
+                    android:onClick="@{cwms::onClickRemoveGeopackage}"
+                    android:text="Remove Geopackage"
+                    android:enabled="true"/>
+            </GridLayout>
         </LinearLayout>
     </ScrollView>
 
