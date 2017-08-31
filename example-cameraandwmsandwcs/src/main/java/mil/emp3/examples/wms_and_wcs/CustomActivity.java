@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
@@ -13,8 +14,10 @@ import org.cmapi.primitives.IGeoAltitudeMode;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import mil.emp3.api.GeoPackage;
 import mil.emp3.api.WMS;
 import mil.emp3.api.WCS;
+import mil.emp3.api.WMTS;
 import mil.emp3.api.enums.WMSVersionEnum;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.ICamera;
@@ -26,16 +29,18 @@ import mil.emp3.examples.wms_and_wcs.databinding.ActivityCustomBinding;
 
 public class CustomActivity extends Activity {
 
-    private final static String TAG = CustomActivity.class.getSimpleName();
     private WMS wmsService = null;
     private WCS wcsService = null;
-    private IMap map = null;
     private ActivityCustomBinding dataBinding;
     private String url;
     private String layer;
     private IGeoAltitudeMode.AltitudeMode altitudeMode = IGeoAltitudeMode.AltitudeMode.ABSOLUTE;
     private final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
-
+    private final static String TAG = CustomActivity.class.getSimpleName();
+    private WMTS wmtsService = null;
+    private WMTS oldWMTSService = null;
+    private IMap map = null;
+    private GeoPackage geoPackage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,6 +315,77 @@ public class CustomActivity extends Activity {
             dataBinding.removeWCS.setEnabled(false);
             dataBinding.addWCS.setEnabled(true);
         } catch (EMP_Exception ex) {
+        }
+    }
+
+    public void onClickAddWMTS(View v) {
+        EditText urlText = (EditText) findViewById(R.id.UrlText);
+        EditText layerName = (EditText) findViewById(R.id.LayerText);
+
+        try {
+            String url = urlText.getText().toString();
+            String layer = layerName.getText().toString();
+            ArrayList<String> layers = new ArrayList<>();
+            layers.add(layer);
+            wmtsService = new WMTS(
+                    url,
+                    null, null, layers);
+            map.addMapService(CustomActivity.this.wmtsService);
+            ICamera camera = map.getCamera();
+            camera.setLatitude(64.27);
+            camera.setLongitude(10.12);
+            camera.setAltitude(225000);
+            camera.apply(false);
+            if (wmtsService != null) {
+                if (wmtsService != oldWMTSService) {
+                    if (oldWMTSService != null)
+                        map.removeMapService(oldWMTSService);
+                    else
+                        Log.i(TAG, "No previous WMTS service");
+                    map.addMapService(wmtsService);
+                    oldWMTSService = wmtsService;
+                } else {
+                    Log.i(TAG, "Layer unchanged");
+                }
+            } else {
+                Log.i(TAG, "Got null WMTS service");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickRemoveWMTS(View v) {
+        try {
+            map.removeMapService(oldWMTSService);
+            oldWMTSService = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickAddGeopackage(View v) {
+        EditText geopackage = (EditText) findViewById(R.id.LayerText);
+
+        try {
+            geoPackage = new GeoPackage("File://" + geopackage.getText().toString());
+            CustomActivity.this.map.addMapService(geoPackage);
+            ICamera camera = CustomActivity.this.map.getCamera();
+            // Place the camera directly over the GeoPackage image.
+            camera.setLatitude(39.54795);
+            camera.setLongitude(-76.16334);
+            camera.setAltitude(2580);
+            camera.apply(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickRemoveGeopackage(View v){
+        try {
+            CustomActivity.this.map.removeMapService(geoPackage);
+        } catch (Exception e) {
+             e.printStackTrace();
         }
     }
 }
