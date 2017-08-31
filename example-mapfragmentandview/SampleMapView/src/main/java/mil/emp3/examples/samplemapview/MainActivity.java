@@ -1,5 +1,6 @@
 package mil.emp3.examples.samplemapview;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -42,8 +43,9 @@ public class MainActivity extends MapFragmentAndViewActivity {
         } catch (EMP_Exception e) {
             e.printStackTrace();
         }
-
-        map2 = (IMap) findViewById(R.id.map2);
+        FragmentManager fm = getFragmentManager();
+        map2 = (IMap) fm.findFragmentByTag("map2_placeholder");
+        map2.setName("map2");
         try {
             map2.addMapStateChangeEventListener(new IMapStateChangeEventListener() {
                 @Override
