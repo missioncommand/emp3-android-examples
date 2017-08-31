@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 23
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "mil.emp3.examples.geopackage"
+        minSdkVersion 23
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android@aar") { transitive = true }
+    implementation (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
+    // Compile in the map engines rather than load it from the APK
+    implementation ("mil.army.missioncommand:emp3-android-worldwind:$version_emp3Android@aar") { transitive = true }
+    implementation ("mil.army.missioncommand:mil-sym-android-renderer:0.1.30@aar") { transitive = true }
+
+    implementation ("com.android.support:appcompat-v7:23.2.1")
+    implementation 'com.android.databinding:library:1.3.1'
+    implementation 'com.android.databinding:adapters:1.3.1'
+}

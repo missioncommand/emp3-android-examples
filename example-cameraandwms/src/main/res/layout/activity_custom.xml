@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="mil.emp3.examples.wms_and_wcs.CustomActivity">
+    tools:context="mil.emp3.examples.cameraandwms.CustomActivity">
 
     <data>
-        <variable name = "cwms" type = "mil.emp3.examples.wms_and_wcs.CustomActivity"/>
+        <variable name = "cwms" type = "mil.emp3.examples.cameraandwms.CustomActivity"/>
     </data>
 <LinearLayout
     android:layout_width="match_parent"
@@ -39,13 +39,22 @@
                 android:text="@string/VersionDefault" />
 
             <Spinner
-                android:id="@+id/AltitudeMode"
+                android:id="@+id/TileFormatText"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Altitude Mode"
+                android:hint="Tile Format"
                 android:spinnerMode="dropdown"
-                android:text="@string/AltitudeModeDefault" />
+                android:text="@string/TileFormatDefault" />
+
+            <Spinner
+                android:id="@+id/TransparentText"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Transparent"
+                android:spinnerMode="dropdown"
+                android:text="@string/TransparentDefault" />
 
             <EditText
                 android:id="@+id/LayerText"
@@ -72,15 +81,6 @@
                 android:columnCount="2">
 
                 <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="0"
-                    android:onClick="@{cwms::onClickOK}"
-                    android:text="@string/OKButton" />
-
-                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="0"
@@ -88,6 +88,13 @@
                     android:text="@string/CancelButton"
                     android:onClick="@{cwms::onClickCancel}" />
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:text="@string/OKButton"
+                    android:onClick="@{cwms::onClickOK}"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,26 +155,6 @@
                     android:layout_column="1"
                     android:text="@string/rollCW"
                     android:onClick="@{cwms::onClickRollCW}" />
-
-                <Button
-                    android:id="@+id/addWCS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="5"
-                    android:onClick="@{cwms::onClickAddWCS}"
-                    android:text="Add WCS"
-                    android:enabled="false"/>
-
-                <Button
-                    android:id="@+id/removeWCS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="5"
-                    android:onClick="@{cwms::onClickRemoveWCS}"
-                    android:text="Remove WCS"
-                    android:enabled="false"/>
             </GridLayout>
 
         </LinearLayout>

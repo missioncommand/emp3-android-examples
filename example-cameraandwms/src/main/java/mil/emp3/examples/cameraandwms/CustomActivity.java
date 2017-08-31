@@ -1,8 +1,8 @@
-package mil.emp3.examples.wms_and_wcs;
+package mil.emp3.examples.cameraandwms;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,32 +10,28 @@ import android.widget.Toast;
 
 import org.cmapi.primitives.IGeoAltitudeMode;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import mil.emp3.api.WMS;
-import mil.emp3.api.WCS;
 import mil.emp3.api.enums.WMSVersionEnum;
+import mil.emp3.api.events.MapStateChangeEvent;
+import mil.emp3.api.events.MapUserInteractionEvent;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.ICamera;
-import mil.emp3.api.interfaces.ILookAt;
 import mil.emp3.api.interfaces.IMap;
-import mil.emp3.examples.maptestfragment.CameraUtility;
+import mil.emp3.api.listeners.IMapInteractionEventListener;
+import mil.emp3.api.listeners.IMapStateChangeEventListener;
+import wei.mark.standout.StandOutWindow;
 
-import mil.emp3.examples.wms_and_wcs.databinding.ActivityCustomBinding;
+import mil.emp3.examples.cameraandwms.databinding.ActivityCustomBinding;
 
-public class CustomActivity extends Activity {
+public class CustomActivity extends AppCompatActivity {
 
     private final static String TAG = CustomActivity.class.getSimpleName();
     private WMS wmsService = null;
-    private WCS wcsService = null;
+    private WMS oldWMSService = null;
     private IMap map = null;
-    private ActivityCustomBinding dataBinding;
-    private String url;
-    private String layer;
-    private IGeoAltitudeMode.AltitudeMode altitudeMode = IGeoAltitudeMode.AltitudeMode.ABSOLUTE;
-    private final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
-
+    ActivityCustomBinding dataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +42,21 @@ public class CustomActivity extends Activity {
         ArrayAdapter<CharSequence> versionAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wms_versions, android.R.layout.simple_spinner_item);
         dataBinding.VersionText.setAdapter(versionAdapter);
-        ArrayAdapter<CharSequence> altitudeModeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.altitude_mode, android.R.layout.simple_spinner_item);
-        dataBinding.AltitudeMode.setAdapter(altitudeModeAdapter);
+        ArrayAdapter<CharSequence> tileAdapter = ArrayAdapter.createFromResource(this,
+                R.array.image_formats, android.R.layout.simple_spinner_item);
+        dataBinding.TileFormatText.setAdapter(tileAdapter);
+        ArrayAdapter<CharSequence> booleanAdapter = ArrayAdapter.createFromResource(this,
+                R.array.boolean_values, android.R.layout.simple_spinner_item);
+        dataBinding.TransparentText.setAdapter(booleanAdapter);
         /*
         Instantiate a camera and set the location and angle
         The altitude here is set initially to 1000 km
          */
 
+        final mil.emp3.api.Camera camera = new mil.emp3.api.Camera();
         camera.setName("Main Cam");
-        camera.setAltitudeMode(altitudeMode);
-        camera.setAltitude(1e5);
+        camera.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
+        camera.setAltitude(1e6);
         camera.setHeading(0.0);
         camera.setLatitude(40.0);
         camera.setLongitude(-100.0);
@@ -86,6 +86,8 @@ public class CustomActivity extends Activity {
             Log.e(TAG, "addMapInteractionEventListener", e);
         }
 
+        WallpaperController wallpaperController = new WallpaperController(map);
+        StandOutWindow.show(getBaseContext(), WallpaperController.class, StandOutWindow.DEFAULT_ID);
 
     }
 
@@ -241,41 +243,31 @@ public class CustomActivity extends Activity {
     public void onClickOK(View v) {
 
         try {
-            url = dataBinding.UrlText.getText().toString();
+            String url = dataBinding.UrlText.getText().toString();
             String version = dataBinding.VersionText.getSelectedItem().toString();
             WMSVersionEnum wmsVersion = WMSVersionEnum.valueOf(version);
-            String altModeString = dataBinding.AltitudeMode.getSelectedItem().toString();
-            IGeoAltitudeMode.AltitudeMode altMode = null;
-            switch (altModeString) {
-                case "CLAMP TO GROUND":
-                    altMode = IGeoAltitudeMode.AltitudeMode.CLAMP_TO_GROUND;
-                    break;
-                case "RELATIVE TO GROUND":
-                    altMode = IGeoAltitudeMode.AltitudeMode.RELATIVE_TO_GROUND;
-                    break;
-                default:
-                    altMode = IGeoAltitudeMode.AltitudeMode.ABSOLUTE;
-                    break;
-            }
-            layer = dataBinding.LayerText.getText().toString();
+            String tileFormat = dataBinding.TileFormatText.getSelectedItem().toString();
+            boolean transparent = (dataBinding.TransparentText.getSelectedItem().toString()).equals("true");
+            String layer = dataBinding.LayerText.getText().toString();
             ArrayList<String> layers = new ArrayList<>();
             layers.add(layer);
-            wmsService = new WMS(url + "wms",
+            wmsService = new WMS(url,
                     wmsVersion,
-                    "image/png",
-                    true,
+                    tileFormat.equals("null") ? null : tileFormat,  // tile format
+                    transparent,
                     layers);
             String resolution = dataBinding.ResolutionText.getText().toString();
             wmsService.setLayerResolution(Double.valueOf(resolution));
             if (wmsService != null) {
-                map.addMapService(wmsService);
-                if (altMode != altitudeMode) {
-                    camera.setAltitudeMode(altMode);
-                    altitudeMode = altMode;
-                    camera.apply(false);
-                }
-                if(!(dataBinding.addWCS.isEnabled() || dataBinding.removeWCS.isEnabled())){
-                    dataBinding.addWCS.setEnabled(true);
+                if (wmsService != oldWMSService) {
+                    if (oldWMSService != null)
+                        map.removeMapService(oldWMSService);
+                    else
+                        Log.i(TAG, "No previous WMS service");
+                    map.addMapService(wmsService);
+                    oldWMSService = wmsService;
+                } else {
+                    Log.i(TAG, "Layer unchanged");
                 }
             } else {
                 Log.i(TAG, "Got null WMS service");
@@ -284,32 +276,5 @@ public class CustomActivity extends Activity {
             e.printStackTrace();
         }
     }
-    public void onClickAddWCS(View v){
-        try {
-            try {
-                url = dataBinding.UrlText.getText().toString();
-                layer = dataBinding.LayerText.getText().toString();
-                wcsService = new WCS(url + "wcs", layer);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Log.i(TAG, wcsService.toString());
-            map.addMapService(wcsService);
-            ILookAt calculatedLookAt = CameraUtility.setupLookAt(28, 87, 9000,
-                    27.9878, 86.9250, 8848);
-            map.setLookAt(calculatedLookAt, false);
 
-            dataBinding.removeWCS.setEnabled(true);
-            dataBinding.addWCS.setEnabled(false);
-        } catch (EMP_Exception ex) {
-        }
-    }
-    public void onClickRemoveWCS(View v){
-        try {
-            map.removeMapService(wcsService);
-            dataBinding.removeWCS.setEnabled(false);
-            dataBinding.addWCS.setEnabled(true);
-        } catch (EMP_Exception ex) {
-        }
-    }
 }
