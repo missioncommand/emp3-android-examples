@@ -208,6 +208,26 @@
                     android:onClick="@{cwms::onClickRemoveGeopackage}"
                     android:text="Remove Geopackage"
                     android:enabled="true"/>
+
+                <Button
+                    android:id="@+id/addLoS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="8"
+                    android:onClick="@{cwms::onClickAddGeopackage}"
+                    android:text="Add Line of Sight"
+                    android:enabled="true"/>
+
+                <Button
+                    android:id="@+id/removeLoS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="8"
+                    android:onClick="@{cwms::onClickRemoveGeopackage}"
+                    android:text="Remove Line of Sight"
+                    android:enabled="true"/>
             </GridLayout>
         </LinearLayout>
     </ScrollView>

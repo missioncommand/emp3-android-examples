@@ -15,16 +15,19 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import mil.emp3.api.GeoPackage;
-import mil.emp3.api.WMS;
+import mil.emp3.api.LineOfSight;
+import mil.emp3.api.LookAt;
 import mil.emp3.api.WCS;
+import mil.emp3.api.WMS;
 import mil.emp3.api.WMTS;
 import mil.emp3.api.enums.WMSVersionEnum;
 import mil.emp3.api.exceptions.EMP_Exception;
 import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.ILookAt;
 import mil.emp3.api.interfaces.IMap;
+import mil.emp3.api.utils.EmpGeoColor;
+import mil.emp3.api.utils.EmpGeoPosition;
 import mil.emp3.examples.maptestfragment.CameraUtility;
-
 import mil.emp3.examples.wms_and_wcs.databinding.ActivityCustomBinding;
 
 public class CustomActivity extends Activity {
@@ -41,6 +44,7 @@ public class CustomActivity extends Activity {
     private WMTS oldWMTSService = null;
     private IMap map = null;
     private GeoPackage geoPackage = null;
+    private LineOfSight los = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -386,6 +390,40 @@ public class CustomActivity extends Activity {
             CustomActivity.this.map.removeMapService(geoPackage);
         } catch (Exception e) {
              e.printStackTrace();
+        }
+    }
+
+    public void onClickAddLoS(View v) {
+        try {
+            map.addMapService(wcsService);
+            Thread.sleep(1000);
+            EmpGeoPosition position = new EmpGeoPosition(46.230, -122.190, 2500.0);
+            EmpGeoColor visibleAttr = new EmpGeoColor(0.5d, 0, 25, 0);
+            EmpGeoColor occludeAttr = new EmpGeoColor(0.8d, 25, 25, 25);
+            double range = 10000.0d;
+            los = new LineOfSight(position, range, visibleAttr, occludeAttr);
+            map.addMapService(los);
+            LookAt lookAt = new LookAt(46.230, -122.190, 500, IGeoAltitudeMode.AltitudeMode.ABSOLUTE);
+            lookAt.setRange(1.5e4); /*range*/
+            lookAt.setHeading(45.0); /*heading*/
+            lookAt.setTilt(70.0); /*tilt*/
+                    /*0 roll*/
+            ;
+            map.setLookAt(lookAt, false);
+            dataBinding.addLoS.setEnabled(false);
+            dataBinding.removeLoS.setEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickRemoveLoS(View V){
+        try {
+            map.removeMapService(los);
+            dataBinding.addLoS.setEnabled(true);
+            dataBinding.removeLoS.setEnabled(false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
