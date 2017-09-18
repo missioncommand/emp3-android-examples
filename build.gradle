@@ -6,6 +6,10 @@ buildscript {
     repositories {
         mavenLocal()
         jcenter()
+        google()
+        maven {
+            url "file://${System.env['ANDROID_HOME']}/extras/android/m2repository"
+        }
         maven {
             url "https://dl.bintray.com/missioncommand/maven/"
         }
@@ -15,8 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath "mil.army.missioncommand:emp3-gradle-plugin:${version_emp3Android}"
+        classpath 'com.android.tools.build:gradle:3.0.0-beta3'
         classpath "org.ajoberstar:grgit:1.7.0"
     }
 }
@@ -25,8 +28,8 @@ ext {
     empUsername = ""
     empPassword = ""
 
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 
     git = org.ajoberstar.grgit.Grgit.open(file('.')) // Open the Git repository in the current directory.
     revision = git.head().id                         // Get commitId of HEAD.
@@ -34,5 +37,19 @@ ext {
 }
 
 allprojects {
-    apply plugin: 'emp.common'
+    repositories {
+        mavenLocal()
+        jcenter()
+        google()
+        maven {
+            url "file://${System.env['ANDROID_HOME']}/extras/android/m2repository"
+        }
+        maven {
+            url "https://dl.bintray.com/missioncommand/maven/"
+        }
+        maven {
+            url "https://oss.jfrog.org/artifactory/libs-snapshot"
+        }
+    }
+
 }

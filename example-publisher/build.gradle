@@ -17,6 +17,6 @@ dependencies {
     provided group: 'infrastructure.data_model', name: 'seam-jar', version: '9.1.0.0', ext: 'jar'
     provided group: 'infrastructure.common', name: 'data_service', version: '1.10',
             classifier: 'api', ext: 'jar'
-    compile (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
+    implementation (group: 'infrastructure.android', name: 'data_service', version: '1.10', classifier: 'coev3', ext: 'jar')
 
 }
