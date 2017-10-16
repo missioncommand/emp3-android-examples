@@ -1,6 +1,6 @@
 rootProject.name = 'emp3-android-example'
 
-include ':example-HelloEmp3'
+include ':example-HelloEmp3', ':example-geographiclib'
 include ':example-MultiEngine'
 include ':example-capabilities'
 include ':example-cameraandwmsandwcs'
