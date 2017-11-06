@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mil.emp3.example_grids.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <mil.emp3.api.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/map"
+            app:map_engine_name="mil.emp3.worldwind.MapInstance"
+            app:map_engine_apk_name = "mil.emp3.worldwind"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            />
+    </LinearLayout>
+
+</LinearLayout>
