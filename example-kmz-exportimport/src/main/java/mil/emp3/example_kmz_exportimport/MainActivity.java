@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     private ICamera oCamera = new Camera();
     private Overlay overlay = new Overlay();
     private HashMap<UUID, IFeature> oFeatureHash = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -74,6 +75,12 @@ public class MainActivity extends AppCompatActivity
         {
             return;
         }
+
+        if(hasRequiredPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == false)
+        {
+            return;
+        }
+
         File targetFile = FileUtility.getExampleKmzFile(getApplicationContext());
         try
         {
@@ -142,7 +149,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("permission", "permission denied to Write External Storage - requesting it");
                 String[] permissions = {permission};
 
-                requestPermissions(permissions, permission.hashCode());
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
                 return false;
             }
         }
