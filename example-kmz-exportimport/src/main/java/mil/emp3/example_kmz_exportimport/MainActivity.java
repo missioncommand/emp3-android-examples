@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
         try
         {
-            this.map.setCamera(this.oCamera, false);
+            this.oCamera = this.map.getCamera();
             this.map.addOverlay(overlay, true);
         }
         catch (EMP_Exception e)
@@ -64,15 +64,6 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-        try
-        {
-            this.map.addOverlay(this.overlay, true);
-        }
-        catch (EMP_Exception e)
-        {
-            e.printStackTrace();
-        }
-
         File tempDirectory = this.getApplicationContext().getExternalFilesDir(null);
         tempDirectory.mkdirs();
 
@@ -85,16 +76,17 @@ public class MainActivity extends AppCompatActivity
                                                                            public void exportSuccess(final File exportObject)
                                                                            {
                                                                                //ExportObject is the kmz file
-                                                                               Toast.makeText(MainActivity.this.getApplicationContext(),
+                                                                               Toast.makeText(MainActivity.this,
                                                                                              String.format("Export successful. Saved to %s",exportObject.getAbsolutePath()),
-                                                                                             Toast.LENGTH_LONG);
+                                                                                             Toast.LENGTH_LONG).show();
+
                                                                            }
                                                                            @Override
                                                                            public void exportFailed(final Exception Ex)
                                                                            {
-                                                                               Toast.makeText(MainActivity.this.getApplicationContext(),
+                                                                               Toast.makeText(MainActivity.this,
                                                                                               String.format("Export failed. %s",Ex.getMessage()),
-                                                                                              Toast.LENGTH_LONG);
+                                                                                              Toast.LENGTH_LONG).show();
                                                                            }
                                                                        },
                                    tempDirectory.getAbsolutePath(),
