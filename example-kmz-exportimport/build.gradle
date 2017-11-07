@@ -1,45 +1,32 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-
-
-
+    compileSdkVersion 23
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "mil.emp3.example_kmz_exportimport"
         minSdkVersion 23
-        targetSdkVersion 26
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
         release {
-            postprocessing {
-                removeUnusedCode false
-                removeUnusedResources false
-                obfuscate false
-                optimizeCode false
-                proguardFile 'proguard-rules.pro'
-            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-//    implementation fileTree(dir: 'libs', include: ['*.jar'])
-//
-//    implementation 'com.android.support:appcompat-v7:26.1.0'
-//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    implementation ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android@aar")  { transitive = true }
+    implementation ("mil.army.missioncommand:emp3-android-sdk-view:$version_emp3Android@aar") { transitive = true }
     implementation (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
+
     implementation ("com.android.support:appcompat-v7:23.2.1")
 }
