@@ -43,6 +43,13 @@ public class PlotUtility
                                                                                  MilStdSymbol.Echelon.BRIGADE);
 
 
+    /***
+     * Randomly plots military symbology points on the map
+     * @param iMaxCount the number of military symbology points to plot
+     * @param oRootOverlay the overlay to plot the military symbology on
+     * @param oFeatureHash the hashmap of features and their UUID that exists on the map already
+     * @param oCamera the camera of the map
+     */
     public static void plotManyMilStd(int                     iMaxCount,
                                       IOverlay                oRootOverlay,
                                       HashMap<UUID, IFeature> oFeatureHash,
