@@ -30,8 +30,7 @@ import mil.emp3.api.utils.kmz.EmpKMZExporter;
 
 public class MainActivity extends AppCompatActivity
 {
-    private IMap    map;
-    private ICamera oCamera = new Camera();
+    private IMap map;
     final private Overlay overlay = new Overlay();
     final private HashMap<UUID, IFeature> oFeatureHash = new HashMap<>();
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity
 
         try
         {
-            this.oCamera = this.map.getCamera();
             this.map.addOverlay(overlay, true);
         }
         catch (EMP_Exception e)
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity
      */
     public void plotMilitarySymbology(final View view)
     {
-        PlotUtility.plotManyMilStd(100, this.overlay, this.oFeatureHash, this.oCamera);
+        PlotUtility.plotManyMilStd(100, this.overlay, this.oFeatureHash, this.map.getCamera());
     }
 
     /***
