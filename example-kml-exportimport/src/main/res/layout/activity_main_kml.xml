@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:layout_row="0"
-            android:onClick="plotPoint"
+            android:onClick="plotRandomPoints"
             android:text="plot Points" />
 
 

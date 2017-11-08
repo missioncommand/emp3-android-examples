@@ -58,7 +58,11 @@ public class MainKMLActivity extends AppCompatActivity
         }
     }
 
-    public void exportToKmlExample(View view)
+    /***
+     * Exports the current map to kml and saves the data on disk
+     * @param view the view that sent the event
+     */
+    public void exportToKmlExample(final View view)
     {
         if(!hasRequiredPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE))
         {
@@ -110,6 +114,10 @@ public class MainKMLActivity extends AppCompatActivity
                                                                       });
     }
 
+    /**
+     * Imports the example kml data to the map
+     * @param view the view that sent the event
+     */
     public void importKmlExample(final View view)
     {
         //read the kml sample data
@@ -138,7 +146,11 @@ public class MainKMLActivity extends AppCompatActivity
         }
     }
 
-    public void plotPoint(final View view)
+    /***
+     * plots random points to export as kml
+     * @param view the view that sent the event
+     */
+    public void plotRandomPoints(final View view)
     {
         try
         {
@@ -173,7 +185,8 @@ public class MainKMLActivity extends AppCompatActivity
         return true;
     }
 
-    private void makeToast(final String text) {
+    private void makeToast(final String text)
+    {
         handler.post(() -> Toast.makeText(MainKMLActivity.this, text, Toast.LENGTH_LONG).show());
     }
 }
