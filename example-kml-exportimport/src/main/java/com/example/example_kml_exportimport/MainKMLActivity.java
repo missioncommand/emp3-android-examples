@@ -3,11 +3,13 @@ package com.example.example_kml_exportimport;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import android.os.Handler;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -33,6 +35,7 @@ public class MainKMLActivity extends AppCompatActivity
     private IMap map;
     final private HashMap<UUID, IFeature> oFeatureHash = new HashMap<>();
     final private Overlay                 overlay      = new Overlay();
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,6 +44,7 @@ public class MainKMLActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_kml);
         this.map = (IMap) findViewById(R.id.map);
 
+        this.handler = new Handler(Looper.getMainLooper());
         //setup overlay
         this.overlay.setName("Test Overlay");
 
@@ -86,30 +90,22 @@ public class MainKMLActivity extends AppCompatActivity
                                                                                   outputStream.flush();
 
                                                                                   //notify the user the kml file has been exported
-                                                                                  Toast.makeText(MainKMLActivity.this,
-                                                                                                 String.format("Export to KML complete. %s", destination.getAbsolutePath()),
-                                                                                                 Toast.LENGTH_LONG).show();
+                                                                                  MainKMLActivity.this.makeToast(String.format("Export KML complete. %s", destination.getAbsolutePath()));
                                                                               }
                                                                               catch (FileNotFoundException exception)
                                                                               {
-                                                                                  Toast.makeText(MainKMLActivity.this,
-                                                                                                 String.format("Writing KML to file failed. %s", exception.getMessage()),
-                                                                                                 Toast.LENGTH_LONG).show();
+                                                                                  MainKMLActivity.this.makeToast(String.format("Writing KML to file failed. %s", exception.getMessage()));
                                                                               }
                                                                               catch (IOException exception)
                                                                               {
-                                                                                  Toast.makeText(MainKMLActivity.this,
-                                                                                                 String.format("Writing KML to file failed. %s", exception.getMessage()),
-                                                                                                 Toast.LENGTH_LONG).show();
+                                                                                  MainKMLActivity.this.makeToast(String.format("Writing KML to file failed. %s", exception.getMessage()));
                                                                               }
                                                                           }
 
                                                                           @Override
                                                                           public void exportFailed(final Exception Ex)
                                                                           {
-                                                                              Toast.makeText(MainKMLActivity.this,
-                                                                                             String.format("Export to KML failed. %s", Ex.getMessage()),
-                                                                                             Toast.LENGTH_LONG).show();
+                                                                              MainKMLActivity.this.makeToast(String.format("Export to KML failed. %s", Ex.getMessage()));
                                                                           }
                                                                       });
     }
@@ -142,13 +138,12 @@ public class MainKMLActivity extends AppCompatActivity
         }
     }
 
-    public void plotFeatures(View view)
+    public void plotPoint(final View view)
     {
         try
         {
-            PlotUtility.plotPoint(this.map.getCamera(), this.overlay);
-            PlotUtility.plotUrlPoint(this.map.getCamera(), this.overlay);
-            PlotUtility.plotRectangle(this.map.getCamera(), this.overlay);
+            PlotUtility.plotRandomPoints(100, this.map.getCamera(), this.overlay);
+            PlotUtility.plotRandomUrlPoints(100, this.map.getCamera(), this.overlay);
         }
         catch (EMP_Exception Ex)
         {
@@ -176,5 +171,9 @@ public class MainKMLActivity extends AppCompatActivity
             }
         }
         return true;
+    }
+
+    private void makeToast(final String text) {
+        handler.post(() -> Toast.makeText(MainKMLActivity.this, text, Toast.LENGTH_LONG).show());
     }
 }

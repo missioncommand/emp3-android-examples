@@ -46,15 +46,36 @@ public class PlotUtility
 {
     private final static String TAG = MainKMLActivity.class.getSimpleName();
 
+
+    public static void plotRandomPoints(final int      numberOfPoints,
+                                        final ICamera  camera,
+                                        final IOverlay overlay) throws EMP_Exception
+    {
+        for(int pointCount = 0; pointCount < numberOfPoints; pointCount++)
+        {
+            plotPoint(camera, overlay);
+        }
+    }
+
+    public static void plotRandomUrlPoints(final int      numberOfPoints,
+                                           final ICamera  camera,
+                                           final IOverlay overlay) throws EMP_Exception
+    {
+        for(int pointCount = 0; pointCount < numberOfPoints; pointCount++)
+        {
+            plotUrlPoint(camera, overlay);
+        }
+    }
+
     public static void plotPoint(final ICamera  camera,
                                  final IOverlay overlay) throws EMP_Exception
     {
          final Point        oPoint     = new Point();
          final GeoIconStyle pointStyle = new GeoIconStyle();
 
-         pointStyle.setSize(500000.0);
+         pointStyle.setSize(50.0);
 
-         oPoint.setPosition(getCameraPosition(camera));
+         oPoint.setPosition(getRandomCoordinate(camera));
          overlay.addFeature(oPoint, true);
          Log.i(TAG, oPoint.toString());
     }
@@ -71,43 +92,23 @@ public class PlotUtility
 
         //set up the point
         oPoint.setIconStyle(oIconStyle);
-        oPoint.setPosition(getCameraPosition(camera));
+        oPoint.setPosition(getRandomCoordinate(camera));
         oPoint.setIconURI("http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png");
 
         overlay.addFeature(oPoint, true);
     }
 
-    public static void plotRectangle(final ICamera camera,
-                                     final IOverlay overlay) throws EMP_Exception
+
+    protected static IGeoPosition getRandomCoordinate(ICamera oCamera)
     {
-        final IGeoColor          lineColor   = new EmpGeoColor(1.0, 0, 0, 255);
-        final IGeoColor          fillColor   = new EmpGeoColor(0.6, 255, 0, 0);
-        final IGeoStrokeStyle    strokeStyle = new GeoStrokeStyle();
-        final IGeoFillStyle      fillStyle   = new GeoFillStyle();
-        final IGeoPosition       position    = getCameraPosition(camera);
-        final Rectangle          oFeature    = new Rectangle();
+        IGeoPosition oPos = new GeoPosition();
+        double dTemp;
 
-        strokeStyle.setStrokeColor(lineColor);
-        strokeStyle.setStrokeWidth(3);
-        fillStyle.setFillColor(fillColor);
-
-        oFeature.setPosition(position);
-        oFeature.setHeight(10000000);
-        oFeature.setWidth(5000000);
-        oFeature.setAzimuth(0);
-        oFeature.setStrokeStyle(strokeStyle);
-        oFeature.setFillStyle(fillStyle);
-        oFeature.setAltitudeMode(IGeoAltitudeMode.AltitudeMode.CLAMP_TO_GROUND);
-        overlay.addFeature(oFeature, true);
-    }
-
-    private static IGeoPosition getCameraPosition(final ICamera camera)
-    {
-        final IGeoPosition oPos = new GeoPosition();
-
-        oPos.setLatitude(camera.getLatitude());
-        oPos.setLongitude(camera.getLongitude());
-        oPos.setAltitude(0);
+        dTemp = oCamera.getLatitude() + (3 * Math.random()) - 1.5;
+        oPos.setLatitude(dTemp);
+        dTemp = oCamera.getLongitude() + (3 * Math.random()) - 1.5;
+        oPos.setLongitude(dTemp);
+        oPos.setAltitude(Math.random() * 16000.0);
 
         return oPos;
     }
