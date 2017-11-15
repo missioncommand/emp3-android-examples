@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    compile project(":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
+    implementation project(":example-mapfragmentandview:example-mapfragmentandview-MapTestFragment")
 
     implementation (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-view', version: "$version_emp3Android", ext: 'aar') { transitive = true }
     implementation (group: 'mil.army.missioncommand', name: 'emp3-android-sdk-core', version: "$version_emp3Android", ext: 'aar') { transitive = true }
