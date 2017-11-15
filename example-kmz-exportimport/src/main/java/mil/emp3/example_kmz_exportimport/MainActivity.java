@@ -2,6 +2,7 @@ package mil.emp3.example_kmz_exportimport;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,7 +117,15 @@ public class MainActivity extends AppCompatActivity
         }
         //create a temp directory for the exporter
         final File tempDirectory = this.getApplicationContext().getExternalFilesDir(null);
-        tempDirectory.mkdirs();
+//        tempDirectory.mkdirs();
+
+        final String kmzExportedFileName = "My_Kmz_File";
+        //Delete the previously exported kmzFile
+        final File kmzExportedFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "KMZExport" + File.separator + kmzExportedFileName + ".kmz");
+        if(kmzExportedFile.exists())
+        {
+            kmzExportedFile.delete();
+        }
 
         //Export the overlay as a kmz file
         EmpKMZExporter.exportToKMZ(this.map,
@@ -142,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                                                                            }
                                                                        },
                                    tempDirectory.getAbsolutePath(),
-                                   "My_Kmz_File");
+                                   kmzExportedFileName);
     }
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -155,7 +164,7 @@ public class MainActivity extends AppCompatActivity
             if (checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED)
             {
 
-                Log.d("permission", String.format("permission denied to %s - requesting it"));
+                Log.d("permission", String.format("permission denied to %s - requesting it", permission));
                 final String[] permissions = {permission};
 
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
