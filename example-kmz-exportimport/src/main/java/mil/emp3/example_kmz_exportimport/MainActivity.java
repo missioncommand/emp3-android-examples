@@ -16,12 +16,9 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mil.emp3.api.Camera;
 import mil.emp3.api.KMLS;
 import mil.emp3.api.Overlay;
-import mil.emp3.api.enums.KMLSEventEnum;
 import mil.emp3.api.exceptions.EMP_Exception;
-import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.IEmpExportToTypeCallBack;
 import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
@@ -117,7 +114,6 @@ public class MainActivity extends AppCompatActivity
         }
         //create a temp directory for the exporter
         final File tempDirectory = this.getApplicationContext().getExternalFilesDir(null);
-//        tempDirectory.mkdirs();
 
         final String kmzExportedFileName = "My_Kmz_File";
         //Delete the previously exported kmzFile
