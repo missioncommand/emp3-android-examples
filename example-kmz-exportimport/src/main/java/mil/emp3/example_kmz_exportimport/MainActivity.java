@@ -2,6 +2,7 @@ package mil.emp3.example_kmz_exportimport;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +16,9 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import mil.emp3.api.Camera;
 import mil.emp3.api.KMLS;
 import mil.emp3.api.Overlay;
-import mil.emp3.api.enums.KMLSEventEnum;
 import mil.emp3.api.exceptions.EMP_Exception;
-import mil.emp3.api.interfaces.ICamera;
 import mil.emp3.api.interfaces.IEmpExportToTypeCallBack;
 import mil.emp3.api.interfaces.IFeature;
 import mil.emp3.api.interfaces.IMap;
@@ -116,7 +114,14 @@ public class MainActivity extends AppCompatActivity
         }
         //create a temp directory for the exporter
         final File tempDirectory = this.getApplicationContext().getExternalFilesDir(null);
-        tempDirectory.mkdirs();
+
+        final String kmzExportedFileName = "My_Kmz_File";
+        //Delete the previously exported kmzFile
+        final File kmzExportedFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "KMZExport" + File.separator + kmzExportedFileName + ".kmz");
+        if(kmzExportedFile.exists())
+        {
+            kmzExportedFile.delete();
+        }
 
         //Export the overlay as a kmz file
         EmpKMZExporter.exportToKMZ(this.map,
@@ -142,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                                                                            }
                                                                        },
                                    tempDirectory.getAbsolutePath(),
-                                   "My_Kmz_File");
+                                   kmzExportedFileName);
     }
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity
             if (checkSelfPermission(permission) == PackageManager.PERMISSION_DENIED)
             {
 
-                Log.d("permission", String.format("permission denied to %s - requesting it"));
+                Log.d("permission", String.format("permission denied to %s - requesting it", permission));
                 final String[] permissions = {permission};
 
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
