@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        version_emp3Android = "3.1.1"
+        version_emp3Android = "3.1.2"
     }
 
     repositories {
@@ -10,9 +10,9 @@ buildscript {
         maven {
             url "file://${System.env['ANDROID_HOME']}/extras/android/m2repository"
         }
-        maven {
-            url "https://dl.bintray.com/missioncommand/maven/"
-        }
+//        maven {
+//            url "https://dl.bintray.com/missioncommand/maven/"
+//        }
         maven {
             url "https://oss.jfrog.org/artifactory/libs-snapshot"
         }
@@ -44,9 +44,9 @@ allprojects {
         maven {
             url "file://${System.env['ANDROID_HOME']}/extras/android/m2repository"
         }
-        maven {
-            url "https://dl.bintray.com/missioncommand/maven/"
-        }
+//        maven {
+//            url "https://dl.bintray.com/missioncommand/maven/"
+//        }
         maven {
             url "https://oss.jfrog.org/artifactory/libs-snapshot"
         }
